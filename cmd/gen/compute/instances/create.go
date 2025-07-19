@@ -25,12 +25,6 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, instanceService computeSdk.InstanceService) {
 	
-	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_SshKeyNameFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_UserDataFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_Image_IDFlag *flags.StrFlag //CobraFlagsDefinition
@@ -42,6 +36,12 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 	var req_MachineType_IDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_MachineType_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_SshKeyNameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_UserDataFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -58,18 +58,6 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 			
 
 			
-			
-			if req_NameFlag.IsChanged() {
-				req.Name = *req_NameFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_SshKeyNameFlag.IsChanged() {
-				req.SshKeyName = req_SshKeyNameFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_UserDataFlag.IsChanged() {
-				req.UserData = req_UserDataFlag.Value
-			}// CobraFlagsAssign
 			
 			if req_AvailabilityZoneFlag.IsChanged() {
 				req.AvailabilityZone = req_AvailabilityZoneFlag.Value
@@ -93,6 +81,18 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 			
 			if req_MachineType_NameFlag.IsChanged() {
 				req.MachineType.Name = req_MachineType_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_NameFlag.IsChanged() {
+				req.Name = *req_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_SshKeyNameFlag.IsChanged() {
+				req.SshKeyName = req_SshKeyNameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_UserDataFlag.IsChanged() {
+				req.UserData = req_UserDataFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -119,12 +119,6 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 	}
 	
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
-	
-	req_SshKeyNameFlag = flags.NewStrP(cmd, "ssh-key-name", "s", "", "")//CobraFlagsCreation
-	
-	req_UserDataFlag = flags.NewStrP(cmd, "user-data", "u", "", "")//CobraFlagsCreation
-	
 	req_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "a", "", "")//CobraFlagsCreation
 	
 	req_Image_IDFlag = flags.NewStrP(cmd, "image.id", "i", "", "")//CobraFlagsCreation
@@ -136,6 +130,12 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 	req_MachineType_IDFlag = flags.NewStrP(cmd, "machine-type.id", "b", "", "")//CobraFlagsCreation
 	
 	req_MachineType_NameFlag = flags.NewStrP(cmd, "machine-type.name", "e", "", "")//CobraFlagsCreation
+	
+	req_NameFlag = flags.NewStrP(cmd, "name", "c", "", "")//CobraFlagsCreation
+	
+	req_SshKeyNameFlag = flags.NewStrP(cmd, "ssh-key-name", "s", "", "")//CobraFlagsCreation
+	
+	req_UserDataFlag = flags.NewStrP(cmd, "user-data", "u", "", "")//CobraFlagsCreation
 	
 
 

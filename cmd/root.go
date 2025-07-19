@@ -91,7 +91,7 @@ func beautifulPrint(cmd *cobra.Command) {
 	cmd.SetHelpFunc(func(cmd *cobra.Command, args []string) {
 		// Cabeçalho colorido
 		headerColor := color.New(color.FgCyan, color.Bold)
-		headerColor.Printf("🚀 %s\n\n", cmd.Short)
+		headerColor.Printf("%s\n\n", cmd.Short)
 
 		// Descrição longa
 		if cmd.Long != "" {
@@ -134,7 +134,7 @@ func beautifulPrint(cmd *cobra.Command) {
 				if commands, exists := commandsByGroup[group.ID]; exists && len(commands) > 0 {
 					fmt.Println()
 					groupColor := color.New(color.FgMagenta, color.Bold)
-					groupColor.Printf("📦 %s\n", group.Title)
+					groupColor.Printf("%s\n", group.Title)
 
 					for _, subCmd := range commands {
 						cmdName := color.New(color.FgCyan, color.Bold)
@@ -251,7 +251,7 @@ func beautifulPrint(cmd *cobra.Command) {
 				if commands, exists := commandsByGroup[group.ID]; exists && len(commands) > 0 {
 					fmt.Println()
 					groupColor := color.New(color.FgMagenta, color.Bold)
-					groupColor.Printf("📦 %s\n", group.Title)
+					groupColor.Printf("%s\n", group.Title)
 
 					for _, subCmd := range commands {
 						cmdName := color.New(color.FgCyan)

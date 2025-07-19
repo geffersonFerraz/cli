@@ -25,9 +25,9 @@ func Retype(ctx context.Context, parent *cobra.Command, volumeService blockstora
 	
 	var idFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_NewType_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_NewType_IDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_NewType_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -51,12 +51,12 @@ func Retype(ctx context.Context, parent *cobra.Command, volumeService blockstora
 				id = *idFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_NewType_NameFlag.IsChanged() {
-				req.NewType.Name = req_NewType_NameFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_NewType_IDFlag.IsChanged() {
 				req.NewType.ID = req_NewType_IDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_NewType_NameFlag.IsChanged() {
+				req.NewType.Name = req_NewType_NameFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -75,9 +75,9 @@ func Retype(ctx context.Context, parent *cobra.Command, volumeService blockstora
 	
 	idFlag = flags.NewStrP(cmd, "id", "i", "", "")//CobraFlagsCreation
 	
-	req_NewType_NameFlag = flags.NewStrP(cmd, "new-type.name", "a", "", "")//CobraFlagsCreation
+	req_NewType_IDFlag = flags.NewStrP(cmd, "new-type.id", "a", "", "")//CobraFlagsCreation
 	
-	req_NewType_IDFlag = flags.NewStrP(cmd, "new-type.id", "b", "", "")//CobraFlagsCreation
+	req_NewType_NameFlag = flags.NewStrP(cmd, "new-type.name", "m", "", "")//CobraFlagsCreation
 	
 
 

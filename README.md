@@ -1,4 +1,4 @@
-🚀 MGC CLI - Command line tool for Magalu Cloud
+MGC CLI - Command line tool for Magalu Cloud
 
 MGC CLI is a powerful tool for managing resources in Magalu Cloud.
 To get started, use 'mgc --help' to see all available commands.
@@ -6,7 +6,7 @@ To get started, use 'mgc --help' to see all available commands.
 
 Available Commands:
 
-📦 Products:
+Products:
   audit               todo
   blockstorage        todo
   compute             todo
@@ -17,10 +17,10 @@ Available Commands:
   network             todo
   profile             todo
 
-📦 Settings:
+Settings:
   config              Configuração do CLI
 
-📦 Other commands:
+Other commands:
   completion          Generate the autocompletion script for the specified shell
   help                Help about any command
   i18n                Gerenciar idiomas da interface
