@@ -1,3 +1,4 @@
+![cli](cli.png)
 MGC CLI - Command line tool for Magalu Cloud
 
 MGC CLI is a powerful tool for managing resources in Magalu Cloud.
