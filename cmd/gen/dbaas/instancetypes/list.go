@@ -18,6 +18,8 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
@@ -28,6 +30,8 @@ func List(ctx context.Context, parent *cobra.Command, instanceTypeService dbaasS
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_StatusFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var opts_EngineIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -57,16 +61,30 @@ func List(ctx context.Context, parent *cobra.Command, instanceTypeService dbaasS
 				opts.Status = opts_StatusFlag.Value
 			}// CobraFlagsAssign
 			
+			if opts_EngineIDFlag.IsChanged() {
+				opts.EngineID = opts_EngineIDFlag.Value
+			}// CobraFlagsAssign
+			
 
 			instancetype, err := instanceTypeService.List(ctx, opts)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(instancetype, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
@@ -76,6 +94,8 @@ func List(ctx context.Context, parent *cobra.Command, instanceTypeService dbaasS
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_StatusFlag = flags.NewStrP(cmd, "status", "s", "", "")//CobraFlagsCreation
+	
+	opts_EngineIDFlag = flags.NewStrP(cmd, "engine-i-d", "e", "", "")//CobraFlagsCreation
 	
 
 

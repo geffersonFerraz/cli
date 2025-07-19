@@ -18,20 +18,22 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, networkCertificateService lbaasSdk.NetworkCertificateService) {
-	
-	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_CertificateFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_PrivateKeyFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -49,14 +51,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkCertificateServic
 
 			
 			
-			if req_LoadBalancerIDFlag.IsChanged() {
-				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_NameFlag.IsChanged() {
-				req.Name = *req_NameFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
@@ -69,40 +63,58 @@ func Create(ctx context.Context, parent *cobra.Command, networkCertificateServic
 				req.PrivateKey = *req_PrivateKeyFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_LoadBalancerIDFlag.IsChanged() {
+				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_NameFlag.IsChanged() {
+				req.Name = *req_NameFlag.Value
+			}// CobraFlagsAssign
+			
 
 			networktlscertificateresponse, err := networkCertificateService.Create(ctx, req)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(networktlscertificateresponse, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
 	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
-	
-	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
-	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "d", "", "")//CobraFlagsCreation
 	
 	req_CertificateFlag = flags.NewStrP(cmd, "certificate", "c", "", "")//CobraFlagsCreation
 	
 	req_PrivateKeyFlag = flags.NewStrP(cmd, "private-key", "p", "", "")//CobraFlagsCreation
 	
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
+	
+	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
+	
 
 
-	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
-	
-	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("certificate")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("private-key")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

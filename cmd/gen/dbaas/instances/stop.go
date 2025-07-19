@@ -18,6 +18,8 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
@@ -47,14 +49,24 @@ func Stop(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk.I
 			
 
 			instancedetail, err := instanceService.Stop(ctx, id)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(instancedetail, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	

@@ -16,6 +16,8 @@ import (
 	
 	flags "mgccli/cobra_utils/flags"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
@@ -53,9 +55,14 @@ func Rename(ctx context.Context, parent *cobra.Command, snapshotService computeS
 			
 
 			err := snapshotService.Rename(ctx, id, newName)
-						if err != nil {
-				fmt.Println(err.Error())
-			}
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 		},
 	}
 	

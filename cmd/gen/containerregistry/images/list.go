@@ -18,6 +18,8 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
@@ -27,13 +29,13 @@ func List(ctx context.Context, parent *cobra.Command, imagesService containerreg
 	
 	var repositoryNameFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var opts_ExpandFlag *flags.StrSliceFlag //CobraFlagsDefinition
+	
+	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
@@ -63,10 +65,6 @@ func List(ctx context.Context, parent *cobra.Command, imagesService containerreg
 				repositoryName = *repositoryNameFlag.Value
 			}// CobraFlagsAssign
 			
-			if opts_LimitFlag.IsChanged() {
-				opts.Limit = opts_LimitFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
@@ -79,16 +77,30 @@ func List(ctx context.Context, parent *cobra.Command, imagesService containerreg
 				opts.Expand = *opts_ExpandFlag.Value
 			}// CobraFlagsAssign
 			
+			if opts_LimitFlag.IsChanged() {
+				opts.Limit = opts_LimitFlag.Value
+			}// CobraFlagsAssign
+			
 
 			imagesresponse, err := imagesService.List(ctx, registryID, repositoryName, opts)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(imagesresponse, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
@@ -97,13 +109,13 @@ func List(ctx context.Context, parent *cobra.Command, imagesService containerreg
 	
 	repositoryNameFlag = flags.NewStrP(cmd, "repository-name", "e", "", "")//CobraFlagsCreation
 	
-	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
-	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
 	opts_ExpandFlag = flags.NewStrSliceP(cmd, "expand", "x", []string{}, "")//CobraFlagsCreation
+	
+	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 
 

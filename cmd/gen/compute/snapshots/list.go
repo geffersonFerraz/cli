@@ -18,10 +18,14 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, snapshotService computeSdk.SnapshotService) {
+	
+	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
@@ -30,8 +34,6 @@ func List(ctx context.Context, parent *cobra.Command, snapshotService computeSdk
 	var opts_ExpandFlag *flags.StrSliceFlag //CobraFlagsDefinition
 	
 	var opts_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
@@ -49,6 +51,10 @@ func List(ctx context.Context, parent *cobra.Command, snapshotService computeSdk
 
 			
 			
+			if opts_LimitFlag.IsChanged() {
+				opts.Limit = opts_LimitFlag.Value
+			}// CobraFlagsAssign
+			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
@@ -65,33 +71,39 @@ func List(ctx context.Context, parent *cobra.Command, snapshotService computeSdk
 				opts.Name = opts_NameFlag.Value
 			}// CobraFlagsAssign
 			
-			if opts_LimitFlag.IsChanged() {
-				opts.Limit = opts_LimitFlag.Value
-			}// CobraFlagsAssign
-			
 
 			snapshot, err := snapshotService.List(ctx, opts)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(snapshot, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
 	
-	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "o", 0, "Offset specifies the number of results to skip for pagination")//CobraFlagsCreation
+	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
-	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "Sort defines the field and direction for result ordering (e.g., \"name:asc\")")//CobraFlagsCreation
+	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
-	opts_ExpandFlag = flags.NewStrSliceP(cmd, "expand", "e", []string{}, "Expand lists related resources to include in the response")//CobraFlagsCreation
+	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
-	opts_NameFlag = flags.NewStrP(cmd, "name", "a", "", "Name filters listed resources based on name field")//CobraFlagsCreation
+	opts_ExpandFlag = flags.NewStrSliceP(cmd, "expand", "e", []string{}, "")//CobraFlagsCreation
 	
-	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "Limit specifies the maximum number of results to return (1-1000)")//CobraFlagsCreation
+	opts_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
 
 

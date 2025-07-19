@@ -16,6 +16,8 @@ import (
 	
 	flags "mgccli/cobra_utils/flags"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
@@ -53,16 +55,21 @@ func Copy(ctx context.Context, parent *cobra.Command, snapshotService computeSdk
 			
 
 			err := snapshotService.Copy(ctx, id, req)
-						if err != nil {
-				fmt.Println(err.Error())
-			}
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 		},
 	}
 	
 	
 	idFlag = flags.NewStrP(cmd, "id", "i", "", "")//CobraFlagsCreation
 	
-	req_DestinationRegionFlag = flags.NewStrP(cmd, "destination-region", "e", "", "")//CobraFlagsCreation
+	req_DestinationRegionFlag = flags.NewStrP(cmd, "destination-region", "e", "", "DestinationRegion is the region where the snapshot should be copied")//CobraFlagsCreation
 	
 
 

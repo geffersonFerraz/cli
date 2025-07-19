@@ -18,16 +18,18 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, volumeTypeService blockstorageSdk.VolumeTypeService) {
 	
+	var opts_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var opts_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var opts_AllowsEncryptionFlag *flags.BoolFlag //CobraFlagsDefinition
-	
-	var opts_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -45,6 +47,10 @@ func List(ctx context.Context, parent *cobra.Command, volumeTypeService blocksto
 
 			
 			
+			if opts_AvailabilityZoneFlag.IsChanged() {
+				opts.AvailabilityZone = *opts_AvailabilityZoneFlag.Value
+			}// CobraFlagsAssign
+			
 			if opts_NameFlag.IsChanged() {
 				opts.Name = *opts_NameFlag.Value
 			}// CobraFlagsAssign
@@ -53,36 +59,42 @@ func List(ctx context.Context, parent *cobra.Command, volumeTypeService blocksto
 				opts.AllowsEncryption = opts_AllowsEncryptionFlag.Value
 			}// CobraFlagsAssign
 			
-			if opts_AvailabilityZoneFlag.IsChanged() {
-				opts.AvailabilityZone = *opts_AvailabilityZoneFlag.Value
-			}// CobraFlagsAssign
-			
 
 			volumetype, err := volumeTypeService.List(ctx, opts)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(volumetype, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
 	
-	opts_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
+	opts_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "a", "", "")//CobraFlagsCreation
 	
-	opts_AllowsEncryptionFlag = flags.NewBoolP(cmd, "allows-encryption", "a", false, "")//CobraFlagsCreation
+	opts_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
 	
-	opts_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "v", "", "")//CobraFlagsCreation
+	opts_AllowsEncryptionFlag = flags.NewBoolP(cmd, "allows-encryption", "l", false, "")//CobraFlagsCreation
 	
 
 
-	
-	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("availability-zone")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

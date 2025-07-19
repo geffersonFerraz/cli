@@ -18,18 +18,20 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, networkBackendService lbaasSdk.NetworkBackendService) {
 	
-	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_HealthCheckIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -47,14 +49,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkBackendService lb
 
 			
 			
-			if req_NameFlag.IsChanged() {
-				req.Name = *req_NameFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_DescriptionFlag.IsChanged() {
-				req.Description = req_DescriptionFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_HealthCheckIDFlag.IsChanged() {
 				req.HealthCheckID = req_HealthCheckIDFlag.Value
 			}// CobraFlagsAssign
@@ -63,34 +57,52 @@ func Create(ctx context.Context, parent *cobra.Command, networkBackendService lb
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_NameFlag.IsChanged() {
+				req.Name = *req_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_DescriptionFlag.IsChanged() {
+				req.Description = req_DescriptionFlag.Value
+			}// CobraFlagsAssign
+			
 
 			result, err := networkBackendService.Create(ctx, req)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(result, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
-	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
-	
-	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-i-d", "a", "", "")//CobraFlagsCreation
+	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-i-d", "h", "", "")//CobraFlagsCreation
 	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
-
-
+	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("name")//CobraFlagsRequired
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
+	
+
+
 	
 	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

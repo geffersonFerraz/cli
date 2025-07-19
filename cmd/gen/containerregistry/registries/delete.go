@@ -16,6 +16,8 @@ import (
 	
 	flags "mgccli/cobra_utils/flags"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
@@ -45,9 +47,14 @@ func Delete(ctx context.Context, parent *cobra.Command, registriesService contai
 			
 
 			err := registriesService.Delete(ctx, registryID)
-						if err != nil {
-				fmt.Println(err.Error())
-			}
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 		},
 	}
 	

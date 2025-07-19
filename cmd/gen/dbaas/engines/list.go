@@ -18,16 +18,18 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, engineService dbaasSdk.EngineService) {
 	
+	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
+	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_StatusFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
@@ -45,6 +47,10 @@ func List(ctx context.Context, parent *cobra.Command, engineService dbaasSdk.Eng
 
 			
 			
+			if opts_OffsetFlag.IsChanged() {
+				opts.Offset = opts_OffsetFlag.Value
+			}// CobraFlagsAssign
+			
 			if opts_LimitFlag.IsChanged() {
 				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
@@ -53,29 +59,35 @@ func List(ctx context.Context, parent *cobra.Command, engineService dbaasSdk.Eng
 				opts.Status = opts_StatusFlag.Value
 			}// CobraFlagsAssign
 			
-			if opts_OffsetFlag.IsChanged() {
-				opts.Offset = opts_OffsetFlag.Value
-			}// CobraFlagsAssign
-			
 
 			enginedetail, err := engineService.List(ctx, opts)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(enginedetail, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
 	
+	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "o", 0, "")//CobraFlagsCreation
+	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_StatusFlag = flags.NewStrP(cmd, "status", "s", "", "")//CobraFlagsCreation
-	
-	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 
 

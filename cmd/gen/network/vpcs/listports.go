@@ -18,6 +18,8 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
@@ -27,11 +29,11 @@ func ListPorts(ctx context.Context, parent *cobra.Command, vPCService networkSdk
 	
 	var detailedFlag *flags.BoolFlag //CobraFlagsDefinition
 	
+	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
+	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
@@ -61,6 +63,10 @@ func ListPorts(ctx context.Context, parent *cobra.Command, vPCService networkSdk
 				detailed = *detailedFlag.Value
 			}// CobraFlagsAssign
 			
+			if opts_LimitFlag.IsChanged() {
+				opts.Limit = opts_LimitFlag.Value
+			}// CobraFlagsAssign
+			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
@@ -69,20 +75,26 @@ func ListPorts(ctx context.Context, parent *cobra.Command, vPCService networkSdk
 				opts.Sort = opts_SortFlag.Value
 			}// CobraFlagsAssign
 			
-			if opts_LimitFlag.IsChanged() {
-				opts.Limit = opts_LimitFlag.Value
-			}// CobraFlagsAssign
-			
 
 			portslist, err := vPCService.ListPorts(ctx, vpcID, detailed, opts)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(portslist, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
@@ -91,11 +103,11 @@ func ListPorts(ctx context.Context, parent *cobra.Command, vPCService networkSdk
 	
 	detailedFlag = flags.NewBoolP(cmd, "detailed", "e", false, "")//CobraFlagsCreation
 	
-	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "Offset specifies the number of items to skip")//CobraFlagsCreation
+	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
-	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "Sort specifies the field and direction for sorting results")//CobraFlagsCreation
+	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
-	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "Limit specifies the maximum number of items to return")//CobraFlagsCreation
+	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
 
 

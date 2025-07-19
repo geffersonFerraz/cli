@@ -18,20 +18,22 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.ImageService) {
-	
-	var opts_LabelsFlag *flags.StrSliceFlag //CobraFlagsDefinition
-	
-	var opts_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var opts_LabelsFlag *flags.StrSliceFlag //CobraFlagsDefinition
+	
+	var opts_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -49,14 +51,6 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 
 			
 			
-			if opts_LabelsFlag.IsChanged() {
-				opts.Labels = *opts_LabelsFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_AvailabilityZoneFlag.IsChanged() {
-				opts.AvailabilityZone = opts_AvailabilityZoneFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_LimitFlag.IsChanged() {
 				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
@@ -69,29 +63,47 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 				opts.Sort = opts_SortFlag.Value
 			}// CobraFlagsAssign
 			
+			if opts_LabelsFlag.IsChanged() {
+				opts.Labels = *opts_LabelsFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_AvailabilityZoneFlag.IsChanged() {
+				opts.AvailabilityZone = opts_AvailabilityZoneFlag.Value
+			}// CobraFlagsAssign
+			
 
 			image, err := imageService.List(ctx, opts)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(image, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
 	
-	opts_LabelsFlag = flags.NewStrSliceP(cmd, "labels", "l", []string{}, "Labels filters images by their labels")//CobraFlagsCreation
+	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
-	opts_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "a", "", "AvailabilityZone filters images by availability zone")//CobraFlagsCreation
+	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
-	opts_LimitFlag = flags.NewIntP(cmd, "limit", "i", 0, "Limit specifies the maximum number of results to return (default: 50)")//CobraFlagsCreation
+	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
-	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "Offset specifies the number of results to skip for pagination")//CobraFlagsCreation
+	opts_LabelsFlag = flags.NewStrSliceP(cmd, "labels", "a", []string{}, "")//CobraFlagsCreation
 	
-	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "Sort defines the field and direction for result ordering (default: \"platform:asc,end_life_at:desc\")")//CobraFlagsCreation
+	opts_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "v", "", "")//CobraFlagsCreation
 	
 
 

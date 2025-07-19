@@ -18,18 +18,20 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, networkListenerService lbaasSdk.NetworkListenerService) {
-	
-	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_SortFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -47,10 +49,6 @@ func List(ctx context.Context, parent *cobra.Command, networkListenerService lba
 
 			
 			
-			if req_LoadBalancerIDFlag.IsChanged() {
-				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_OffsetFlag.IsChanged() {
 				req.Offset = req_OffsetFlag.Value
 			}// CobraFlagsAssign
@@ -63,27 +61,41 @@ func List(ctx context.Context, parent *cobra.Command, networkListenerService lba
 				req.Sort = req_SortFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_LoadBalancerIDFlag.IsChanged() {
+				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
+			}// CobraFlagsAssign
+			
 
 			networklistenerresponse, err := networkListenerService.List(ctx, req)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(networklistenerresponse, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
 	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
+	req_OffsetFlag = flags.NewIntP(cmd, "offset", "o", 0, "")//CobraFlagsCreation
 	
-	req_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
-	
-	req_LimitFlag = flags.NewIntP(cmd, "limit", "i", 0, "")//CobraFlagsCreation
+	req_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	req_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
+	
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "a", "", "")//CobraFlagsCreation
 	
 
 

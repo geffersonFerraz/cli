@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"os"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -11,28 +10,46 @@ const logDebugFlag = "debug"
 const logDebugDef = "info+:*"
 
 func addLogDebugFlag(cmd *cobra.Command) {
-	cmd.Root().PersistentFlags().BoolP(
+	cmd.Root().PersistentFlags().String(
 		logDebugFlag,
-		"d",
-		false,
+		"info",
 		`Display detailed log information at the debug level`,
 	)
 }
 
-func getLogDebugFlag(cmd *cobra.Command) string {
-	if result, ok := cmd.Root().PersistentFlags().GetBool(logDebugFlag); ok == nil {
-		if result {
-			return getDebugLevelFromOS()
+func getLogDebugFlag(cmd *cobra.Command) int {
+	if result, ok := cmd.Root().PersistentFlags().GetString(logDebugFlag); ok == nil {
+		if result != "" {
+			return parseDebugLevel(result)
 		}
 	}
 
-	return ""
+	return LevelErrorLevel
 }
 
-func getDebugLevelFromOS() string {
-	if result := os.Getenv("MGC_SDK_LOG_DEBUG"); result != "" {
-		return strings.ToLower(result) + "+:*"
+const (
+	LevelDebug = "debug"
+	LevelInfo  = "info"
+	LevelWarn  = "warn"
+	LevelError = "error"
+
+	LevelDebugLevel = -4
+	LevelInfoLevel  = 0
+	LevelWarnLevel  = 4
+	LevelErrorLevel = 8
+)
+
+func parseDebugLevel(result string) int {
+	switch strings.ToLower(result) {
+	case LevelDebug:
+		return LevelDebugLevel
+	case LevelInfo:
+		return LevelInfoLevel
+	case LevelWarn:
+		return LevelWarnLevel
+	case LevelError:
+		return LevelErrorLevel
 	}
 
-	return logDebugDef
+	return LevelErrorLevel
 }

@@ -15,9 +15,8 @@ func (a APIKeyParameters) GetAPIKey() string {
 }
 
 func addApiKeyFlag(cmd *cobra.Command) {
-	cmd.Root().PersistentFlags().StringP(
+	cmd.Root().PersistentFlags().String(
 		apiKeyFlag,
-		"k",
 		"",
 		"Use your API key to authenticate with the API",
 	)

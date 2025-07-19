@@ -18,12 +18,16 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService networkSdk.VPCService) {
 	
 	var vpcIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_SubnetPoolIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -34,8 +38,6 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 	var req_IPVersionFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_DNSNameserversFlag *flags.StrSliceFlag //CobraFlagsDefinition
-	
-	var req_SubnetPoolIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var opts_ZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -63,6 +65,10 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 				vpcID = *vpcIDFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_SubnetPoolIDFlag.IsChanged() {
+				req.SubnetPoolID = req_SubnetPoolIDFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
@@ -83,29 +89,37 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 				req.DNSNameservers = req_DNSNameserversFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_SubnetPoolIDFlag.IsChanged() {
-				req.SubnetPoolID = req_SubnetPoolIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_ZoneFlag.IsChanged() {
 				opts.Zone = opts_ZoneFlag.Value
 			}// CobraFlagsAssign
 			
 
 			result, err := vPCService.CreateSubnet(ctx, vpcID, req, opts)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(result, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
 	
 	vpcIDFlag = flags.NewStrP(cmd, "vpc-i-d", "v", "", "")//CobraFlagsCreation
+	
+	req_SubnetPoolIDFlag = flags.NewStrP(cmd, "subnet-pool-i-d", "s", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
@@ -115,9 +129,7 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 	
 	req_IPVersionFlag = flags.NewIntP(cmd, "i-p-version", "i", 0, "")//CobraFlagsCreation
 	
-	req_DNSNameserversFlag = flags.NewStrSliceP(cmd, "d-n-s-nameservers", "s", []string{}, "")//CobraFlagsCreation
-	
-	req_SubnetPoolIDFlag = flags.NewStrP(cmd, "subnet-pool-i-d", "u", "", "")//CobraFlagsCreation
+	req_DNSNameserversFlag = flags.NewStrSliceP(cmd, "d-n-s-nameservers", "m", []string{}, "")//CobraFlagsCreation
 	
 	opts_ZoneFlag = flags.NewStrP(cmd, "zone", "z", "", "")//CobraFlagsCreation
 	

@@ -18,16 +18,18 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, keyService sshkeysSdk.KeyService) {
 	
-	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
@@ -45,10 +47,6 @@ func List(ctx context.Context, parent *cobra.Command, keyService sshkeysSdk.KeyS
 
 			
 			
-			if opts_LimitFlag.IsChanged() {
-				opts.Limit = opts_LimitFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
@@ -57,25 +55,39 @@ func List(ctx context.Context, parent *cobra.Command, keyService sshkeysSdk.KeyS
 				opts.Sort = opts_SortFlag.Value
 			}// CobraFlagsAssign
 			
+			if opts_LimitFlag.IsChanged() {
+				opts.Limit = opts_LimitFlag.Value
+			}// CobraFlagsAssign
+			
 
 			sshkey, err := keyService.List(ctx, opts)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(sshkey, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
 	
-	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "Limit specifies the maximum number of items to return")//CobraFlagsCreation
+	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "o", 0, "")//CobraFlagsCreation
 	
-	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "Offset specifies the number of items to skip")//CobraFlagsCreation
+	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
-	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "Sort defines the sort order for the results")//CobraFlagsCreation
+	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 
 

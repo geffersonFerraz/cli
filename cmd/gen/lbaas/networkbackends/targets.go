@@ -16,6 +16,8 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
@@ -37,10 +39,15 @@ func Targets(ctx context.Context, parent *cobra.Command, networkBackendService l
 			
 
 			networkbackendtargetservice := networkBackendService.Targets()
-			sdkResult, err := json.MarshalIndent(networkbackendtargetservice, "", "  ")
+						sdkResult, err := json.MarshalIndent(networkbackendtargetservice, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
 		},
 	}

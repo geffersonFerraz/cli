@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net/url"
 	"os"
@@ -9,11 +10,12 @@ import (
 	"strings"
 
 	"mgccli/cmd"
+	"mgccli/i18n"
 )
 
 var RawVersion string
 
-var Version string = func() string {
+var version string = func() string {
 	if RawVersion == "" {
 		return getVCSInfo("v0.0.0")
 	}
@@ -44,11 +46,45 @@ func getVCSInfo(version string) string {
 	return "v0.0.0 dev"
 }
 
-func main() {
-	// TODO: Implementar flag para desabilitar o panicRecover
-	// defer panicRecover()
+func getLang() string {
+	lang, err := os.LookupEnv("MGC_LANG")
+	if err {
+		return lang
+	}
+	return ""
+}
 
-	err := cmd.RootCmd().Execute()
+func getLangFromArgs(args []string) string {
+	for k, arg := range args {
+		if strings.HasPrefix(arg, "--lang=") {
+			return strings.TrimPrefix(arg, "--lang=")
+		}
+		if strings.HasPrefix(arg, "-l") {
+			return args[k+1]
+		}
+		if strings.HasPrefix(arg, "--lang") {
+			return args[k+1]
+		}
+	}
+	return ""
+}
+
+func main() {
+	panicOff := os.Getenv("MGC_PANIC_OFF")
+	if panicOff == "" {
+		defer panicRecover()
+	}
+	ctx := context.Background()
+
+	lang := getLang()
+	if lang == "" {
+		lang = getLangFromArgs(os.Args)
+	}
+
+	manager := i18n.GetInstance()
+	manager.SetLanguage(lang)
+
+	err := cmd.RootCmd(ctx, version, manager).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
 		os.Exit(1)
@@ -65,31 +101,40 @@ func panicRecover() {
 		query := url.Values{}
 		query.Add("title", fmt.Sprintf("Error report at '%s'", args))
 		query.Add("body", fmt.Sprintf("Version: %s\nSO: %s / %s\nArgs: %s\nError: %s\n",
-			Version,
+			version,
 			runtime.GOOS,
 			runtime.GOARCH,
 			args,
 			err))
 		Url = Url + "?" + query.Encode()
 
-		fmt.Fprintf(os.Stderr, `
-😔 Oops! Something went wrong.
-     Version: %s
-     SO: %s / %s  
-     Args: %s 
-     Error: %s
+		manager := i18n.GetInstance()
 
-Please help us improve by sending the error report to our repository:
+		fmt.Fprintf(os.Stderr, `
+😔 %s
+     %s: %s
+     %s: %s / %s  
+     %s: %s 
+     %s: %s
+
+%s
 	%s
 
-Thank you for your cooperation!
+%s
 `,
-			Version,
+			manager.T("cli.panic_message"),
+			manager.T("cli.version"),
+			version,
+			manager.T("cli.os"),
 			runtime.GOOS,
 			runtime.GOARCH,
+			manager.T("cli.args"),
 			args,
+			manager.T("cli.error"),
 			err,
-			Url)
+			manager.T("cli.panic_help"),
+			Url,
+			manager.T("cli.panic_thanks"))
 		os.Exit(1)
 	}
 }

@@ -5,9 +5,8 @@ import "github.com/spf13/cobra"
 const noConfirmationFlag = "no-confirm"
 
 func addNoConfirmationFlag(cmd *cobra.Command) {
-	cmd.Root().PersistentFlags().BoolP(
+	cmd.Root().PersistentFlags().Bool(
 		noConfirmationFlag,
-		"n",
 		false,
 		"Bypasses confirmation step for commands that ask a confirmation from the user",
 	)

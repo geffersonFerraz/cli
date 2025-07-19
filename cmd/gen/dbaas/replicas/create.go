@@ -18,16 +18,18 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.ReplicaService) {
 	
-	var req_SourceIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_InstanceTypeIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_SourceIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -45,10 +47,6 @@ func Create(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.
 
 			
 			
-			if req_SourceIDFlag.IsChanged() {
-				req.SourceID = *req_SourceIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
@@ -57,32 +55,46 @@ func Create(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.
 				req.InstanceTypeID = req_InstanceTypeIDFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_SourceIDFlag.IsChanged() {
+				req.SourceID = *req_SourceIDFlag.Value
+			}// CobraFlagsAssign
+			
 
 			replicaresponse, err := replicaService.Create(ctx, req)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(replicaresponse, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
 	
-	req_SourceIDFlag = flags.NewStrP(cmd, "source-i-d", "s", "", "")//CobraFlagsCreation
-	
-	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
+	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
 	
 	req_InstanceTypeIDFlag = flags.NewStrP(cmd, "instance-type-i-d", "i", "", "")//CobraFlagsCreation
 	
-
-
+	req_SourceIDFlag = flags.NewStrP(cmd, "source-i-d", "s", "", "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("source-i-d")//CobraFlagsRequired
+
+
 	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("source-i-d")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

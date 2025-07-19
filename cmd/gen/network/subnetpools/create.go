@@ -18,18 +18,20 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, subnetPoolService networkSdk.SubnetPoolService) {
-	
-	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_TypeFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_CIDRFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -47,10 +49,6 @@ func Create(ctx context.Context, parent *cobra.Command, subnetPoolService networ
 
 			
 			
-			if req_DescriptionFlag.IsChanged() {
-				req.Description = *req_DescriptionFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_TypeFlag.IsChanged() {
 				req.Type = req_TypeFlag.Value
 			}// CobraFlagsAssign
@@ -63,21 +61,33 @@ func Create(ctx context.Context, parent *cobra.Command, subnetPoolService networ
 				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_DescriptionFlag.IsChanged() {
+				req.Description = *req_DescriptionFlag.Value
+			}// CobraFlagsAssign
+			
 
 			result, err := subnetPoolService.Create(ctx, req)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(result, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
-	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "d", "", "")//CobraFlagsCreation
 	
 	req_TypeFlag = flags.NewStrP(cmd, "type", "t", "", "")//CobraFlagsCreation
 	
@@ -85,12 +95,14 @@ func Create(ctx context.Context, parent *cobra.Command, subnetPoolService networ
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
-
-
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("description")//CobraFlagsRequired
+
+
 	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("description")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

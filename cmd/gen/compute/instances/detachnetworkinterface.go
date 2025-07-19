@@ -16,18 +16,20 @@ import (
 	
 	flags "mgccli/cobra_utils/flags"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func DetachNetworkInterface(ctx context.Context, parent *cobra.Command, instanceService computeSdk.InstanceService) {
 	
-	var req_Network_Interface_IDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_Network_Interface_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_Instance_IDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_Instance_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_Network_Interface_IDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_Network_Interface_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -45,14 +47,6 @@ func DetachNetworkInterface(ctx context.Context, parent *cobra.Command, instance
 
 			
 			
-			if req_Network_Interface_IDFlag.IsChanged() {
-				req.Network.Interface.ID = req_Network_Interface_IDFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_Network_Interface_NameFlag.IsChanged() {
-				req.Network.Interface.Name = req_Network_Interface_NameFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_Instance_IDFlag.IsChanged() {
 				req.Instance.ID = req_Instance_IDFlag.Value
 			}// CobraFlagsAssign
@@ -61,22 +55,35 @@ func DetachNetworkInterface(ctx context.Context, parent *cobra.Command, instance
 				req.Instance.Name = req_Instance_NameFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_Network_Interface_IDFlag.IsChanged() {
+				req.Network.Interface.ID = req_Network_Interface_IDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_Network_Interface_NameFlag.IsChanged() {
+				req.Network.Interface.Name = req_Network_Interface_NameFlag.Value
+			}// CobraFlagsAssign
+			
 
 			err := instanceService.DetachNetworkInterface(ctx, req)
-						if err != nil {
-				fmt.Println(err.Error())
-			}
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 		},
 	}
 	
 	
-	req_Network_Interface_IDFlag = flags.NewStrP(cmd, "network.interface.id", "i", "", "")//CobraFlagsCreation
+	req_Instance_IDFlag = flags.NewStrP(cmd, "instance.id", "i", "", "")//CobraFlagsCreation
 	
-	req_Network_Interface_NameFlag = flags.NewStrP(cmd, "network.interface.name", "a", "", "")//CobraFlagsCreation
+	req_Instance_NameFlag = flags.NewStrP(cmd, "instance.name", "a", "", "")//CobraFlagsCreation
 	
-	req_Instance_IDFlag = flags.NewStrP(cmd, "instance.id", "b", "", "")//CobraFlagsCreation
+	req_Network_Interface_IDFlag = flags.NewStrP(cmd, "network.interface.id", "b", "", "")//CobraFlagsCreation
 	
-	req_Instance_NameFlag = flags.NewStrP(cmd, "instance.name", "m", "", "")//CobraFlagsCreation
+	req_Network_Interface_NameFlag = flags.NewStrP(cmd, "network.interface.name", "m", "", "")//CobraFlagsCreation
 	
 
 

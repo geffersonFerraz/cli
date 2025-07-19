@@ -16,6 +16,8 @@ import (
 	
 	flags "mgccli/cobra_utils/flags"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
@@ -53,16 +55,21 @@ func Update(ctx context.Context, parent *cobra.Command, portService networkSdk.P
 			
 
 			err := portService.Update(ctx, id, req)
-						if err != nil {
-				fmt.Println(err.Error())
-			}
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 		},
 	}
 	
 	
 	idFlag = flags.NewStrP(cmd, "id", "i", "", "")//CobraFlagsCreation
 	
-	req_IPSpoofingGuardFlag = flags.NewBoolP(cmd, "i-p-spoofing-guard", "p", false, "Allows spoofed packets to enter a port")//CobraFlagsCreation
+	req_IPSpoofingGuardFlag = flags.NewBoolP(cmd, "i-p-spoofing-guard", "p", false, "")//CobraFlagsCreation
 	
 
 

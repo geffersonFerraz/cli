@@ -16,6 +16,8 @@ import (
 	
 	flags "mgccli/cobra_utils/flags"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
@@ -23,9 +25,9 @@ func Retype(ctx context.Context, parent *cobra.Command, volumeService blockstora
 	
 	var idFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_NewType_IDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_NewType_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_NewType_IDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -49,28 +51,33 @@ func Retype(ctx context.Context, parent *cobra.Command, volumeService blockstora
 				id = *idFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_NewType_IDFlag.IsChanged() {
-				req.NewType.ID = req_NewType_IDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_NewType_NameFlag.IsChanged() {
 				req.NewType.Name = req_NewType_NameFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_NewType_IDFlag.IsChanged() {
+				req.NewType.ID = req_NewType_IDFlag.Value
+			}// CobraFlagsAssign
+			
 
 			err := volumeService.Retype(ctx, id, req)
-						if err != nil {
-				fmt.Println(err.Error())
-			}
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 		},
 	}
 	
 	
 	idFlag = flags.NewStrP(cmd, "id", "i", "", "")//CobraFlagsCreation
 	
-	req_NewType_IDFlag = flags.NewStrP(cmd, "new-type.id", "a", "", "")//CobraFlagsCreation
+	req_NewType_NameFlag = flags.NewStrP(cmd, "new-type.name", "a", "", "")//CobraFlagsCreation
 	
-	req_NewType_NameFlag = flags.NewStrP(cmd, "new-type.name", "m", "", "")//CobraFlagsCreation
+	req_NewType_IDFlag = flags.NewStrP(cmd, "new-type.id", "b", "", "")//CobraFlagsCreation
 	
 
 

@@ -18,12 +18,12 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, networkListenerService lbaasSdk.NetworkListenerService) {
-	
-	var req_PortFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -34,6 +34,8 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_PortFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
@@ -50,10 +52,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 			
 
 			
-			
-			if req_PortFlag.IsChanged() {
-				req.Port = *req_PortFlag.Value
-			}// CobraFlagsAssign
 			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
@@ -75,21 +73,33 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_PortFlag.IsChanged() {
+				req.Port = *req_PortFlag.Value
+			}// CobraFlagsAssign
+			
 
 			networklistenerresponse, err := networkListenerService.Create(ctx, req)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(networklistenerresponse, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
-	
-	req_PortFlag = flags.NewIntP(cmd, "port", "p", 0, "")//CobraFlagsCreation
 	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
@@ -101,16 +111,18 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
-
-
+	req_PortFlag = flags.NewIntP(cmd, "port", "p", 0, "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("port")//CobraFlagsRequired
+
+
 	
 	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("backend-i-d")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("port")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

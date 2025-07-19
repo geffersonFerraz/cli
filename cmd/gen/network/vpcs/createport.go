@@ -18,6 +18,8 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
@@ -25,15 +27,15 @@ func CreatePort(ctx context.Context, parent *cobra.Command, vPCService networkSd
 	
 	var vpcIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_SubnetsFlag *flags.StrSliceFlag //CobraFlagsDefinition
-	
-	var req_SecurityGroupsFlag *flags.StrSliceFlag //CobraFlagsDefinition
-	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_HasPIPFlag *flags.BoolFlag //CobraFlagsDefinition
 	
 	var req_HasSGFlag *flags.BoolFlag //CobraFlagsDefinition
+	
+	var req_SubnetsFlag *flags.StrSliceFlag //CobraFlagsDefinition
+	
+	var req_SecurityGroupsFlag *flags.StrSliceFlag //CobraFlagsDefinition
 	
 	var opts_ZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -61,14 +63,6 @@ func CreatePort(ctx context.Context, parent *cobra.Command, vPCService networkSd
 				vpcID = *vpcIDFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_SubnetsFlag.IsChanged() {
-				req.Subnets = req_SubnetsFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_SecurityGroupsFlag.IsChanged() {
-				req.SecurityGroups = req_SecurityGroupsFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
@@ -81,35 +75,53 @@ func CreatePort(ctx context.Context, parent *cobra.Command, vPCService networkSd
 				req.HasSG = req_HasSGFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_SubnetsFlag.IsChanged() {
+				req.Subnets = req_SubnetsFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_SecurityGroupsFlag.IsChanged() {
+				req.SecurityGroups = req_SecurityGroupsFlag.Value
+			}// CobraFlagsAssign
+			
 			if opts_ZoneFlag.IsChanged() {
 				opts.Zone = opts_ZoneFlag.Value
 			}// CobraFlagsAssign
 			
 
 			result, err := vPCService.CreatePort(ctx, vpcID, req, opts)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(result, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
 	
 	vpcIDFlag = flags.NewStrP(cmd, "vpc-i-d", "v", "", "")//CobraFlagsCreation
 	
-	req_SubnetsFlag = flags.NewStrSliceP(cmd, "subnets", "s", []string{}, "")//CobraFlagsCreation
-	
-	req_SecurityGroupsFlag = flags.NewStrSliceP(cmd, "security-groups", "e", []string{}, "")//CobraFlagsCreation
-	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
-	req_HasPIPFlag = flags.NewBoolP(cmd, "has-p-i-p", "p", false, "")//CobraFlagsCreation
+	req_HasPIPFlag = flags.NewBoolP(cmd, "has-p-i-p", "s", false, "")//CobraFlagsCreation
 	
 	req_HasSGFlag = flags.NewBoolP(cmd, "has-s-g", "g", false, "")//CobraFlagsCreation
+	
+	req_SubnetsFlag = flags.NewStrSliceP(cmd, "subnets", "u", []string{}, "")//CobraFlagsCreation
+	
+	req_SecurityGroupsFlag = flags.NewStrSliceP(cmd, "security-groups", "e", []string{}, "")//CobraFlagsCreation
 	
 	opts_ZoneFlag = flags.NewStrP(cmd, "zone", "z", "", "")//CobraFlagsCreation
 	

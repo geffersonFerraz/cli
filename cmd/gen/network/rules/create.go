@@ -18,12 +18,18 @@ import (
 	
 	"encoding/json"
 	
+	"mgccli/cmd_utils"
+	
 	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.RuleService) {
 	
 	var securityGroupIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_EtherTypeFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DirectionFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -34,10 +40,6 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 	var req_ProtocolFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_RemoteIPPrefixFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_EtherTypeFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -61,6 +63,14 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 				securityGroupID = *securityGroupIDFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_EtherTypeFlag.IsChanged() {
+				req.EtherType = *req_EtherTypeFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_DescriptionFlag.IsChanged() {
+				req.Description = req_DescriptionFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_DirectionFlag.IsChanged() {
 				req.Direction = req_DirectionFlag.Value
 			}// CobraFlagsAssign
@@ -81,29 +91,35 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 				req.RemoteIPPrefix = req_RemoteIPPrefixFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_EtherTypeFlag.IsChanged() {
-				req.EtherType = *req_EtherTypeFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_DescriptionFlag.IsChanged() {
-				req.Description = req_DescriptionFlag.Value
-			}// CobraFlagsAssign
-			
 
 			result, err := ruleService.Create(ctx, securityGroupID, req)
+			
+			if err != nil {
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			sdkResult, err := json.MarshalIndent(result, "", "  ")
+
 			if err != nil {
-				fmt.Println(err.Error())
-			}
+			msg, detail := cmdutils.ParseSDKError(err)
+					fmt.Println(msg)
+					fmt.Println(detail)
+					return
+				}
+			
 			fmt.Println(string(sdkResult))
-			if err != nil {
-				fmt.Println(err.Error())
-			}
 		},
 	}
 	
 	
 	securityGroupIDFlag = flags.NewStrP(cmd, "security-group-i-d", "s", "", "")//CobraFlagsCreation
+	
+	req_EtherTypeFlag = flags.NewStrP(cmd, "ether-type", "e", "", "")//CobraFlagsCreation
+	
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "c", "", "")//CobraFlagsCreation
 	
 	req_DirectionFlag = flags.NewStrP(cmd, "direction", "i", "", "")//CobraFlagsCreation
 	
@@ -111,13 +127,9 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 	
 	req_PortRangeMaxFlag = flags.NewIntP(cmd, "port-range-max", "t", 0, "")//CobraFlagsCreation
 	
-	req_ProtocolFlag = flags.NewStrP(cmd, "protocol", "c", "", "")//CobraFlagsCreation
+	req_ProtocolFlag = flags.NewStrP(cmd, "protocol", "l", "", "")//CobraFlagsCreation
 	
-	req_RemoteIPPrefixFlag = flags.NewStrP(cmd, "remote-i-p-prefix", "e", "", "")//CobraFlagsCreation
-	
-	req_EtherTypeFlag = flags.NewStrP(cmd, "ether-type", "y", "", "")//CobraFlagsCreation
-	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "a", "", "")//CobraFlagsCreation
+	req_RemoteIPPrefixFlag = flags.NewStrP(cmd, "remote-i-p-prefix", "m", "", "")//CobraFlagsCreation
 	
 
 
