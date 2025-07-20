@@ -31,6 +31,8 @@
     "i18n.translations_dir_not_found": "directorio de traducciones no encontrado: %s",
     "i18n.no_translation_files": "no se encontraron archivos de traducción en %s",
     "i18n.error_listing_files": "error al listar archivos de traducción: %w",
-    "i18n.error_loading_file": "error al cargar %s: %w"
+    "i18n.error_loading_file": "error al cargar %s: %w",
+    "cli.config.short": "Configuración",
+    "cli.config.long": "Gestionar configuración"
   }
 } 

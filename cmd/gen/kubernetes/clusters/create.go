@@ -25,8 +25,6 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, clusterService kubernetesSdk.ClusterService) {
 	
-	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_EnabledServerGroupFlag *flags.BoolFlag //CobraFlagsDefinition
 	
 	var req_NodePoolsFlag *flags.JSONArrayValue[kubernetesSdk.CreateNodePoolRequest] //CobraFlagsDefinition
@@ -40,6 +38,8 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_VersionFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -56,10 +56,6 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 			
 
 			
-			
-			if req_DescriptionFlag.IsChanged() {
-				req.Description = req_DescriptionFlag.Value
-			}// CobraFlagsAssign
 			
 			if req_EnabledServerGroupFlag.IsChanged() {
 				req.EnabledServerGroup = req_EnabledServerGroupFlag.Value
@@ -89,6 +85,10 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 				req.Version = req_VersionFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_DescriptionFlag.IsChanged() {
+				req.Description = req_DescriptionFlag.Value
+			}// CobraFlagsAssign
+			
 
 			createclusterresponse, err := clusterService.Create(ctx, req)
 			
@@ -113,8 +113,6 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 	}
 	
 	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "d", "", "")//CobraFlagsCreation
-	
 	req_EnabledServerGroupFlag = flags.NewBoolP(cmd, "enabled-server-group", "e", false, "")//CobraFlagsCreation
 	
 	req_NodePoolsFlag = flags.NewJSONArrayValueP[kubernetesSdk.CreateNodePoolRequest](cmd, "node-pools", "p", "",)//CobraFlagsCreation
@@ -128,6 +126,8 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 	req_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
 	
 	req_VersionFlag = flags.NewStrP(cmd, "version", "v", "", "")//CobraFlagsCreation
+	
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "i", "", "")//CobraFlagsCreation
 	
 
 

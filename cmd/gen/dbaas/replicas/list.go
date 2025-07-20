@@ -25,11 +25,11 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.ReplicaService) {
 	
-	var opts_SourceIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
+	
+	var opts_SourceIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -47,16 +47,16 @@ func List(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.Re
 
 			
 			
-			if opts_SourceIDFlag.IsChanged() {
-				opts.SourceID = opts_SourceIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
 			
 			if opts_LimitFlag.IsChanged() {
 				opts.Limit = opts_LimitFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_SourceIDFlag.IsChanged() {
+				opts.SourceID = opts_SourceIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -83,11 +83,11 @@ func List(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.Re
 	}
 	
 	
-	opts_SourceIDFlag = flags.NewStrP(cmd, "source-i-d", "s", "", "")//CobraFlagsCreation
-	
-	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
+	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "o", 0, "")//CobraFlagsCreation
 	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
+	
+	opts_SourceIDFlag = flags.NewStrP(cmd, "source-i-d", "s", "", "")//CobraFlagsCreation
 	
 
 

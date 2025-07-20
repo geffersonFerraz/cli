@@ -25,11 +25,11 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, networkACLService lbaasSdk.NetworkACLService) {
 	
+	var req_RemoteIPPrefixFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_RemoteIPPrefixFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -47,16 +47,16 @@ func Create(ctx context.Context, parent *cobra.Command, networkACLService lbaasS
 
 			
 			
+			if req_RemoteIPPrefixFlag.IsChanged() {
+				req.RemoteIPPrefix = *req_RemoteIPPrefixFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_NameFlag.IsChanged() {
 				req.Name = req_NameFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_RemoteIPPrefixFlag.IsChanged() {
-				req.RemoteIPPrefix = *req_RemoteIPPrefixFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -83,18 +83,18 @@ func Create(ctx context.Context, parent *cobra.Command, networkACLService lbaasS
 	}
 	
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
+	req_RemoteIPPrefixFlag = flags.NewStrP(cmd, "remote-i-p-prefix", "r", "", "")//CobraFlagsCreation
+	
+	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
-	req_RemoteIPPrefixFlag = flags.NewStrP(cmd, "remote-i-p-prefix", "e", "", "")//CobraFlagsCreation
-	
 
 
-	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("remote-i-p-prefix")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

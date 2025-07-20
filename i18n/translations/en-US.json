@@ -31,6 +31,8 @@
     "i18n.translations_dir_not_found": "translations directory not found: %s",
     "i18n.no_translation_files": "no translation files found in %s",
     "i18n.error_listing_files": "error listing translation files: %w",
-    "i18n.error_loading_file": "error loading %s: %w"
+    "i18n.error_loading_file": "error loading %s: %w",
+    "cli.config.short": "Configuration",
+    "cli.config.long": "Manage configuration"
   }
 } 

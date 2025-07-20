@@ -1,15 +1,19 @@
 package config
 
 import (
+	"mgccli/i18n"
+
 	sdk "github.com/MagaluCloud/mgc-sdk-go/client"
 	"github.com/spf13/cobra"
 )
 
 func ConfigCmd(parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
+	manager := i18n.GetInstance()
 	cmd := &cobra.Command{
 		Use:     "config",
-		Short:   "Configuração do CLI",
-		Long:    `Configuração do CLI`,
+		Short:   manager.T("cli.config.short"),
+		Long:    manager.T("cli.config.long"),
+		Aliases: []string{"cfg"},
 		GroupID: "settings",
 	}
 
