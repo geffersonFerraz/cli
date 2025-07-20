@@ -211,7 +211,7 @@ func beautifulPrint(cmd *cobra.Command) {
 		if cmd.HasAvailableSubCommands() {
 			fmt.Println()
 			footerColor := color.New(color.FgBlue, color.Italic)
-			footerColor.Printf("💡 "+manager.T("cli.help_more_info")+"\n", cmd.CommandPath())
+			footerColor.Printf(manager.T("cli.help_more_info")+"\n", cmd.CommandPath())
 		}
 	})
 

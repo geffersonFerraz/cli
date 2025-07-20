@@ -27,6 +27,8 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 	
 	var securityGroupIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var req_DirectionFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var req_PortRangeMinFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_PortRangeMaxFlag *flags.IntFlag //CobraFlagsDefinition
@@ -38,8 +40,6 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 	var req_EtherTypeFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_DirectionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -61,6 +61,10 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 			
 			if securityGroupIDFlag.IsChanged() {
 				securityGroupID = *securityGroupIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_DirectionFlag.IsChanged() {
+				req.Direction = req_DirectionFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_PortRangeMinFlag.IsChanged() {
@@ -85,10 +89,6 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_DirectionFlag.IsChanged() {
-				req.Direction = req_DirectionFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -117,6 +117,8 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 	
 	securityGroupIDFlag = flags.NewStrP(cmd, "security-group-i-d", "s", "", "")//CobraFlagsCreation
 	
+	req_DirectionFlag = flags.NewStrP(cmd, "direction", "i", "", "")//CobraFlagsCreation
+	
 	req_PortRangeMinFlag = flags.NewIntP(cmd, "port-range-min", "p", 0, "")//CobraFlagsCreation
 	
 	req_PortRangeMaxFlag = flags.NewIntP(cmd, "port-range-max", "t", 0, "")//CobraFlagsCreation
@@ -127,9 +129,7 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 	
 	req_EtherTypeFlag = flags.NewStrP(cmd, "ether-type", "y", "", "")//CobraFlagsCreation
 	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "i", "", "")//CobraFlagsCreation
-	
-	req_DirectionFlag = flags.NewStrP(cmd, "direction", "a", "", "")//CobraFlagsCreation
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "a", "", "")//CobraFlagsCreation
 	
 
 

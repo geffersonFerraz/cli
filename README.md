@@ -35,4 +35,4 @@ Local Flags:
   --raw             Output raw data, without any formatting or coloring
   --version         -v version for mgc
 
-💡 Use "mgc [command] --help" for more information about a command.
+Use "mgc [command] --help" for more information about a command.

@@ -25,8 +25,6 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.ImageService) {
 	
-	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var opts_LabelsFlag *flags.StrSliceFlag //CobraFlagsDefinition
@@ -34,6 +32,8 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 	var opts_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
+	
+	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
@@ -51,10 +51,6 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 
 			
 			
-			if opts_OffsetFlag.IsChanged() {
-				opts.Offset = opts_OffsetFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_SortFlag.IsChanged() {
 				opts.Sort = opts_SortFlag.Value
 			}// CobraFlagsAssign
@@ -69,6 +65,10 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 			
 			if opts_LimitFlag.IsChanged() {
 				opts.Limit = opts_LimitFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_OffsetFlag.IsChanged() {
+				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -95,8 +95,6 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 	}
 	
 	
-	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "o", 0, "")//CobraFlagsCreation
-	
 	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
 	opts_LabelsFlag = flags.NewStrSliceP(cmd, "labels", "l", []string{}, "")//CobraFlagsCreation
@@ -104,6 +102,8 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 	opts_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "a", "", "")//CobraFlagsCreation
 	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "i", 0, "")//CobraFlagsCreation
+	
+	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 
 

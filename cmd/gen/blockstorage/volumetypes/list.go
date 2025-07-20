@@ -25,11 +25,11 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, volumeTypeService blockstorageSdk.VolumeTypeService) {
 	
-	var opts_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var opts_AllowsEncryptionFlag *flags.BoolFlag //CobraFlagsDefinition
 	
 	var opts_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var opts_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -47,16 +47,16 @@ func List(ctx context.Context, parent *cobra.Command, volumeTypeService blocksto
 
 			
 			
-			if opts_NameFlag.IsChanged() {
-				opts.Name = *opts_NameFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_AllowsEncryptionFlag.IsChanged() {
 				opts.AllowsEncryption = opts_AllowsEncryptionFlag.Value
 			}// CobraFlagsAssign
 			
 			if opts_AvailabilityZoneFlag.IsChanged() {
 				opts.AvailabilityZone = *opts_AvailabilityZoneFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_NameFlag.IsChanged() {
+				opts.Name = *opts_NameFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -83,18 +83,18 @@ func List(ctx context.Context, parent *cobra.Command, volumeTypeService blocksto
 	}
 	
 	
-	opts_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
-	
 	opts_AllowsEncryptionFlag = flags.NewBoolP(cmd, "allows-encryption", "a", false, "")//CobraFlagsCreation
 	
 	opts_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "v", "", "")//CobraFlagsCreation
 	
-
-
+	opts_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("name")//CobraFlagsRequired
+
+
 	
 	cmd.MarkFlagRequired("availability-zone")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 
