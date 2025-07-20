@@ -25,8 +25,9 @@ import (
 func AuditCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
 	cmd := &cobra.Command{
 		Use:     "audit",
-		Short:   "todo",
+		Short:   "Events, EventTypes.",
 		Long:    `todo2`,
+		
 		GroupID: "products",
 	}
 

@@ -35,7 +35,7 @@ func BookCIDR(ctx context.Context, parent *cobra.Command, subnetPoolService netw
 
 	cmd := &cobra.Command{
 		Use:     "book-c-i-d-r",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

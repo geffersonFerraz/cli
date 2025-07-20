@@ -31,7 +31,7 @@ func GetKubeConfig(ctx context.Context, parent *cobra.Command, clusterService ku
 
 	cmd := &cobra.Command{
 		Use:     "get-kube-config",
-		Short:   "todo",
+		Short:   "Clusters, Flavors, Nodepools, Versions.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

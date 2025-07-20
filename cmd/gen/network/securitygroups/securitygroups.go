@@ -19,7 +19,7 @@ import (
 func SecurityGroupsCmd(ctx context.Context, parent *cobra.Command, securityGroupService networkSdk.SecurityGroupService) {
 	cmd := &cobra.Command{
 		Use:     "security-groups",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		
 	}

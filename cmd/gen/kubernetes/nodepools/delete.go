@@ -31,7 +31,7 @@ func Delete(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 
 	cmd := &cobra.Command{
 		Use:     "delete",
-		Short:   "todo",
+		Short:   "Clusters, Flavors, Nodepools, Versions.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

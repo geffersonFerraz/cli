@@ -19,7 +19,7 @@ import (
 func ClustersCmd(ctx context.Context, parent *cobra.Command, clusterService dbaasSdk.ClusterService) {
 	cmd := &cobra.Command{
 		Use:     "clusters",
-		Short:   "todo",
+		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
 		Long:    `todo2`,
 		
 	}

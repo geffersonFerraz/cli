@@ -29,8 +29,13 @@ import (
 func KubernetesCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
 	cmd := &cobra.Command{
 		Use:     "kubernetes",
-		Short:   "todo",
+		Short:   "Clusters, Flavors, Nodepools, Versions.",
 		Long:    `todo2`,
+		Aliases: []string{
+		//	
+		//	"k8s",
+	//		
+		},
 		GroupID: "products",
 	}
 

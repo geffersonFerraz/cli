@@ -37,7 +37,7 @@ func List(ctx context.Context, parent *cobra.Command, instanceTypeService comput
 
 	cmd := &cobra.Command{
 		Use:     "list",
-		Short:   "todo",
+		Short:   "Instances, Images, InstanceTypes, Snapshots.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

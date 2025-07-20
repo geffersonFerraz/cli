@@ -31,7 +31,7 @@ func Delete(ctx context.Context, parent *cobra.Command, instanceService computeS
 
 	cmd := &cobra.Command{
 		Use:     "delete",
-		Short:   "todo",
+		Short:   "Instances, Images, InstanceTypes, Snapshots.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

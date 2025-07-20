@@ -19,7 +19,7 @@ import (
 func NetworkLoadBalancersCmd(ctx context.Context, parent *cobra.Command, networkLoadBalancerService lbaasSdk.NetworkLoadBalancerService) {
 	cmd := &cobra.Command{
 		Use:     "network-load-balancers",
-		Short:   "todo",
+		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
 		Long:    `todo2`,
 		
 	}

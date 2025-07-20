@@ -33,7 +33,7 @@ func Update(ctx context.Context, parent *cobra.Command, clusterService kubernete
 
 	cmd := &cobra.Command{
 		Use:     "update",
-		Short:   "todo",
+		Short:   "Clusters, Flavors, Nodepools, Versions.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

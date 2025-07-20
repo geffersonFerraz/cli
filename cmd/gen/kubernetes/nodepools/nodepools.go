@@ -19,7 +19,7 @@ import (
 func NodepoolsCmd(ctx context.Context, parent *cobra.Command, nodePoolService kubernetesSdk.NodePoolService) {
 	cmd := &cobra.Command{
 		Use:     "nodepools",
-		Short:   "todo",
+		Short:   "Clusters, Flavors, Nodepools, Versions.",
 		Long:    `todo2`,
 		
 	}

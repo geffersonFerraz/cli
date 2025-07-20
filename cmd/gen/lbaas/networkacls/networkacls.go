@@ -19,7 +19,7 @@ import (
 func NetworkACLsCmd(ctx context.Context, parent *cobra.Command, networkACLService lbaasSdk.NetworkACLService) {
 	cmd := &cobra.Command{
 		Use:     "network-a-c-ls",
-		Short:   "todo",
+		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
 		Long:    `todo2`,
 		
 	}

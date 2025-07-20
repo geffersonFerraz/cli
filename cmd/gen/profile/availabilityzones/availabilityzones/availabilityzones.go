@@ -19,7 +19,7 @@ import (
 func AvailabilityZonesCmd(ctx context.Context, parent *cobra.Command, service availabilityzonesSdk.Service) {
 	cmd := &cobra.Command{
 		Use:     "availability-zones",
-		Short:   "todo",
+		Short:   "",
 		Long:    `todo2`,
 		
 	}

@@ -33,7 +33,7 @@ func Get(ctx context.Context, parent *cobra.Command, snapshotService computeSdk.
 
 	cmd := &cobra.Command{
 		Use:     "get",
-		Short:   "todo",
+		Short:   "Instances, Images, InstanceTypes, Snapshots.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

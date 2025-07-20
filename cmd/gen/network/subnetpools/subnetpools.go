@@ -19,7 +19,7 @@ import (
 func SubnetPoolsCmd(ctx context.Context, parent *cobra.Command, subnetPoolService networkSdk.SubnetPoolService) {
 	cmd := &cobra.Command{
 		Use:     "subnet-pools",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		
 	}

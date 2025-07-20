@@ -19,7 +19,7 @@ import (
 func NetworkBackendsCmd(ctx context.Context, parent *cobra.Command, networkBackendService lbaasSdk.NetworkBackendService) {
 	cmd := &cobra.Command{
 		Use:     "network-backends",
-		Short:   "todo",
+		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
 		Long:    `todo2`,
 		
 	}

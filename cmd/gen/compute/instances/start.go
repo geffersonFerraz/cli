@@ -29,7 +29,7 @@ func Start(ctx context.Context, parent *cobra.Command, instanceService computeSd
 
 	cmd := &cobra.Command{
 		Use:     "start",
-		Short:   "todo",
+		Short:   "Instances, Images, InstanceTypes, Snapshots.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

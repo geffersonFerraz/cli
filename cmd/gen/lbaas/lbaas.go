@@ -33,8 +33,13 @@ import (
 func LbaasCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
 	cmd := &cobra.Command{
 		Use:     "lbaas",
-		Short:   "todo",
+		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
 		Long:    `todo2`,
+		Aliases: []string{
+		//	
+		//	"load-balancer",
+	//		
+		},
 		GroupID: "products",
 	}
 

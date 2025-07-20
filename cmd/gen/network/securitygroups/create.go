@@ -25,17 +25,17 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, securityGroupService networkSdk.SecurityGroupService) {
 	
-	var req_SkipDefaultRulesFlag *flags.BoolFlag //CobraFlagsDefinition
-	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_SkipDefaultRulesFlag *flags.BoolFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -47,16 +47,16 @@ func Create(ctx context.Context, parent *cobra.Command, securityGroupService net
 
 			
 			
-			if req_SkipDefaultRulesFlag.IsChanged() {
-				req.SkipDefaultRules = req_SkipDefaultRulesFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_SkipDefaultRulesFlag.IsChanged() {
+				req.SkipDefaultRules = req_SkipDefaultRulesFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -83,11 +83,11 @@ func Create(ctx context.Context, parent *cobra.Command, securityGroupService net
 	}
 	
 	
-	req_SkipDefaultRulesFlag = flags.NewBoolP(cmd, "skip-default-rules", "s", false, "")//CobraFlagsCreation
-	
-	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
+	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
+	
+	req_SkipDefaultRulesFlag = flags.NewBoolP(cmd, "skip-default-rules", "s", false, "")//CobraFlagsCreation
 	
 
 

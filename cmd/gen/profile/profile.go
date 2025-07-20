@@ -14,26 +14,27 @@ import (
 	
 	"github.com/spf13/cobra"
 	
-	"mgccli/cmd/gen/profile/sshkeys"
-	
 	"mgccli/cmd/gen/profile/availabilityzones"
+	
+	"mgccli/cmd/gen/profile/sshkeys"
 	
 )
 
 func ProfileCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
 	cmd := &cobra.Command{
 		Use:     "profile",
-		Short:   "todo",
+		Short:   "Manage account settings, including SSH keys and related configurations.",
 		Long:    `todo2`,
+		
 		GroupID: "products",
 	}
 
     
 
 	
-	sshkeys.SshkeysCmd(ctx, cmd, sdkCoreConfig)
-	
 	availabilityzones.AvailabilityzonesCmd(ctx, cmd, sdkCoreConfig)
+	
+	sshkeys.SshkeysCmd(ctx, cmd, sdkCoreConfig)
 	
 
 	parent.AddCommand(cmd)

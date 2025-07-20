@@ -35,7 +35,7 @@ func Update(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk
 
 	cmd := &cobra.Command{
 		Use:     "update",
-		Short:   "todo",
+		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

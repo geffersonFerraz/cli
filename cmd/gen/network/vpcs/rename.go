@@ -31,7 +31,7 @@ func Rename(ctx context.Context, parent *cobra.Command, vPCService networkSdk.VP
 
 	cmd := &cobra.Command{
 		Use:     "rename",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

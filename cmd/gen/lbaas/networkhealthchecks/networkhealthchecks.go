@@ -19,7 +19,7 @@ import (
 func NetworkHealthChecksCmd(ctx context.Context, parent *cobra.Command, networkHealthCheckService lbaasSdk.NetworkHealthCheckService) {
 	cmd := &cobra.Command{
 		Use:     "network-health-checks",
-		Short:   "todo",
+		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
 		Long:    `todo2`,
 		
 	}

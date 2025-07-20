@@ -33,7 +33,7 @@ func CreatePublicIP(ctx context.Context, parent *cobra.Command, vPCService netwo
 
 	cmd := &cobra.Command{
 		Use:     "create-public-i-p",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

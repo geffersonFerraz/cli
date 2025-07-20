@@ -19,7 +19,7 @@ import (
 func InstanceTypesCmd(ctx context.Context, parent *cobra.Command, instanceTypeService computeSdk.InstanceTypeService) {
 	cmd := &cobra.Command{
 		Use:     "instance-types",
-		Short:   "todo",
+		Short:   "Instances, Images, InstanceTypes, Snapshots.",
 		Long:    `todo2`,
 		
 	}

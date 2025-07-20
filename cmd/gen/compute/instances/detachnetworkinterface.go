@@ -35,7 +35,7 @@ func DetachNetworkInterface(ctx context.Context, parent *cobra.Command, instance
 
 	cmd := &cobra.Command{
 		Use:     "detach-network-interface",
-		Short:   "todo",
+		Short:   "Instances, Images, InstanceTypes, Snapshots.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

@@ -19,7 +19,7 @@ import (
 func NetworkCertificatesCmd(ctx context.Context, parent *cobra.Command, networkCertificateService lbaasSdk.NetworkCertificateService) {
 	cmd := &cobra.Command{
 		Use:     "network-certificates",
-		Short:   "todo",
+		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
 		Long:    `todo2`,
 		
 	}

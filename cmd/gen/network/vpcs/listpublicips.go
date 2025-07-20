@@ -31,7 +31,7 @@ func ListPublicIPs(ctx context.Context, parent *cobra.Command, vPCService networ
 
 	cmd := &cobra.Command{
 		Use:     "list-public-i-ps",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

@@ -31,7 +31,7 @@ func Copy(ctx context.Context, parent *cobra.Command, snapshotService computeSdk
 
 	cmd := &cobra.Command{
 		Use:     "copy",
-		Short:   "todo",
+		Short:   "Instances, Images, InstanceTypes, Snapshots.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

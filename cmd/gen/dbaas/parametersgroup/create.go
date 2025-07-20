@@ -35,7 +35,7 @@ func Create(ctx context.Context, parent *cobra.Command, parameterGroupService db
 
 	cmd := &cobra.Command{
 		Use:     "create",
-		Short:   "todo",
+		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

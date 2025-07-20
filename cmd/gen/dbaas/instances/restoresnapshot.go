@@ -29,19 +29,19 @@ func RestoreSnapshot(ctx context.Context, parent *cobra.Command, instanceService
 	
 	var snapshotIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_InstanceTypeIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_BackupRetentionDaysFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_BackupStartAtFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var req_InstanceTypeIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	
 
 	cmd := &cobra.Command{
 		Use:     "restore-snapshot",
-		Short:   "todo",
+		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -65,10 +65,6 @@ func RestoreSnapshot(ctx context.Context, parent *cobra.Command, instanceService
 				snapshotID = *snapshotIDFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_InstanceTypeIDFlag.IsChanged() {
-				req.InstanceTypeID = *req_InstanceTypeIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_BackupRetentionDaysFlag.IsChanged() {
 				req.BackupRetentionDays = req_BackupRetentionDaysFlag.Value
 			}// CobraFlagsAssign
@@ -79,6 +75,10 @@ func RestoreSnapshot(ctx context.Context, parent *cobra.Command, instanceService
 			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_InstanceTypeIDFlag.IsChanged() {
+				req.InstanceTypeID = *req_InstanceTypeIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -109,13 +109,13 @@ func RestoreSnapshot(ctx context.Context, parent *cobra.Command, instanceService
 	
 	snapshotIDFlag = flags.NewStrP(cmd, "snapshot-i-d", "s", "", "")//CobraFlagsCreation
 	
-	req_InstanceTypeIDFlag = flags.NewStrP(cmd, "instance-type-i-d", "t", "", "")//CobraFlagsCreation
-	
 	req_BackupRetentionDaysFlag = flags.NewIntP(cmd, "backup-retention-days", "b", 0, "")//CobraFlagsCreation
 	
 	req_BackupStartAtFlag = flags.NewStrP(cmd, "backup-start-at", "a", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
+	
+	req_InstanceTypeIDFlag = flags.NewStrP(cmd, "instance-type-i-d", "t", "", "")//CobraFlagsCreation
 	
 
 
@@ -124,9 +124,9 @@ func RestoreSnapshot(ctx context.Context, parent *cobra.Command, instanceService
 	
 	cmd.MarkFlagRequired("snapshotID")//CobraFlagsRequired
 	
-	cmd.MarkFlagRequired("instance-type-i-d")//CobraFlagsRequired
-	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("instance-type-i-d")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

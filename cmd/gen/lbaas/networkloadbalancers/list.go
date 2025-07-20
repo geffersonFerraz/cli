@@ -35,7 +35,7 @@ func List(ctx context.Context, parent *cobra.Command, networkLoadBalancerService
 
 	cmd := &cobra.Command{
 		Use:     "list",
-		Short:   "todo",
+		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

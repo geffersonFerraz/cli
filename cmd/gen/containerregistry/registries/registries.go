@@ -19,7 +19,7 @@ import (
 func RegistriesCmd(ctx context.Context, parent *cobra.Command, registriesService containerregistrySdk.RegistriesService) {
 	cmd := &cobra.Command{
 		Use:     "registries",
-		Short:   "todo",
+		Short:   "Credentials, Registries, Repositories, Images.",
 		Long:    `todo2`,
 		
 	}

@@ -25,8 +25,6 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.ImageService) {
 	
-	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var opts_LabelsFlag *flags.StrSliceFlag //CobraFlagsDefinition
 	
 	var opts_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
@@ -35,11 +33,13 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
+	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list",
-		Short:   "todo",
+		Short:   "Instances, Images, InstanceTypes, Snapshots.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -50,10 +50,6 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 			
 
 			
-			
-			if opts_SortFlag.IsChanged() {
-				opts.Sort = opts_SortFlag.Value
-			}// CobraFlagsAssign
 			
 			if opts_LabelsFlag.IsChanged() {
 				opts.Labels = *opts_LabelsFlag.Value
@@ -69,6 +65,10 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_SortFlag.IsChanged() {
+				opts.Sort = opts_SortFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -95,8 +95,6 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 	}
 	
 	
-	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
-	
 	opts_LabelsFlag = flags.NewStrSliceP(cmd, "labels", "l", []string{}, "")//CobraFlagsCreation
 	
 	opts_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "a", "", "")//CobraFlagsCreation
@@ -104,6 +102,8 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "i", 0, "")//CobraFlagsCreation
 	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
+	
+	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
 
 

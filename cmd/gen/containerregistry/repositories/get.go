@@ -33,7 +33,7 @@ func Get(ctx context.Context, parent *cobra.Command, repositoriesService contain
 
 	cmd := &cobra.Command{
 		Use:     "get",
-		Short:   "todo",
+		Short:   "Credentials, Registries, Repositories, Images.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

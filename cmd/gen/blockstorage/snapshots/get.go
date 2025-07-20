@@ -33,7 +33,7 @@ func Get(ctx context.Context, parent *cobra.Command, snapshotService blockstorag
 
 	cmd := &cobra.Command{
 		Use:     "get",
-		Short:   "todo",
+		Short:   "Volumes, VolumeTypes, Snapshots.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

@@ -19,7 +19,7 @@ import (
 func ClustersCmd(ctx context.Context, parent *cobra.Command, clusterService kubernetesSdk.ClusterService) {
 	cmd := &cobra.Command{
 		Use:     "clusters",
-		Short:   "todo",
+		Short:   "Clusters, Flavors, Nodepools, Versions.",
 		Long:    `todo2`,
 		
 	}

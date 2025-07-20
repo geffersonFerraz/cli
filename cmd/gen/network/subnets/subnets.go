@@ -19,7 +19,7 @@ import (
 func SubnetsCmd(ctx context.Context, parent *cobra.Command, subnetService networkSdk.SubnetService) {
 	cmd := &cobra.Command{
 		Use:     "subnets",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		
 	}

@@ -33,7 +33,7 @@ func Get(ctx context.Context, parent *cobra.Command, networkListenerService lbaa
 
 	cmd := &cobra.Command{
 		Use:     "get",
-		Short:   "todo",
+		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

@@ -19,7 +19,7 @@ import (
 func VersionsCmd(ctx context.Context, parent *cobra.Command, versionService kubernetesSdk.VersionService) {
 	cmd := &cobra.Command{
 		Use:     "versions",
-		Short:   "todo",
+		Short:   "Clusters, Flavors, Nodepools, Versions.",
 		Long:    `todo2`,
 		
 	}

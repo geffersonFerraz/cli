@@ -19,7 +19,7 @@ import (
 func KeysCmd(ctx context.Context, parent *cobra.Command, keyService sshkeysSdk.KeyService) {
 	cmd := &cobra.Command{
 		Use:     "keys",
-		Short:   "todo",
+		Short:   "",
 		Long:    `todo2`,
 		
 	}

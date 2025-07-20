@@ -33,7 +33,7 @@ func Resize(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.
 
 	cmd := &cobra.Command{
 		Use:     "resize",
-		Short:   "todo",
+		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

@@ -31,7 +31,7 @@ func Start(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.R
 
 	cmd := &cobra.Command{
 		Use:     "start",
-		Short:   "todo",
+		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

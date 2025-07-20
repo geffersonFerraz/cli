@@ -35,8 +35,15 @@ import (
 func DbaasCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
 	cmd := &cobra.Command{
 		Use:     "dbaas",
-		Short:   "todo",
+		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
 		Long:    `todo2`,
+		Aliases: []string{
+		//	
+		//	"db",
+	//		
+		//	"database",
+	//		
+		},
 		GroupID: "products",
 	}
 

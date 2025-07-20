@@ -19,7 +19,7 @@ import (
 func InstancesCmd(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk.InstanceService) {
 	cmd := &cobra.Command{
 		Use:     "instances",
-		Short:   "todo",
+		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
 		Long:    `todo2`,
 		
 	}

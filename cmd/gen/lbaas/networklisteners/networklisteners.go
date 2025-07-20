@@ -19,7 +19,7 @@ import (
 func NetworkListenersCmd(ctx context.Context, parent *cobra.Command, networkListenerService lbaasSdk.NetworkListenerService) {
 	cmd := &cobra.Command{
 		Use:     "network-listeners",
-		Short:   "todo",
+		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
 		Long:    `todo2`,
 		
 	}

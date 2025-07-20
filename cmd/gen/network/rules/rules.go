@@ -19,7 +19,7 @@ import (
 func RulesCmd(ctx context.Context, parent *cobra.Command, ruleService networkSdk.RuleService) {
 	cmd := &cobra.Command{
 		Use:     "rules",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		
 	}

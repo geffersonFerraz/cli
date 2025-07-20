@@ -31,7 +31,7 @@ func Get(ctx context.Context, parent *cobra.Command, engineService dbaasSdk.Engi
 
 	cmd := &cobra.Command{
 		Use:     "get",
-		Short:   "todo",
+		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

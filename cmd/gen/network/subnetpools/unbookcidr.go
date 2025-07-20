@@ -31,7 +31,7 @@ func UnbookCIDR(ctx context.Context, parent *cobra.Command, subnetPoolService ne
 
 	cmd := &cobra.Command{
 		Use:     "unbook-c-i-d-r",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

@@ -19,7 +19,7 @@ import (
 func ImagesCmd(ctx context.Context, parent *cobra.Command, imagesService containerregistrySdk.ImagesService) {
 	cmd := &cobra.Command{
 		Use:     "images",
-		Short:   "todo",
+		Short:   "Credentials, Registries, Repositories, Images.",
 		Long:    `todo2`,
 		
 	}

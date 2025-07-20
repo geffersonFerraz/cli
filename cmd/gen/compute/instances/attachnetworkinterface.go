@@ -27,15 +27,15 @@ func AttachNetworkInterface(ctx context.Context, parent *cobra.Command, instance
 	
 	var req_Instance_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_Network_Interface_IDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_Network_Interface_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_Network_Interface_IDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "attach-network-interface",
-		Short:   "todo",
+		Short:   "Instances, Images, InstanceTypes, Snapshots.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -55,12 +55,12 @@ func AttachNetworkInterface(ctx context.Context, parent *cobra.Command, instance
 				req.Instance.Name = req_Instance_NameFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_Network_Interface_IDFlag.IsChanged() {
-				req.Network.Interface.ID = req_Network_Interface_IDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_Network_Interface_NameFlag.IsChanged() {
 				req.Network.Interface.Name = req_Network_Interface_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_Network_Interface_IDFlag.IsChanged() {
+				req.Network.Interface.ID = req_Network_Interface_IDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -81,9 +81,9 @@ func AttachNetworkInterface(ctx context.Context, parent *cobra.Command, instance
 	
 	req_Instance_NameFlag = flags.NewStrP(cmd, "instance.name", "a", "", "")//CobraFlagsCreation
 	
-	req_Network_Interface_IDFlag = flags.NewStrP(cmd, "network.interface.id", "b", "", "")//CobraFlagsCreation
-	
 	req_Network_Interface_NameFlag = flags.NewStrP(cmd, "network.interface.name", "m", "", "")//CobraFlagsCreation
+	
+	req_Network_Interface_IDFlag = flags.NewStrP(cmd, "network.interface.id", "b", "", "")//CobraFlagsCreation
 	
 
 

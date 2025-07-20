@@ -31,7 +31,7 @@ func DetachSecurityGroup(ctx context.Context, parent *cobra.Command, portService
 
 	cmd := &cobra.Command{
 		Use:     "detach-security-group",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

@@ -19,7 +19,7 @@ import (
 func ParametersCmd(ctx context.Context, parent *cobra.Command, parameterService dbaasSdk.ParameterService) {
 	cmd := &cobra.Command{
 		Use:     "parameters",
-		Short:   "todo",
+		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
 		Long:    `todo2`,
 		
 	}

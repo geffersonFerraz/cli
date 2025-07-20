@@ -28,9 +28,14 @@ import (
 
 func ContainerregistryCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
 	cmd := &cobra.Command{
-		Use:     "containerregistry",
-		Short:   "todo",
+		Use:     "container-registry",
+		Short:   "Credentials, Registries, Repositories, Images.",
 		Long:    `todo2`,
+		Aliases: []string{
+		//	
+		//	"cr",
+	//		
+		},
 		GroupID: "products",
 	}
 

@@ -19,7 +19,7 @@ import (
 func FlavorsCmd(ctx context.Context, parent *cobra.Command, flavorService kubernetesSdk.FlavorService) {
 	cmd := &cobra.Command{
 		Use:     "flavors",
-		Short:   "todo",
+		Short:   "Clusters, Flavors, Nodepools, Versions.",
 		Long:    `todo2`,
 		
 	}

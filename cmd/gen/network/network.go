@@ -37,8 +37,17 @@ import (
 func NetworkCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
 	cmd := &cobra.Command{
 		Use:     "network",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
+		Aliases: []string{
+		//	
+		//	"networks",
+	//		
+		//	"net",
+	//		
+		//	"vpc",
+	//		
+		},
 		GroupID: "products",
 	}
 

@@ -23,15 +23,15 @@ import (
 
 func Delete(ctx context.Context, parent *cobra.Command, networkListenerService lbaasSdk.NetworkListenerService) {
 	
-	var req_ListenerIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_ListenerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "delete",
-		Short:   "todo",
+		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -43,12 +43,12 @@ func Delete(ctx context.Context, parent *cobra.Command, networkListenerService l
 
 			
 			
-			if req_ListenerIDFlag.IsChanged() {
-				req.ListenerID = *req_ListenerIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_ListenerIDFlag.IsChanged() {
+				req.ListenerID = *req_ListenerIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -65,16 +65,16 @@ func Delete(ctx context.Context, parent *cobra.Command, networkListenerService l
 	}
 	
 	
-	req_ListenerIDFlag = flags.NewStrP(cmd, "listener-i-d", "l", "", "")//CobraFlagsCreation
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "a", "", "")//CobraFlagsCreation
+	req_ListenerIDFlag = flags.NewStrP(cmd, "listener-i-d", "i", "", "")//CobraFlagsCreation
 	
 
 
-	
-	cmd.MarkFlagRequired("listener-i-d")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("listener-i-d")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

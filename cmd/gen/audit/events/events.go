@@ -19,7 +19,7 @@ import (
 func EventsCmd(ctx context.Context, parent *cobra.Command, eventService auditSdk.EventService) {
 	cmd := &cobra.Command{
 		Use:     "events",
-		Short:   "todo",
+		Short:   "Events, EventTypes.",
 		Long:    `todo2`,
 		
 	}

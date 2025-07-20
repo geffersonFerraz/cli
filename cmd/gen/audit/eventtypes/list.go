@@ -35,7 +35,7 @@ func List(ctx context.Context, parent *cobra.Command, eventTypeService auditSdk.
 
 	cmd := &cobra.Command{
 		Use:     "list",
-		Short:   "todo",
+		Short:   "Events, EventTypes.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

@@ -27,8 +27,6 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 	
 	var vpcIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_SubnetPoolIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
@@ -39,13 +37,15 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 	
 	var req_DNSNameserversFlag *flags.StrSliceFlag //CobraFlagsDefinition
 	
+	var req_SubnetPoolIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var opts_ZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create-subnet",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -63,10 +63,6 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 			
 			if vpcIDFlag.IsChanged() {
 				vpcID = *vpcIDFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_SubnetPoolIDFlag.IsChanged() {
-				req.SubnetPoolID = req_SubnetPoolIDFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_NameFlag.IsChanged() {
@@ -87,6 +83,10 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 			
 			if req_DNSNameserversFlag.IsChanged() {
 				req.DNSNameservers = req_DNSNameserversFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_SubnetPoolIDFlag.IsChanged() {
+				req.SubnetPoolID = req_SubnetPoolIDFlag.Value
 			}// CobraFlagsAssign
 			
 			if opts_ZoneFlag.IsChanged() {
@@ -119,8 +119,6 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 	
 	vpcIDFlag = flags.NewStrP(cmd, "vpc-i-d", "v", "", "")//CobraFlagsCreation
 	
-	req_SubnetPoolIDFlag = flags.NewStrP(cmd, "subnet-pool-i-d", "s", "", "")//CobraFlagsCreation
-	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
@@ -129,7 +127,9 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 	
 	req_IPVersionFlag = flags.NewIntP(cmd, "i-p-version", "i", 0, "")//CobraFlagsCreation
 	
-	req_DNSNameserversFlag = flags.NewStrSliceP(cmd, "d-n-s-nameservers", "m", []string{}, "")//CobraFlagsCreation
+	req_DNSNameserversFlag = flags.NewStrSliceP(cmd, "d-n-s-nameservers", "s", []string{}, "")//CobraFlagsCreation
+	
+	req_SubnetPoolIDFlag = flags.NewStrP(cmd, "subnet-pool-i-d", "u", "", "")//CobraFlagsCreation
 	
 	opts_ZoneFlag = flags.NewStrP(cmd, "zone", "z", "", "")//CobraFlagsCreation
 	

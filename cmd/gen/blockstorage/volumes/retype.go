@@ -33,7 +33,7 @@ func Retype(ctx context.Context, parent *cobra.Command, volumeService blockstora
 
 	cmd := &cobra.Command{
 		Use:     "retype",
-		Short:   "todo",
+		Short:   "Volumes, VolumeTypes, Snapshots.",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

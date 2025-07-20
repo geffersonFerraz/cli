@@ -19,7 +19,7 @@ import (
 func ReplicasCmd(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.ReplicaService) {
 	cmd := &cobra.Command{
 		Use:     "replicas",
-		Short:   "todo",
+		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
 		Long:    `todo2`,
 		
 	}

@@ -27,7 +27,7 @@ func Targets(ctx context.Context, parent *cobra.Command, networkBackendService l
 
 	cmd := &cobra.Command{
 		Use:     "targets",
-		Short:   "todo",
+		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

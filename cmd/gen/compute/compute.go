@@ -28,9 +28,20 @@ import (
 
 func ComputeCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
 	cmd := &cobra.Command{
-		Use:     "compute",
-		Short:   "todo",
+		Use:     "virtual-machine",
+		Short:   "Instances, Images, InstanceTypes, Snapshots.",
 		Long:    `todo2`,
+		Aliases: []string{
+		//	
+		//	"vm",
+	//		
+		//	"virtual-machines",
+	//		
+		//	"vms",
+	//		
+		//	"compute",
+	//		
+		},
 		GroupID: "products",
 	}
 

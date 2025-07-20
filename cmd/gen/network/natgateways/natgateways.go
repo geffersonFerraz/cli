@@ -19,7 +19,7 @@ import (
 func NatGatewaysCmd(ctx context.Context, parent *cobra.Command, natGatewayService networkSdk.NatGatewayService) {
 	cmd := &cobra.Command{
 		Use:     "nat-gateways",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		
 	}

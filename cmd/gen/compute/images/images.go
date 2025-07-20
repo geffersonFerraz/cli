@@ -19,7 +19,7 @@ import (
 func ImagesCmd(ctx context.Context, parent *cobra.Command, imageService computeSdk.ImageService) {
 	cmd := &cobra.Command{
 		Use:     "images",
-		Short:   "todo",
+		Short:   "Instances, Images, InstanceTypes, Snapshots.",
 		Long:    `todo2`,
 		
 	}

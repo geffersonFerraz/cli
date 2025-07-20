@@ -31,7 +31,7 @@ func ListSubnets(ctx context.Context, parent *cobra.Command, vPCService networkS
 
 	cmd := &cobra.Command{
 		Use:     "list-subnets",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

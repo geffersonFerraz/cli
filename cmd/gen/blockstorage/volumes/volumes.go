@@ -19,7 +19,7 @@ import (
 func VolumesCmd(ctx context.Context, parent *cobra.Command, volumeService blockstorageSdk.VolumeService) {
 	cmd := &cobra.Command{
 		Use:     "volumes",
-		Short:   "todo",
+		Short:   "Volumes, VolumeTypes, Snapshots.",
 		Long:    `todo2`,
 		
 	}

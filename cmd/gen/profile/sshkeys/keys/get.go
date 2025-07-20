@@ -31,7 +31,7 @@ func Get(ctx context.Context, parent *cobra.Command, keyService sshkeysSdk.KeySe
 
 	cmd := &cobra.Command{
 		Use:     "get",
-		Short:   "todo",
+		Short:   "",
 		Long:    `todo2`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

@@ -19,7 +19,7 @@ import (
 func VPCsCmd(ctx context.Context, parent *cobra.Command, vPCService networkSdk.VPCService) {
 	cmd := &cobra.Command{
 		Use:     "v-p-cs",
-		Short:   "todo",
+		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `todo2`,
 		
 	}
