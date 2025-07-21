@@ -25,9 +25,9 @@ import (
 
 func Get(ctx context.Context, parent *cobra.Command, networkBackendService lbaasSdk.NetworkBackendService) {
 	
-	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_BackendIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -45,12 +45,12 @@ func Get(ctx context.Context, parent *cobra.Command, networkBackendService lbaas
 
 			
 			
-			if req_LoadBalancerIDFlag.IsChanged() {
-				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_BackendIDFlag.IsChanged() {
 				req.BackendID = *req_BackendIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_LoadBalancerIDFlag.IsChanged() {
+				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -77,16 +77,16 @@ func Get(ctx context.Context, parent *cobra.Command, networkBackendService lbaas
 	}
 	
 	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
-	
 	req_BackendIDFlag = flags.NewStrP(cmd, "backend-i-d", "b", "", "")//CobraFlagsCreation
 	
-
-
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
+
+
 	
 	cmd.MarkFlagRequired("backend-i-d")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

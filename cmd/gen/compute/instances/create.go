@@ -25,8 +25,6 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, instanceService computeSdk.InstanceService) {
 	
-	var req_LabelsFlag *flags.StrSliceFlag //CobraFlagsDefinition
-	
 	var req_MachineType_IDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_MachineType_NameFlag *flags.StrFlag //CobraFlagsDefinition
@@ -43,6 +41,8 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 	
 	var req_Image_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var req_LabelsFlag *flags.StrSliceFlag //CobraFlagsDefinition
+	
 	
 
 	cmd := &cobra.Command{
@@ -58,10 +58,6 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 			
 
 			
-			
-			if req_LabelsFlag.IsChanged() {
-				req.Labels = req_LabelsFlag.Value
-			}// CobraFlagsAssign
 			
 			if req_MachineType_IDFlag.IsChanged() {
 				req.MachineType.ID = req_MachineType_IDFlag.Value
@@ -95,6 +91,10 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 				req.Image.Name = req_Image_NameFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_LabelsFlag.IsChanged() {
+				req.Labels = req_LabelsFlag.Value
+			}// CobraFlagsAssign
+			
 
 			result, err := instanceService.Create(ctx, req)
 			
@@ -119,8 +119,6 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 	}
 	
 	
-	req_LabelsFlag = flags.NewStrSliceP(cmd, "labels", "l", []string{}, "")//CobraFlagsCreation
-	
 	req_MachineType_IDFlag = flags.NewStrP(cmd, "machine-type.id", "i", "", "")//CobraFlagsCreation
 	
 	req_MachineType_NameFlag = flags.NewStrP(cmd, "machine-type.name", "a", "", "")//CobraFlagsCreation
@@ -136,6 +134,8 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 	req_Image_IDFlag = flags.NewStrP(cmd, "image.id", "b", "", "")//CobraFlagsCreation
 	
 	req_Image_NameFlag = flags.NewStrP(cmd, "image.name", "e", "", "")//CobraFlagsCreation
+	
+	req_LabelsFlag = flags.NewStrSliceP(cmd, "labels", "l", []string{}, "")//CobraFlagsCreation
 	
 
 

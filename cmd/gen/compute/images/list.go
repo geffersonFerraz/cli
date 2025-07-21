@@ -25,15 +25,15 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.ImageService) {
 	
+	var opts_LabelsFlag *flags.StrSliceFlag //CobraFlagsDefinition
+	
+	var opts_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var opts_LabelsFlag *flags.StrSliceFlag //CobraFlagsDefinition
-	
-	var opts_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -51,6 +51,14 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 
 			
 			
+			if opts_LabelsFlag.IsChanged() {
+				opts.Labels = *opts_LabelsFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_AvailabilityZoneFlag.IsChanged() {
+				opts.AvailabilityZone = opts_AvailabilityZoneFlag.Value
+			}// CobraFlagsAssign
+			
 			if opts_LimitFlag.IsChanged() {
 				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
@@ -61,14 +69,6 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 			
 			if opts_SortFlag.IsChanged() {
 				opts.Sort = opts_SortFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_LabelsFlag.IsChanged() {
-				opts.Labels = *opts_LabelsFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_AvailabilityZoneFlag.IsChanged() {
-				opts.AvailabilityZone = opts_AvailabilityZoneFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -95,15 +95,15 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 	}
 	
 	
-	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
+	opts_LabelsFlag = flags.NewStrSliceP(cmd, "labels", "l", []string{}, "")//CobraFlagsCreation
+	
+	opts_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "a", "", "")//CobraFlagsCreation
+	
+	opts_LimitFlag = flags.NewIntP(cmd, "limit", "i", 0, "")//CobraFlagsCreation
 	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
-	
-	opts_LabelsFlag = flags.NewStrSliceP(cmd, "labels", "a", []string{}, "")//CobraFlagsCreation
-	
-	opts_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "v", "", "")//CobraFlagsCreation
 	
 
 

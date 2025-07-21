@@ -25,9 +25,9 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, vPCService networkSdk.VPCService) {
 	
-	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -45,12 +45,12 @@ func Create(ctx context.Context, parent *cobra.Command, vPCService networkSdk.VP
 
 			
 			
-			if req_DescriptionFlag.IsChanged() {
-				req.Description = req_DescriptionFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_DescriptionFlag.IsChanged() {
+				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -77,9 +77,9 @@ func Create(ctx context.Context, parent *cobra.Command, vPCService networkSdk.VP
 	}
 	
 	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "d", "", "")//CobraFlagsCreation
+	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
 
 

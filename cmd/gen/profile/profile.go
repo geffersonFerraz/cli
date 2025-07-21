@@ -14,9 +14,9 @@ import (
 	
 	"github.com/spf13/cobra"
 	
-	"mgccli/cmd/gen/profile/sshkeys"
-	
 	"mgccli/cmd/gen/profile/availabilityzones"
+	
+	"mgccli/cmd/gen/profile/sshkeys"
 	
 )
 
@@ -32,9 +32,9 @@ func ProfileCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.Co
     
 
 	
-	sshkeys.SshkeysCmd(ctx, cmd, sdkCoreConfig)
-	
 	availabilityzones.AvailabilityzonesCmd(ctx, cmd, sdkCoreConfig)
+	
+	sshkeys.SshkeysCmd(ctx, cmd, sdkCoreConfig)
 	
 
 	parent.AddCommand(cmd)

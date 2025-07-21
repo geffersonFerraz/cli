@@ -25,21 +25,21 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, eventService auditSdk.EventService) {
 	
-	var params_IDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var params_SourceLikeFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var params_TypeLikeFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var params_ProductLikeFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var params_DataFlag *flags.StrMapFlag //CobraFlagsDefinition
-	
 	var params_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var params_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
+	var params_TypeLikeFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var params_AuthIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var params_DataFlag *flags.StrMapFlag //CobraFlagsDefinition
+	
+	var params_IDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var params_SourceLikeFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var params_ProductLikeFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var params_TenantIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -59,26 +59,6 @@ func List(ctx context.Context, parent *cobra.Command, eventService auditSdk.Even
 
 			
 			
-			if params_IDFlag.IsChanged() {
-				params.ID = params_IDFlag.Value
-			}// CobraFlagsAssign
-			
-			if params_SourceLikeFlag.IsChanged() {
-				params.SourceLike = params_SourceLikeFlag.Value
-			}// CobraFlagsAssign
-			
-			if params_TypeLikeFlag.IsChanged() {
-				params.TypeLike = params_TypeLikeFlag.Value
-			}// CobraFlagsAssign
-			
-			if params_ProductLikeFlag.IsChanged() {
-				params.ProductLike = params_ProductLikeFlag.Value
-			}// CobraFlagsAssign
-			
-			if params_DataFlag.IsChanged() {
-				params.Data = *params_DataFlag.Value
-			}// CobraFlagsAssign
-			
 			if params_LimitFlag.IsChanged() {
 				params.Limit = params_LimitFlag.Value
 			}// CobraFlagsAssign
@@ -87,8 +67,28 @@ func List(ctx context.Context, parent *cobra.Command, eventService auditSdk.Even
 				params.Offset = params_OffsetFlag.Value
 			}// CobraFlagsAssign
 			
+			if params_TypeLikeFlag.IsChanged() {
+				params.TypeLike = params_TypeLikeFlag.Value
+			}// CobraFlagsAssign
+			
 			if params_AuthIDFlag.IsChanged() {
 				params.AuthID = params_AuthIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if params_DataFlag.IsChanged() {
+				params.Data = *params_DataFlag.Value
+			}// CobraFlagsAssign
+			
+			if params_IDFlag.IsChanged() {
+				params.ID = params_IDFlag.Value
+			}// CobraFlagsAssign
+			
+			if params_SourceLikeFlag.IsChanged() {
+				params.SourceLike = params_SourceLikeFlag.Value
+			}// CobraFlagsAssign
+			
+			if params_ProductLikeFlag.IsChanged() {
+				params.ProductLike = params_ProductLikeFlag.Value
 			}// CobraFlagsAssign
 			
 			if params_TenantIDFlag.IsChanged() {
@@ -119,21 +119,21 @@ func List(ctx context.Context, parent *cobra.Command, eventService auditSdk.Even
 	}
 	
 	
-	params_IDFlag = flags.NewStrP(cmd, "i-d", "i", "", "")//CobraFlagsCreation
-	
-	params_SourceLikeFlag = flags.NewStrP(cmd, "source-like", "s", "", "")//CobraFlagsCreation
-	
-	params_TypeLikeFlag = flags.NewStrP(cmd, "type-like", "t", "", "")//CobraFlagsCreation
-	
-	params_ProductLikeFlag = flags.NewStrP(cmd, "product-like", "p", "", "")//CobraFlagsCreation
-	
-	params_DataFlag = flags.NewStrMapP(cmd, "data", "a", map[string]string{}, "")//CobraFlagsCreation
-	
 	params_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	params_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
-	params_AuthIDFlag = flags.NewStrP(cmd, "auth-i-d", "u", "", "")//CobraFlagsCreation
+	params_TypeLikeFlag = flags.NewStrP(cmd, "type-like", "t", "", "")//CobraFlagsCreation
+	
+	params_AuthIDFlag = flags.NewStrP(cmd, "auth-i-d", "a", "", "")//CobraFlagsCreation
+	
+	params_DataFlag = flags.NewStrMapP(cmd, "data", "b", map[string]string{}, "")//CobraFlagsCreation
+	
+	params_IDFlag = flags.NewStrP(cmd, "i-d", "i", "", "")//CobraFlagsCreation
+	
+	params_SourceLikeFlag = flags.NewStrP(cmd, "source-like", "s", "", "")//CobraFlagsCreation
+	
+	params_ProductLikeFlag = flags.NewStrP(cmd, "product-like", "p", "", "")//CobraFlagsCreation
 	
 	params_TenantIDFlag = flags.NewStrP(cmd, "tenant-i-d", "e", "", "")//CobraFlagsCreation
 	
