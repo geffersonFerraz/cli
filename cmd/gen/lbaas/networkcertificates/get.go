@@ -25,9 +25,9 @@ import (
 
 func Get(ctx context.Context, parent *cobra.Command, networkCertificateService lbaasSdk.NetworkCertificateService) {
 	
-	var req_TLSCertificateIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_TLSCertificateIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -45,12 +45,12 @@ func Get(ctx context.Context, parent *cobra.Command, networkCertificateService l
 
 			
 			
-			if req_TLSCertificateIDFlag.IsChanged() {
-				req.TLSCertificateID = *req_TLSCertificateIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_TLSCertificateIDFlag.IsChanged() {
+				req.TLSCertificateID = *req_TLSCertificateIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -77,16 +77,16 @@ func Get(ctx context.Context, parent *cobra.Command, networkCertificateService l
 	}
 	
 	
-	req_TLSCertificateIDFlag = flags.NewStrP(cmd, "t-l-s-certificate-i-d", "t", "", "")//CobraFlagsCreation
-	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
-
-
+	req_TLSCertificateIDFlag = flags.NewStrP(cmd, "t-l-s-certificate-i-d", "t", "", "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("t-l-s-certificate-i-d")//CobraFlagsRequired
+
+
 	
 	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("t-l-s-certificate-i-d")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

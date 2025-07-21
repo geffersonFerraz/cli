@@ -25,6 +25,8 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, clusterService kubernetesSdk.ClusterService) {
 	
+	var req_EnabledServerGroupFlag *flags.BoolFlag //CobraFlagsDefinition
+	
 	var req_NodePoolsFlag *flags.JSONArrayValue[kubernetesSdk.CreateNodePoolRequest] //CobraFlagsDefinition
 	
 	var req_AllowedCIDRsFlag *flags.StrSliceFlag //CobraFlagsDefinition
@@ -38,8 +40,6 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 	var req_VersionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_EnabledServerGroupFlag *flags.BoolFlag //CobraFlagsDefinition
 	
 	
 
@@ -56,6 +56,10 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 			
 
 			
+			
+			if req_EnabledServerGroupFlag.IsChanged() {
+				req.EnabledServerGroup = req_EnabledServerGroupFlag.Value
+			}// CobraFlagsAssign
 			
 			if req_NodePoolsFlag.IsChanged() {
 				req.NodePools = req_NodePoolsFlag.Value
@@ -85,10 +89,6 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_EnabledServerGroupFlag.IsChanged() {
-				req.EnabledServerGroup = req_EnabledServerGroupFlag.Value
-			}// CobraFlagsAssign
-			
 
 			createclusterresponse, err := clusterService.Create(ctx, req)
 			
@@ -113,7 +113,9 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 	}
 	
 	
-	req_NodePoolsFlag = flags.NewJSONArrayValueP[kubernetesSdk.CreateNodePoolRequest](cmd, "node-pools", "n", "",)//CobraFlagsCreation
+	req_EnabledServerGroupFlag = flags.NewBoolP(cmd, "enabled-server-group", "e", false, "")//CobraFlagsCreation
+	
+	req_NodePoolsFlag = flags.NewJSONArrayValueP[kubernetesSdk.CreateNodePoolRequest](cmd, "node-pools", "p", "",)//CobraFlagsCreation
 	
 	req_AllowedCIDRsFlag = flags.NewStrSliceP(cmd, "allowed-c-i-d-rs", "a", []string{}, "")//CobraFlagsCreation
 	
@@ -125,9 +127,7 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 	
 	req_VersionFlag = flags.NewStrP(cmd, "version", "v", "", "")//CobraFlagsCreation
 	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
-	
-	req_EnabledServerGroupFlag = flags.NewBoolP(cmd, "enabled-server-group", "b", false, "")//CobraFlagsCreation
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "i", "", "")//CobraFlagsCreation
 	
 
 

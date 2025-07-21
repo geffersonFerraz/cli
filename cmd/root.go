@@ -21,7 +21,7 @@ import (
 
 func RootCmd(ctx context.Context, version string, manager *i18n.Manager) *cobra.Command {
 	var rootCmd = &cobra.Command{
-		Use:     "mgc",
+		Use:     "cli",
 		Short:   manager.T("cli.short_description"),
 		Long:    manager.T("cli.long_description"),
 		Version: version,

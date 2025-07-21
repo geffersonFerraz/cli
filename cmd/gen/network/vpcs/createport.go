@@ -27,15 +27,15 @@ func CreatePort(ctx context.Context, parent *cobra.Command, vPCService networkSd
 	
 	var vpcIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_HasPIPFlag *flags.BoolFlag //CobraFlagsDefinition
+	
 	var req_HasSGFlag *flags.BoolFlag //CobraFlagsDefinition
 	
 	var req_SubnetsFlag *flags.StrSliceFlag //CobraFlagsDefinition
 	
 	var req_SecurityGroupsFlag *flags.StrSliceFlag //CobraFlagsDefinition
-	
-	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_HasPIPFlag *flags.BoolFlag //CobraFlagsDefinition
 	
 	var opts_ZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -63,6 +63,14 @@ func CreatePort(ctx context.Context, parent *cobra.Command, vPCService networkSd
 				vpcID = *vpcIDFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_NameFlag.IsChanged() {
+				req.Name = *req_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_HasPIPFlag.IsChanged() {
+				req.HasPIP = req_HasPIPFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_HasSGFlag.IsChanged() {
 				req.HasSG = req_HasSGFlag.Value
 			}// CobraFlagsAssign
@@ -73,14 +81,6 @@ func CreatePort(ctx context.Context, parent *cobra.Command, vPCService networkSd
 			
 			if req_SecurityGroupsFlag.IsChanged() {
 				req.SecurityGroups = req_SecurityGroupsFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_NameFlag.IsChanged() {
-				req.Name = *req_NameFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_HasPIPFlag.IsChanged() {
-				req.HasPIP = req_HasPIPFlag.Value
 			}// CobraFlagsAssign
 			
 			if opts_ZoneFlag.IsChanged() {
@@ -113,15 +113,15 @@ func CreatePort(ctx context.Context, parent *cobra.Command, vPCService networkSd
 	
 	vpcIDFlag = flags.NewStrP(cmd, "vpc-i-d", "v", "", "")//CobraFlagsCreation
 	
-	req_HasSGFlag = flags.NewBoolP(cmd, "has-s-g", "a", false, "")//CobraFlagsCreation
+	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
-	req_SubnetsFlag = flags.NewStrSliceP(cmd, "subnets", "s", []string{}, "")//CobraFlagsCreation
+	req_HasPIPFlag = flags.NewBoolP(cmd, "has-p-i-p", "s", false, "")//CobraFlagsCreation
+	
+	req_HasSGFlag = flags.NewBoolP(cmd, "has-s-g", "g", false, "")//CobraFlagsCreation
+	
+	req_SubnetsFlag = flags.NewStrSliceP(cmd, "subnets", "u", []string{}, "")//CobraFlagsCreation
 	
 	req_SecurityGroupsFlag = flags.NewStrSliceP(cmd, "security-groups", "e", []string{}, "")//CobraFlagsCreation
-	
-	req_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
-	
-	req_HasPIPFlag = flags.NewBoolP(cmd, "has-p-i-p", "p", false, "")//CobraFlagsCreation
 	
 	opts_ZoneFlag = flags.NewStrP(cmd, "zone", "z", "", "")//CobraFlagsCreation
 	

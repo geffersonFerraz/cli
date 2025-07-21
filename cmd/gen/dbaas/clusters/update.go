@@ -27,11 +27,11 @@ func Update(ctx context.Context, parent *cobra.Command, clusterService dbaasSdk.
 	
 	var IDFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_ParameterGroupIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_BackupRetentionDaysFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_BackupStartAtFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_ParameterGroupIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -55,16 +55,16 @@ func Update(ctx context.Context, parent *cobra.Command, clusterService dbaasSdk.
 				ID = *IDFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_ParameterGroupIDFlag.IsChanged() {
-				req.ParameterGroupID = req_ParameterGroupIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_BackupRetentionDaysFlag.IsChanged() {
 				req.BackupRetentionDays = req_BackupRetentionDaysFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_BackupStartAtFlag.IsChanged() {
 				req.BackupStartAt = req_BackupStartAtFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_ParameterGroupIDFlag.IsChanged() {
+				req.ParameterGroupID = req_ParameterGroupIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -93,11 +93,11 @@ func Update(ctx context.Context, parent *cobra.Command, clusterService dbaasSdk.
 	
 	IDFlag = flags.NewStrP(cmd, "i-d", "i", "", "")//CobraFlagsCreation
 	
-	req_ParameterGroupIDFlag = flags.NewStrP(cmd, "parameter-group-i-d", "p", "", "")//CobraFlagsCreation
-	
 	req_BackupRetentionDaysFlag = flags.NewIntP(cmd, "backup-retention-days", "b", 0, "")//CobraFlagsCreation
 	
 	req_BackupStartAtFlag = flags.NewStrP(cmd, "backup-start-at", "a", "", "")//CobraFlagsCreation
+	
+	req_ParameterGroupIDFlag = flags.NewStrP(cmd, "parameter-group-i-d", "p", "", "")//CobraFlagsCreation
 	
 
 

@@ -23,6 +23,12 @@ import (
 
 func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerService lbaasSdk.NetworkLoadBalancerService) {
 	
+	var req_TLSCertificatesFlag *flags.JSONArrayValue[lbaasSdk.NetworkTLSCertificateUpdateRequest] //CobraFlagsDefinition
+	
+	var req_PanicThresholdFlag *flags.IntFlag //CobraFlagsDefinition
+	
+	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
@@ -30,12 +36,6 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	var req_BackendsFlag *flags.JSONArrayValue[lbaasSdk.NetworkBackendUpdateRequest] //CobraFlagsDefinition
 	
 	var req_HealthChecksFlag *flags.JSONArrayValue[lbaasSdk.NetworkHealthCheckUpdateRequest] //CobraFlagsDefinition
-	
-	var req_TLSCertificatesFlag *flags.JSONArrayValue[lbaasSdk.NetworkTLSCertificateUpdateRequest] //CobraFlagsDefinition
-	
-	var req_PanicThresholdFlag *flags.IntFlag //CobraFlagsDefinition
-	
-	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -53,6 +53,18 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 
 			
 			
+			if req_TLSCertificatesFlag.IsChanged() {
+				req.TLSCertificates = *req_TLSCertificatesFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_PanicThresholdFlag.IsChanged() {
+				req.PanicThreshold = req_PanicThresholdFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_LoadBalancerIDFlag.IsChanged() {
+				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_NameFlag.IsChanged() {
 				req.Name = req_NameFlag.Value
 			}// CobraFlagsAssign
@@ -69,18 +81,6 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 				req.HealthChecks = *req_HealthChecksFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_TLSCertificatesFlag.IsChanged() {
-				req.TLSCertificates = *req_TLSCertificatesFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_PanicThresholdFlag.IsChanged() {
-				req.PanicThreshold = req_PanicThresholdFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_LoadBalancerIDFlag.IsChanged() {
-				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
-			}// CobraFlagsAssign
-			
 
 			err := networkLoadBalancerService.Update(ctx, req)
 			
@@ -95,19 +95,19 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	}
 	
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
-	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
-	
-	req_BackendsFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkBackendUpdateRequest](cmd, "backends", "b", "",)//CobraFlagsCreation
-	
-	req_HealthChecksFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkHealthCheckUpdateRequest](cmd, "health-checks", "a", "",)//CobraFlagsCreation
-	
 	req_TLSCertificatesFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkTLSCertificateUpdateRequest](cmd, "t-l-s-certificates", "t", "",)//CobraFlagsCreation
 	
 	req_PanicThresholdFlag = flags.NewIntP(cmd, "panic-threshold", "p", 0, "")//CobraFlagsCreation
 	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
+	
+	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
+	
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
+	
+	req_BackendsFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkBackendUpdateRequest](cmd, "backends", "b", "",)//CobraFlagsCreation
+	
+	req_HealthChecksFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkHealthCheckUpdateRequest](cmd, "health-checks", "c", "",)//CobraFlagsCreation
 	
 
 

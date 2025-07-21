@@ -27,11 +27,11 @@ func List(ctx context.Context, parent *cobra.Command, natGatewayService networkS
 	
 	var vpcIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
-	
-	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -55,16 +55,16 @@ func List(ctx context.Context, parent *cobra.Command, natGatewayService networkS
 				vpcID = *vpcIDFlag.Value
 			}// CobraFlagsAssign
 			
+			if opts_SortFlag.IsChanged() {
+				opts.Sort = opts_SortFlag.Value
+			}// CobraFlagsAssign
+			
 			if opts_LimitFlag.IsChanged() {
 				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
 			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_SortFlag.IsChanged() {
-				opts.Sort = opts_SortFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -93,11 +93,11 @@ func List(ctx context.Context, parent *cobra.Command, natGatewayService networkS
 	
 	vpcIDFlag = flags.NewStrP(cmd, "vpc-i-d", "v", "", "")//CobraFlagsCreation
 	
+	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
+	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
-	
-	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
 
 
