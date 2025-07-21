@@ -20,7 +20,7 @@ func EventsCmd(ctx context.Context, parent *cobra.Command, eventService auditSdk
 	cmd := &cobra.Command{
 		Use:     "events",
 		Short:   "Events, EventTypes.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

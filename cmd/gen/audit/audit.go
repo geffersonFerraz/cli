@@ -26,7 +26,7 @@ func AuditCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.Core
 	cmd := &cobra.Command{
 		Use:     "audit",
 		Short:   "Events, EventTypes.",
-		Long:    `todo2`,
+		Long:    `menu.LongDescription 3`,
 		
 		GroupID: "products",
 	}

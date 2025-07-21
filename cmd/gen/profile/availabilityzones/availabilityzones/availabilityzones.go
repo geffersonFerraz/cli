@@ -20,7 +20,7 @@ func AvailabilityZonesCmd(ctx context.Context, parent *cobra.Command, service av
 	cmd := &cobra.Command{
 		Use:     "availability-zones",
 		Short:   "",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

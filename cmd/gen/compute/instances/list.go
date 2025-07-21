@@ -25,6 +25,8 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, instanceService computeSdk.InstanceService) {
 	
+	var opts_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
@@ -33,14 +35,12 @@ func List(ctx context.Context, parent *cobra.Command, instanceService computeSdk
 	
 	var opts_ExpandFlag *flags.StrSliceFlag //CobraFlagsDefinition
 	
-	var opts_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "Instances, Images, InstanceTypes, Snapshots.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			
@@ -50,6 +50,10 @@ func List(ctx context.Context, parent *cobra.Command, instanceService computeSdk
 			
 
 			
+			
+			if opts_NameFlag.IsChanged() {
+				opts.Name = opts_NameFlag.Value
+			}// CobraFlagsAssign
 			
 			if opts_LimitFlag.IsChanged() {
 				opts.Limit = opts_LimitFlag.Value
@@ -65,10 +69,6 @@ func List(ctx context.Context, parent *cobra.Command, instanceService computeSdk
 			
 			if opts_ExpandFlag.IsChanged() {
 				opts.Expand = *opts_ExpandFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_NameFlag.IsChanged() {
-				opts.Name = opts_NameFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -95,6 +95,8 @@ func List(ctx context.Context, parent *cobra.Command, instanceService computeSdk
 	}
 	
 	
+	opts_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
+	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
@@ -102,8 +104,6 @@ func List(ctx context.Context, parent *cobra.Command, instanceService computeSdk
 	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
 	opts_ExpandFlag = flags.NewStrSliceP(cmd, "expand", "e", []string{}, "")//CobraFlagsCreation
-	
-	opts_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
 
 

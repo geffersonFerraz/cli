@@ -34,7 +34,7 @@ func GetSnapshot(ctx context.Context, parent *cobra.Command, instanceService dba
 	cmd := &cobra.Command{
 		Use:     "get-snapshot",
 		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

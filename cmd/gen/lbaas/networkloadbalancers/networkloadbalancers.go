@@ -20,7 +20,7 @@ func NetworkLoadBalancersCmd(ctx context.Context, parent *cobra.Command, network
 	cmd := &cobra.Command{
 		Use:     "network-load-balancers",
 		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

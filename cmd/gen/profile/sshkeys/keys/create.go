@@ -34,7 +34,7 @@ func Create(ctx context.Context, parent *cobra.Command, keyService sshkeysSdk.Ke
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

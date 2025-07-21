@@ -20,7 +20,7 @@ func InstanceTypesCmd(ctx context.Context, parent *cobra.Command, instanceTypeSe
 	cmd := &cobra.Command{
 		Use:     "instance-types",
 		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

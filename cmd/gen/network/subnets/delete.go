@@ -30,7 +30,7 @@ func Delete(ctx context.Context, parent *cobra.Command, subnetService networkSdk
 	cmd := &cobra.Command{
 		Use:     "delete",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

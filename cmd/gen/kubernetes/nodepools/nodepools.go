@@ -20,7 +20,7 @@ func NodepoolsCmd(ctx context.Context, parent *cobra.Command, nodePoolService ku
 	cmd := &cobra.Command{
 		Use:     "nodepools",
 		Short:   "Clusters, Flavors, Nodepools, Versions.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

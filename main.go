@@ -95,7 +95,7 @@ func panicRecover() {
 	err := recover()
 	if err != nil {
 
-		Url := "https://github.com/MagaluCloud/mgccli/issues/new"
+		Url := "https://github.com/geffersonFerraz/cli/issues/new"
 		args := strings.Join(os.Args, " ")
 
 		query := url.Values{}

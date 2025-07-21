@@ -20,7 +20,7 @@ func ParametersCmd(ctx context.Context, parent *cobra.Command, parameterService 
 	cmd := &cobra.Command{
 		Use:     "parameters",
 		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

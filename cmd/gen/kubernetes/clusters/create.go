@@ -25,14 +25,6 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, clusterService kubernetesSdk.ClusterService) {
 	
-	var req_EnabledServerGroupFlag *flags.BoolFlag //CobraFlagsDefinition
-	
-	var req_NodePoolsFlag *flags.JSONArrayValue[kubernetesSdk.CreateNodePoolRequest] //CobraFlagsDefinition
-	
-	var req_AllowedCIDRsFlag *flags.StrSliceFlag //CobraFlagsDefinition
-	
-	var req_ServicesIpV4CIDRFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_ClusterIPv4CIDRFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
@@ -41,12 +33,20 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var req_EnabledServerGroupFlag *flags.BoolFlag //CobraFlagsDefinition
+	
+	var req_NodePoolsFlag *flags.JSONArrayValue[kubernetesSdk.CreateNodePoolRequest] //CobraFlagsDefinition
+	
+	var req_AllowedCIDRsFlag *flags.StrSliceFlag //CobraFlagsDefinition
+	
+	var req_ServicesIpV4CIDRFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Clusters, Flavors, Nodepools, Versions.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			
@@ -56,22 +56,6 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 			
 
 			
-			
-			if req_EnabledServerGroupFlag.IsChanged() {
-				req.EnabledServerGroup = req_EnabledServerGroupFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_NodePoolsFlag.IsChanged() {
-				req.NodePools = req_NodePoolsFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_AllowedCIDRsFlag.IsChanged() {
-				req.AllowedCIDRs = req_AllowedCIDRsFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_ServicesIpV4CIDRFlag.IsChanged() {
-				req.ServicesIpV4CIDR = req_ServicesIpV4CIDRFlag.Value
-			}// CobraFlagsAssign
 			
 			if req_ClusterIPv4CIDRFlag.IsChanged() {
 				req.ClusterIPv4CIDR = req_ClusterIPv4CIDRFlag.Value
@@ -87,6 +71,22 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_EnabledServerGroupFlag.IsChanged() {
+				req.EnabledServerGroup = req_EnabledServerGroupFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_NodePoolsFlag.IsChanged() {
+				req.NodePools = req_NodePoolsFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_AllowedCIDRsFlag.IsChanged() {
+				req.AllowedCIDRs = req_AllowedCIDRsFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_ServicesIpV4CIDRFlag.IsChanged() {
+				req.ServicesIpV4CIDR = req_ServicesIpV4CIDRFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -113,21 +113,21 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 	}
 	
 	
-	req_EnabledServerGroupFlag = flags.NewBoolP(cmd, "enabled-server-group", "e", false, "")//CobraFlagsCreation
-	
-	req_NodePoolsFlag = flags.NewJSONArrayValueP[kubernetesSdk.CreateNodePoolRequest](cmd, "node-pools", "p", "",)//CobraFlagsCreation
-	
-	req_AllowedCIDRsFlag = flags.NewStrSliceP(cmd, "allowed-c-i-d-rs", "a", []string{}, "")//CobraFlagsCreation
-	
-	req_ServicesIpV4CIDRFlag = flags.NewStrP(cmd, "services-ip-v4-c-i-d-r", "s", "", "")//CobraFlagsCreation
-	
 	req_ClusterIPv4CIDRFlag = flags.NewStrP(cmd, "cluster-i-pv4-c-i-d-r", "c", "", "")//CobraFlagsCreation
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
+	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
 	req_VersionFlag = flags.NewStrP(cmd, "version", "v", "", "")//CobraFlagsCreation
 	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "i", "", "")//CobraFlagsCreation
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
+	
+	req_EnabledServerGroupFlag = flags.NewBoolP(cmd, "enabled-server-group", "b", false, "")//CobraFlagsCreation
+	
+	req_NodePoolsFlag = flags.NewJSONArrayValueP[kubernetesSdk.CreateNodePoolRequest](cmd, "node-pools", "p", "",)//CobraFlagsCreation
+	
+	req_AllowedCIDRsFlag = flags.NewStrSliceP(cmd, "allowed-c-i-d-rs", "l", []string{}, "")//CobraFlagsCreation
+	
+	req_ServicesIpV4CIDRFlag = flags.NewStrP(cmd, "services-ip-v4-c-i-d-r", "s", "", "")//CobraFlagsCreation
 	
 
 

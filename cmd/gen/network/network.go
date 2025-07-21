@@ -38,7 +38,7 @@ func NetworkCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.Co
 	cmd := &cobra.Command{
 		Use:     "network",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
 		//	
 		//	"networks",

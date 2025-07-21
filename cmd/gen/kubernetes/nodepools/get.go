@@ -34,7 +34,7 @@ func Get(ctx context.Context, parent *cobra.Command, nodePoolService kubernetesS
 	cmd := &cobra.Command{
 		Use:     "get",
 		Short:   "Clusters, Flavors, Nodepools, Versions.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

@@ -34,7 +34,7 @@ func LbaasCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.Core
 	cmd := &cobra.Command{
 		Use:     "lbaas",
 		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
-		Long:    `todo2`,
+		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
 		//	
 		//	"load-balancer",

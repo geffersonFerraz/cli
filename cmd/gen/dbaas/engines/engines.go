@@ -20,7 +20,7 @@ func EnginesCmd(ctx context.Context, parent *cobra.Command, engineService dbaasS
 	cmd := &cobra.Command{
 		Use:     "engines",
 		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

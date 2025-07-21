@@ -20,7 +20,7 @@ func SubnetsCmd(ctx context.Context, parent *cobra.Command, subnetService networ
 	cmd := &cobra.Command{
 		Use:     "subnets",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

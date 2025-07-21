@@ -27,8 +27,6 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 	
 	var clusterIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_MaxPodsPerNodeFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	var req_AvailabilityZonesFlag *flags.StrSliceFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
@@ -41,12 +39,14 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 	
 	var req_TaintsFlag *flags.JSONArrayValue[kubernetesSdk.Taint] //CobraFlagsDefinition
 	
+	var req_MaxPodsPerNodeFlag *flags.IntFlag //CobraFlagsDefinition
+	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Clusters, Flavors, Nodepools, Versions.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			
@@ -61,10 +61,6 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 			
 			if clusterIDFlag.IsChanged() {
 				clusterID = *clusterIDFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_MaxPodsPerNodeFlag.IsChanged() {
-				req.MaxPodsPerNode = req_MaxPodsPerNodeFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_AvailabilityZonesFlag.IsChanged() {
@@ -89,6 +85,10 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 			
 			if req_TaintsFlag.IsChanged() {
 				req.Taints = req_TaintsFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_MaxPodsPerNodeFlag.IsChanged() {
+				req.MaxPodsPerNode = req_MaxPodsPerNodeFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -117,19 +117,19 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 	
 	clusterIDFlag = flags.NewStrP(cmd, "cluster-i-d", "c", "", "")//CobraFlagsCreation
 	
-	req_MaxPodsPerNodeFlag = flags.NewIntP(cmd, "max-pods-per-node", "m", 0, "")//CobraFlagsCreation
-	
 	req_AvailabilityZonesFlag = flags.NewStrSliceP(cmd, "availability-zones", "a", []string{}, "")//CobraFlagsCreation
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "e", "", "")//CobraFlagsCreation
+	req_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
 	
 	req_FlavorFlag = flags.NewStrP(cmd, "flavor", "f", "", "")//CobraFlagsCreation
 	
-	req_ReplicasFlag = flags.NewIntP(cmd, "replicas", "p", 0, "")//CobraFlagsCreation
+	req_ReplicasFlag = flags.NewIntP(cmd, "replicas", "e", 0, "")//CobraFlagsCreation
 	
 	req_TagsFlag = flags.NewStrSliceP(cmd, "tags", "t", []string{}, "")//CobraFlagsCreation
 	
 	req_TaintsFlag = flags.NewJSONArrayValueP[kubernetesSdk.Taint](cmd, "taints", "i", "",)//CobraFlagsCreation
+	
+	req_MaxPodsPerNodeFlag = flags.NewIntP(cmd, "max-pods-per-node", "x", 0, "")//CobraFlagsCreation
 	
 
 

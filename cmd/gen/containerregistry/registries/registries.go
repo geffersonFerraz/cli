@@ -20,7 +20,7 @@ func RegistriesCmd(ctx context.Context, parent *cobra.Command, registriesService
 	cmd := &cobra.Command{
 		Use:     "registries",
 		Short:   "Credentials, Registries, Repositories, Images.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

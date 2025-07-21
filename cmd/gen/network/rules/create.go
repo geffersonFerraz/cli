@@ -27,12 +27,6 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 	
 	var securityGroupIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_ProtocolFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_RemoteIPPrefixFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_EtherTypeFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DirectionFlag *flags.StrFlag //CobraFlagsDefinition
@@ -41,12 +35,18 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 	
 	var req_PortRangeMaxFlag *flags.IntFlag //CobraFlagsDefinition
 	
+	var req_ProtocolFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_RemoteIPPrefixFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_EtherTypeFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			
@@ -63,18 +63,6 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 				securityGroupID = *securityGroupIDFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_ProtocolFlag.IsChanged() {
-				req.Protocol = req_ProtocolFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_RemoteIPPrefixFlag.IsChanged() {
-				req.RemoteIPPrefix = req_RemoteIPPrefixFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_EtherTypeFlag.IsChanged() {
-				req.EtherType = *req_EtherTypeFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
@@ -89,6 +77,18 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 			
 			if req_PortRangeMaxFlag.IsChanged() {
 				req.PortRangeMax = req_PortRangeMaxFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_ProtocolFlag.IsChanged() {
+				req.Protocol = req_ProtocolFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_RemoteIPPrefixFlag.IsChanged() {
+				req.RemoteIPPrefix = req_RemoteIPPrefixFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_EtherTypeFlag.IsChanged() {
+				req.EtherType = *req_EtherTypeFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -117,19 +117,19 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 	
 	securityGroupIDFlag = flags.NewStrP(cmd, "security-group-i-d", "s", "", "")//CobraFlagsCreation
 	
-	req_ProtocolFlag = flags.NewStrP(cmd, "protocol", "p", "", "")//CobraFlagsCreation
-	
-	req_RemoteIPPrefixFlag = flags.NewStrP(cmd, "remote-i-p-prefix", "e", "", "")//CobraFlagsCreation
-	
-	req_EtherTypeFlag = flags.NewStrP(cmd, "ether-type", "t", "", "")//CobraFlagsCreation
-	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "c", "", "")//CobraFlagsCreation
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
 	req_DirectionFlag = flags.NewStrP(cmd, "direction", "i", "", "")//CobraFlagsCreation
 	
-	req_PortRangeMinFlag = flags.NewIntP(cmd, "port-range-min", "a", 0, "")//CobraFlagsCreation
+	req_PortRangeMinFlag = flags.NewIntP(cmd, "port-range-min", "p", 0, "")//CobraFlagsCreation
 	
-	req_PortRangeMaxFlag = flags.NewIntP(cmd, "port-range-max", "g", 0, "")//CobraFlagsCreation
+	req_PortRangeMaxFlag = flags.NewIntP(cmd, "port-range-max", "t", 0, "")//CobraFlagsCreation
+	
+	req_ProtocolFlag = flags.NewStrP(cmd, "protocol", "c", "", "")//CobraFlagsCreation
+	
+	req_RemoteIPPrefixFlag = flags.NewStrP(cmd, "remote-i-p-prefix", "m", "", "")//CobraFlagsCreation
+	
+	req_EtherTypeFlag = flags.NewStrP(cmd, "ether-type", "y", "", "")//CobraFlagsCreation
 	
 
 

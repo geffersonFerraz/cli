@@ -20,7 +20,7 @@ func ReplicasCmd(ctx context.Context, parent *cobra.Command, replicaService dbaa
 	cmd := &cobra.Command{
 		Use:     "replicas",
 		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

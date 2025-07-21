@@ -25,20 +25,20 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, networkBackendService lbaasSdk.NetworkBackendService) {
 	
-	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_HealthCheckIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			
@@ -48,10 +48,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkBackendService lb
 			
 
 			
-			
-			if req_LoadBalancerIDFlag.IsChanged() {
-				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
-			}// CobraFlagsAssign
 			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
@@ -63,6 +59,10 @@ func Create(ctx context.Context, parent *cobra.Command, networkBackendService lb
 			
 			if req_HealthCheckIDFlag.IsChanged() {
 				req.HealthCheckID = req_HealthCheckIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_LoadBalancerIDFlag.IsChanged() {
+				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -89,20 +89,20 @@ func Create(ctx context.Context, parent *cobra.Command, networkBackendService lb
 	}
 	
 	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
-	
-	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
+	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
-	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-i-d", "t", "", "")//CobraFlagsCreation
+	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-i-d", "a", "", "")//CobraFlagsCreation
+	
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
 
 
-	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

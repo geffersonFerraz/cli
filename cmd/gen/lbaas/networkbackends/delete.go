@@ -32,7 +32,7 @@ func Delete(ctx context.Context, parent *cobra.Command, networkBackendService lb
 	cmd := &cobra.Command{
 		Use:     "delete",
 		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

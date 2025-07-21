@@ -36,7 +36,7 @@ func DbaasCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.Core
 	cmd := &cobra.Command{
 		Use:     "dbaas",
 		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
-		Long:    `todo2`,
+		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
 		//	
 		//	"db",

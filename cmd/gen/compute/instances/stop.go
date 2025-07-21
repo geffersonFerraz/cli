@@ -30,7 +30,7 @@ func Stop(ctx context.Context, parent *cobra.Command, instanceService computeSdk
 	cmd := &cobra.Command{
 		Use:     "stop",
 		Short:   "Instances, Images, InstanceTypes, Snapshots.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

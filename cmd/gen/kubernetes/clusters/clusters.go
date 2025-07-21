@@ -20,7 +20,7 @@ func ClustersCmd(ctx context.Context, parent *cobra.Command, clusterService kube
 	cmd := &cobra.Command{
 		Use:     "clusters",
 		Short:   "Clusters, Flavors, Nodepools, Versions.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

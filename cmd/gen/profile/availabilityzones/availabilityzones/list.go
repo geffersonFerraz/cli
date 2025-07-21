@@ -32,7 +32,7 @@ func List(ctx context.Context, parent *cobra.Command, service availabilityzonesS
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

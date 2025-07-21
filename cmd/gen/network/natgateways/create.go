@@ -25,20 +25,20 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, natGatewayService networkSdk.NatGatewayService) {
 	
-	var req_VPCIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_ZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var req_VPCIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			
@@ -48,10 +48,6 @@ func Create(ctx context.Context, parent *cobra.Command, natGatewayService networ
 			
 
 			
-			
-			if req_VPCIDFlag.IsChanged() {
-				req.VPCID = *req_VPCIDFlag.Value
-			}// CobraFlagsAssign
 			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
@@ -63,6 +59,10 @@ func Create(ctx context.Context, parent *cobra.Command, natGatewayService networ
 			
 			if req_ZoneFlag.IsChanged() {
 				req.Zone = *req_ZoneFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_VPCIDFlag.IsChanged() {
+				req.VPCID = *req_VPCIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -89,22 +89,22 @@ func Create(ctx context.Context, parent *cobra.Command, natGatewayService networ
 	}
 	
 	
-	req_VPCIDFlag = flags.NewStrP(cmd, "v-p-c-i-d", "v", "", "")//CobraFlagsCreation
-	
-	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
+	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
 	req_ZoneFlag = flags.NewStrP(cmd, "zone", "z", "", "")//CobraFlagsCreation
 	
-
-
+	req_VPCIDFlag = flags.NewStrP(cmd, "v-p-c-i-d", "v", "", "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("v-p-c-i-d")//CobraFlagsRequired
+
+
 	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("zone")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("v-p-c-i-d")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

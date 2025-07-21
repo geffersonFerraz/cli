@@ -38,7 +38,7 @@ func Create(ctx context.Context, parent *cobra.Command, subnetPoolService networ
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

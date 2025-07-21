@@ -20,7 +20,7 @@ func VersionsCmd(ctx context.Context, parent *cobra.Command, versionService kube
 	cmd := &cobra.Command{
 		Use:     "versions",
 		Short:   "Clusters, Flavors, Nodepools, Versions.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

@@ -32,7 +32,7 @@ func List(ctx context.Context, parent *cobra.Command, networkBackendService lbaa
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

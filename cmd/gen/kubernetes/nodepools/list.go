@@ -27,20 +27,20 @@ func List(ctx context.Context, parent *cobra.Command, nodePoolService kubernetes
 	
 	var clusterIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
+	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var opts_ExpandFlag *flags.StrSliceFlag //CobraFlagsDefinition
 	
-	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "Clusters, Flavors, Nodepools, Versions.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			
@@ -57,6 +57,10 @@ func List(ctx context.Context, parent *cobra.Command, nodePoolService kubernetes
 				clusterID = *clusterIDFlag.Value
 			}// CobraFlagsAssign
 			
+			if opts_LimitFlag.IsChanged() {
+				opts.Limit = opts_LimitFlag.Value
+			}// CobraFlagsAssign
+			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
@@ -67,10 +71,6 @@ func List(ctx context.Context, parent *cobra.Command, nodePoolService kubernetes
 			
 			if opts_ExpandFlag.IsChanged() {
 				opts.Expand = *opts_ExpandFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_LimitFlag.IsChanged() {
-				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -99,13 +99,13 @@ func List(ctx context.Context, parent *cobra.Command, nodePoolService kubernetes
 	
 	clusterIDFlag = flags.NewStrP(cmd, "cluster-i-d", "c", "", "")//CobraFlagsCreation
 	
+	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
+	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
 	opts_ExpandFlag = flags.NewStrSliceP(cmd, "expand", "e", []string{}, "")//CobraFlagsCreation
-	
-	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 
 

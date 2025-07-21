@@ -28,7 +28,7 @@ func BlockstorageCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig s
 	cmd := &cobra.Command{
 		Use:     "block-storage",
 		Short:   "Volumes, VolumeTypes, Snapshots.",
-		Long:    `todo2`,
+		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
 		//	
 		//	"bs",

@@ -20,7 +20,7 @@ func VolumeTypesCmd(ctx context.Context, parent *cobra.Command, volumeTypeServic
 	cmd := &cobra.Command{
 		Use:     "volume-types",
 		Short:   "Volumes, VolumeTypes, Snapshots.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

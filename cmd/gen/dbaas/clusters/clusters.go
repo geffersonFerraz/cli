@@ -20,7 +20,7 @@ func ClustersCmd(ctx context.Context, parent *cobra.Command, clusterService dbaa
 	cmd := &cobra.Command{
 		Use:     "clusters",
 		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

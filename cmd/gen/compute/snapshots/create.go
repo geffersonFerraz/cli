@@ -32,7 +32,7 @@ func Create(ctx context.Context, parent *cobra.Command, snapshotService computeS
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Instances, Images, InstanceTypes, Snapshots.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

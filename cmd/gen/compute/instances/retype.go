@@ -34,7 +34,7 @@ func Retype(ctx context.Context, parent *cobra.Command, instanceService computeS
 	cmd := &cobra.Command{
 		Use:     "retype",
 		Short:   "Instances, Images, InstanceTypes, Snapshots.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

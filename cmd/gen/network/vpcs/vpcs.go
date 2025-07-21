@@ -20,7 +20,7 @@ func VPCsCmd(ctx context.Context, parent *cobra.Command, vPCService networkSdk.V
 	cmd := &cobra.Command{
 		Use:     "v-p-cs",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

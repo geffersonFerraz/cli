@@ -32,7 +32,7 @@ func DetachFromPort(ctx context.Context, parent *cobra.Command, publicIPService 
 	cmd := &cobra.Command{
 		Use:     "detach-from-port",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

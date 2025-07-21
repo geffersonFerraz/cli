@@ -28,7 +28,7 @@ func List(ctx context.Context, parent *cobra.Command, versionService kubernetesS
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "Clusters, Flavors, Nodepools, Versions.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

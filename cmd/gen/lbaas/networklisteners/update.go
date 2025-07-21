@@ -34,7 +34,7 @@ func Update(ctx context.Context, parent *cobra.Command, networkListenerService l
 	cmd := &cobra.Command{
 		Use:     "update",
 		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

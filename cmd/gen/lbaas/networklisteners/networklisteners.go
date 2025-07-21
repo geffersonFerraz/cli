@@ -20,7 +20,7 @@ func NetworkListenersCmd(ctx context.Context, parent *cobra.Command, networkList
 	cmd := &cobra.Command{
 		Use:     "network-listeners",
 		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

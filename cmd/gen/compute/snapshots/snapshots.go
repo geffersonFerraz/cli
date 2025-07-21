@@ -20,7 +20,7 @@ func SnapshotsCmd(ctx context.Context, parent *cobra.Command, snapshotService co
 	cmd := &cobra.Command{
 		Use:     "snapshots",
 		Short:   "Instances, Images, InstanceTypes, Snapshots.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

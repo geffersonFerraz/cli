@@ -20,7 +20,7 @@ func PublicIPsCmd(ctx context.Context, parent *cobra.Command, publicIPService ne
 	cmd := &cobra.Command{
 		Use:     "public-i-ps",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

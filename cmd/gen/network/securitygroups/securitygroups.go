@@ -20,7 +20,7 @@ func SecurityGroupsCmd(ctx context.Context, parent *cobra.Command, securityGroup
 	cmd := &cobra.Command{
 		Use:     "security-groups",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

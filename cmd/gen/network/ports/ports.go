@@ -20,7 +20,7 @@ func PortsCmd(ctx context.Context, parent *cobra.Command, portService networkSdk
 	cmd := &cobra.Command{
 		Use:     "ports",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

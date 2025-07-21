@@ -46,7 +46,7 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 	cmd := &cobra.Command{
 		Use:     "create-subnet",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

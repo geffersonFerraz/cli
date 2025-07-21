@@ -30,7 +30,7 @@ func ContainerregistryCmd(ctx context.Context, parent *cobra.Command, sdkCoreCon
 	cmd := &cobra.Command{
 		Use:     "container-registry",
 		Short:   "Credentials, Registries, Repositories, Images.",
-		Long:    `todo2`,
+		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
 		//	
 		//	"cr",

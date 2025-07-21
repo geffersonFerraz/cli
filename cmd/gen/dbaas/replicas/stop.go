@@ -32,7 +32,7 @@ func Stop(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.Re
 	cmd := &cobra.Command{
 		Use:     "stop",
 		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

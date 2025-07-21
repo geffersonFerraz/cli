@@ -32,7 +32,7 @@ func AttachToPort(ctx context.Context, parent *cobra.Command, publicIPService ne
 	cmd := &cobra.Command{
 		Use:     "attach-to-port",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

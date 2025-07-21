@@ -30,7 +30,7 @@ func KubernetesCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk
 	cmd := &cobra.Command{
 		Use:     "kubernetes",
 		Short:   "Clusters, Flavors, Nodepools, Versions.",
-		Long:    `todo2`,
+		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
 		//	
 		//	"k8s",

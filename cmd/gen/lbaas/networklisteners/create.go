@@ -25,8 +25,6 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, networkListenerService lbaasSdk.NetworkListenerService) {
 	
-	var req_PortFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_BackendIDFlag *flags.StrFlag //CobraFlagsDefinition
@@ -37,12 +35,14 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var req_PortFlag *flags.IntFlag //CobraFlagsDefinition
+	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			
@@ -52,10 +52,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 			
 
 			
-			
-			if req_PortFlag.IsChanged() {
-				req.Port = *req_PortFlag.Value
-			}// CobraFlagsAssign
 			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
@@ -75,6 +71,10 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_PortFlag.IsChanged() {
+				req.Port = *req_PortFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -101,8 +101,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 	}
 	
 	
-	req_PortFlag = flags.NewIntP(cmd, "port", "p", 0, "")//CobraFlagsCreation
-	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
 	req_BackendIDFlag = flags.NewStrP(cmd, "backend-i-d", "b", "", "")//CobraFlagsCreation
@@ -113,16 +111,18 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
-
-
+	req_PortFlag = flags.NewIntP(cmd, "port", "p", 0, "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("port")//CobraFlagsRequired
+
+
 	
 	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("backend-i-d")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("port")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

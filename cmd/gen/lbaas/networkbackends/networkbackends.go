@@ -20,7 +20,7 @@ func NetworkBackendsCmd(ctx context.Context, parent *cobra.Command, networkBacke
 	cmd := &cobra.Command{
 		Use:     "network-backends",
 		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

@@ -30,7 +30,7 @@ func ComputeCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.Co
 	cmd := &cobra.Command{
 		Use:     "virtual-machine",
 		Short:   "Instances, Images, InstanceTypes, Snapshots.",
-		Long:    `todo2`,
+		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
 		//	
 		//	"vm",

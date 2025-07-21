@@ -20,7 +20,7 @@ func CredentialsCmd(ctx context.Context, parent *cobra.Command, credentialsServi
 	cmd := &cobra.Command{
 		Use:     "credentials",
 		Short:   "Credentials, Registries, Repositories, Images.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

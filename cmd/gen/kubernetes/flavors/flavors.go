@@ -20,7 +20,7 @@ func FlavorsCmd(ctx context.Context, parent *cobra.Command, flavorService kubern
 	cmd := &cobra.Command{
 		Use:     "flavors",
 		Short:   "Clusters, Flavors, Nodepools, Versions.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

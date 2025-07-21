@@ -20,7 +20,7 @@ func KeysCmd(ctx context.Context, parent *cobra.Command, keyService sshkeysSdk.K
 	cmd := &cobra.Command{
 		Use:     "keys",
 		Short:   "",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

@@ -20,7 +20,7 @@ func NatGatewaysCmd(ctx context.Context, parent *cobra.Command, natGatewayServic
 	cmd := &cobra.Command{
 		Use:     "nat-gateways",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

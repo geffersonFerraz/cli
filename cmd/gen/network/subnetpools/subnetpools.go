@@ -20,7 +20,7 @@ func SubnetPoolsCmd(ctx context.Context, parent *cobra.Command, subnetPoolServic
 	cmd := &cobra.Command{
 		Use:     "subnet-pools",
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

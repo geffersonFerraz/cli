@@ -25,18 +25,18 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, parameterGroupService dbaasSdk.ParameterGroupService) {
 	
+	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
+	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_EngineIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			
@@ -47,16 +47,16 @@ func List(ctx context.Context, parent *cobra.Command, parameterGroupService dbaa
 
 			
 			
+			if opts_OffsetFlag.IsChanged() {
+				opts.Offset = opts_OffsetFlag.Value
+			}// CobraFlagsAssign
+			
 			if opts_LimitFlag.IsChanged() {
 				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
 			
 			if opts_EngineIDFlag.IsChanged() {
 				opts.EngineID = opts_EngineIDFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_OffsetFlag.IsChanged() {
-				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -83,11 +83,11 @@ func List(ctx context.Context, parent *cobra.Command, parameterGroupService dbaa
 	}
 	
 	
+	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "o", 0, "")//CobraFlagsCreation
+	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_EngineIDFlag = flags.NewStrP(cmd, "engine-i-d", "e", "", "")//CobraFlagsCreation
-	
-	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 
 

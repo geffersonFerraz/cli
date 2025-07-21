@@ -32,7 +32,7 @@ func Attach(ctx context.Context, parent *cobra.Command, volumeService blockstora
 	cmd := &cobra.Command{
 		Use:     "attach",
 		Short:   "Volumes, VolumeTypes, Snapshots.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

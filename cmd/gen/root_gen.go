@@ -13,6 +13,10 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"mgccli/cmd/gen/containerregistry"
+
+	"mgccli/cmd/gen/network"
+
 	"mgccli/cmd/gen/profile"
 
 	"mgccli/cmd/gen/compute"
@@ -21,19 +25,19 @@ import (
 
 	"mgccli/cmd/gen/lbaas"
 
-	"mgccli/cmd/gen/audit"
-
-	"mgccli/cmd/gen/network"
-
 	"mgccli/cmd/gen/blockstorage"
 
-	"mgccli/cmd/gen/containerregistry"
-
 	"mgccli/cmd/gen/dbaas"
+
+	"mgccli/cmd/gen/audit"
 
 )
 
 func RootGen(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
+
+	containerregistry.ContainerregistryCmd(ctx, parent, sdkCoreConfig)
+
+	network.NetworkCmd(ctx, parent, sdkCoreConfig)
 
 	profile.ProfileCmd(ctx, parent, sdkCoreConfig)
 
@@ -43,14 +47,10 @@ func RootGen(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreC
 
 	lbaas.LbaasCmd(ctx, parent, sdkCoreConfig)
 
-	audit.AuditCmd(ctx, parent, sdkCoreConfig)
-
-	network.NetworkCmd(ctx, parent, sdkCoreConfig)
-
 	blockstorage.BlockstorageCmd(ctx, parent, sdkCoreConfig)
 
-	containerregistry.ContainerregistryCmd(ctx, parent, sdkCoreConfig)
-
 	dbaas.DbaasCmd(ctx, parent, sdkCoreConfig)
+
+	audit.AuditCmd(ctx, parent, sdkCoreConfig)
 
 }

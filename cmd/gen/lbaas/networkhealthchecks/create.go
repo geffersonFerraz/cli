@@ -27,32 +27,32 @@ func Create(ctx context.Context, parent *cobra.Command, networkHealthCheckServic
 	
 	var req_TimeoutSecondsFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var req_UnhealthyThresholdCountFlag *flags.IntFlag //CobraFlagsDefinition
+	var req_HealthyThresholdCountFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
+	var req_PathFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_IntervalSecondsFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_InitialDelaySecondsFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var req_HealthyThresholdCountFlag *flags.IntFlag //CobraFlagsDefinition
+	var req_UnhealthyThresholdCountFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var req_PathFlag *flags.StrFlag //CobraFlagsDefinition
+	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_PortFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_HealthyStatusCodeFlag *flags.IntFlag //CobraFlagsDefinition
-	
-	var req_IntervalSecondsFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			
@@ -67,8 +67,8 @@ func Create(ctx context.Context, parent *cobra.Command, networkHealthCheckServic
 				req.TimeoutSeconds = req_TimeoutSecondsFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_UnhealthyThresholdCountFlag.IsChanged() {
-				req.UnhealthyThresholdCount = req_UnhealthyThresholdCountFlag.Value
+			if req_HealthyThresholdCountFlag.IsChanged() {
+				req.HealthyThresholdCount = req_HealthyThresholdCountFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_LoadBalancerIDFlag.IsChanged() {
@@ -79,20 +79,24 @@ func Create(ctx context.Context, parent *cobra.Command, networkHealthCheckServic
 				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_DescriptionFlag.IsChanged() {
-				req.Description = req_DescriptionFlag.Value
+			if req_PathFlag.IsChanged() {
+				req.Path = req_PathFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_IntervalSecondsFlag.IsChanged() {
+				req.IntervalSeconds = req_IntervalSecondsFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_InitialDelaySecondsFlag.IsChanged() {
 				req.InitialDelaySeconds = req_InitialDelaySecondsFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_HealthyThresholdCountFlag.IsChanged() {
-				req.HealthyThresholdCount = req_HealthyThresholdCountFlag.Value
+			if req_UnhealthyThresholdCountFlag.IsChanged() {
+				req.UnhealthyThresholdCount = req_UnhealthyThresholdCountFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_PathFlag.IsChanged() {
-				req.Path = req_PathFlag.Value
+			if req_DescriptionFlag.IsChanged() {
+				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_PortFlag.IsChanged() {
@@ -101,10 +105,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkHealthCheckServic
 			
 			if req_HealthyStatusCodeFlag.IsChanged() {
 				req.HealthyStatusCode = req_HealthyStatusCodeFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_IntervalSecondsFlag.IsChanged() {
-				req.IntervalSeconds = req_IntervalSecondsFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -133,25 +133,25 @@ func Create(ctx context.Context, parent *cobra.Command, networkHealthCheckServic
 	
 	req_TimeoutSecondsFlag = flags.NewIntP(cmd, "timeout-seconds", "t", 0, "")//CobraFlagsCreation
 	
-	req_UnhealthyThresholdCountFlag = flags.NewIntP(cmd, "unhealthy-threshold-count", "u", 0, "")//CobraFlagsCreation
+	req_HealthyThresholdCountFlag = flags.NewIntP(cmd, "healthy-threshold-count", "e", 0, "")//CobraFlagsCreation
 	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
-	
-	req_InitialDelaySecondsFlag = flags.NewIntP(cmd, "initial-delay-seconds", "i", 0, "")//CobraFlagsCreation
-	
-	req_HealthyThresholdCountFlag = flags.NewIntP(cmd, "healthy-threshold-count", "y", 0, "")//CobraFlagsCreation
-	
 	req_PathFlag = flags.NewStrP(cmd, "path", "p", "", "")//CobraFlagsCreation
+	
+	req_IntervalSecondsFlag = flags.NewIntP(cmd, "interval-seconds", "i", 0, "")//CobraFlagsCreation
+	
+	req_InitialDelaySecondsFlag = flags.NewIntP(cmd, "initial-delay-seconds", "y", 0, "")//CobraFlagsCreation
+	
+	req_UnhealthyThresholdCountFlag = flags.NewIntP(cmd, "unhealthy-threshold-count", "u", 0, "")//CobraFlagsCreation
+	
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "s", "", "")//CobraFlagsCreation
 	
 	req_PortFlag = flags.NewIntP(cmd, "port", "b", 0, "")//CobraFlagsCreation
 	
-	req_HealthyStatusCodeFlag = flags.NewIntP(cmd, "healthy-status-code", "s", 0, "")//CobraFlagsCreation
-	
-	req_IntervalSecondsFlag = flags.NewIntP(cmd, "interval-seconds", "v", 0, "")//CobraFlagsCreation
+	req_HealthyStatusCodeFlag = flags.NewIntP(cmd, "healthy-status-code", "c", 0, "")//CobraFlagsCreation
 	
 
 

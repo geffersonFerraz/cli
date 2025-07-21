@@ -25,20 +25,20 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, networkHealthCheckService lbaasSdk.NetworkHealthCheckService) {
 	
+	var req_SortFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var req_SortFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			
@@ -48,6 +48,10 @@ func List(ctx context.Context, parent *cobra.Command, networkHealthCheckService 
 			
 
 			
+			
+			if req_SortFlag.IsChanged() {
+				req.Sort = req_SortFlag.Value
+			}// CobraFlagsAssign
 			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
@@ -59,10 +63,6 @@ func List(ctx context.Context, parent *cobra.Command, networkHealthCheckService 
 			
 			if req_LimitFlag.IsChanged() {
 				req.Limit = req_LimitFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_SortFlag.IsChanged() {
-				req.Sort = req_SortFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -89,13 +89,13 @@ func List(ctx context.Context, parent *cobra.Command, networkHealthCheckService 
 	}
 	
 	
+	req_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
+	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
 	req_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 	req_LimitFlag = flags.NewIntP(cmd, "limit", "i", 0, "")//CobraFlagsCreation
-	
-	req_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
 
 

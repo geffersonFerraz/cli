@@ -32,7 +32,7 @@ func Create(ctx context.Context, parent *cobra.Command, registriesService contai
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Credentials, Registries, Repositories, Images.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

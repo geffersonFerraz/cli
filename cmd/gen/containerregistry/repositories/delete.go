@@ -32,7 +32,7 @@ func Delete(ctx context.Context, parent *cobra.Command, repositoriesService cont
 	cmd := &cobra.Command{
 		Use:     "delete",
 		Short:   "Credentials, Registries, Repositories, Images.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			

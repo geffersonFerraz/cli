@@ -20,7 +20,7 @@ func ImagesCmd(ctx context.Context, parent *cobra.Command, imagesService contain
 	cmd := &cobra.Command{
 		Use:     "images",
 		Short:   "Credentials, Registries, Repositories, Images.",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 4`,
 		
 	}
 

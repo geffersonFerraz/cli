@@ -32,7 +32,7 @@ func Start(ctx context.Context, parent *cobra.Command, clusterService dbaasSdk.C
 	cmd := &cobra.Command{
 		Use:     "start",
 		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
-		Long:    `todo2`,
+		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
 			
