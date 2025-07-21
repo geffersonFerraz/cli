@@ -25,11 +25,11 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, snapshotService blockstorageSdk.SnapshotService) {
 	
-	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_TypeFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -47,16 +47,16 @@ func Create(ctx context.Context, parent *cobra.Command, snapshotService blocksto
 
 			
 			
-			if req_NameFlag.IsChanged() {
-				req.Name = *req_NameFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_TypeFlag.IsChanged() {
 				req.Type = req_TypeFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_NameFlag.IsChanged() {
+				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -83,11 +83,11 @@ func Create(ctx context.Context, parent *cobra.Command, snapshotService blocksto
 	}
 	
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
-	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "d", "", "")//CobraFlagsCreation
 	
 	req_TypeFlag = flags.NewStrP(cmd, "type", "t", "", "")//CobraFlagsCreation
+	
+	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
 
 

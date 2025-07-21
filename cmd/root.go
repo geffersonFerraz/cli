@@ -51,7 +51,7 @@ func RootCmd(ctx context.Context, version string, manager *i18n.Manager) *cobra.
 	addLangFlag(rootCmd)
 
 	// Init SDK
-	apiKey := os.Getenv("MGC_API_KEY")
+	apiKey := os.Getenv("CLI_API_KEY")
 	if apiKey == "" {
 		apiKey = getApiKeyFlag(rootCmd)
 		if apiKey == "" {
@@ -62,7 +62,7 @@ func RootCmd(ctx context.Context, version string, manager *i18n.Manager) *cobra.
 	sdkOptions := []sdk.Option{}
 	debugLevel := getLogDebugFlag(rootCmd)
 	sdkOptions = append(sdkOptions, sdk.WithLogger(slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.Level(debugLevel)}))))
-	sdkOptions = append(sdkOptions, sdk.WithUserAgent(fmt.Sprintf("MgcCLI2/%s (%s; %s)", version, runtime.GOOS, runtime.GOARCH)))
+	sdkOptions = append(sdkOptions, sdk.WithUserAgent(fmt.Sprintf("CommunityCLI/%s (%s; %s)", version, runtime.GOOS, runtime.GOARCH)))
 
 	sdkCoreConfig := sdk.NewMgcClient(apiKey,
 		sdkOptions...,

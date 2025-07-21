@@ -27,9 +27,9 @@ func Update(ctx context.Context, parent *cobra.Command, parameterGroupService db
 	
 	var IDFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -53,12 +53,12 @@ func Update(ctx context.Context, parent *cobra.Command, parameterGroupService db
 				ID = *IDFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_NameFlag.IsChanged() {
-				req.Name = req_NameFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_NameFlag.IsChanged() {
+				req.Name = req_NameFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -87,9 +87,9 @@ func Update(ctx context.Context, parent *cobra.Command, parameterGroupService db
 	
 	IDFlag = flags.NewStrP(cmd, "i-d", "i", "", "")//CobraFlagsCreation
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
-	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
+	
+	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
 
 

@@ -25,6 +25,8 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, networkCertificateService lbaasSdk.NetworkCertificateService) {
 	
+	var req_PrivateKeyFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
@@ -32,8 +34,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkCertificateServic
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_CertificateFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_PrivateKeyFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -51,6 +51,10 @@ func Create(ctx context.Context, parent *cobra.Command, networkCertificateServic
 
 			
 			
+			if req_PrivateKeyFlag.IsChanged() {
+				req.PrivateKey = *req_PrivateKeyFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
 			}// CobraFlagsAssign
@@ -65,10 +69,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkCertificateServic
 			
 			if req_CertificateFlag.IsChanged() {
 				req.Certificate = *req_CertificateFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_PrivateKeyFlag.IsChanged() {
-				req.PrivateKey = *req_PrivateKeyFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -95,6 +95,8 @@ func Create(ctx context.Context, parent *cobra.Command, networkCertificateServic
 	}
 	
 	
+	req_PrivateKeyFlag = flags.NewStrP(cmd, "private-key", "p", "", "")//CobraFlagsCreation
+	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
@@ -103,18 +105,16 @@ func Create(ctx context.Context, parent *cobra.Command, networkCertificateServic
 	
 	req_CertificateFlag = flags.NewStrP(cmd, "certificate", "c", "", "")//CobraFlagsCreation
 	
-	req_PrivateKeyFlag = flags.NewStrP(cmd, "private-key", "p", "", "")//CobraFlagsCreation
+
+
 	
-
-
+	cmd.MarkFlagRequired("private-key")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("certificate")//CobraFlagsRequired
-	
-	cmd.MarkFlagRequired("private-key")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

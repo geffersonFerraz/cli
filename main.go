@@ -47,7 +47,7 @@ func getVCSInfo(version string) string {
 }
 
 func getLang() string {
-	lang, err := os.LookupEnv("MGC_LANG")
+	lang, err := os.LookupEnv("CLI_LANG")
 	if err {
 		return lang
 	}
@@ -70,7 +70,7 @@ func getLangFromArgs(args []string) string {
 }
 
 func main() {
-	panicOff := os.Getenv("MGC_PANIC_OFF")
+	panicOff := os.Getenv("CLI_PANIC_OFF")
 	if panicOff == "" {
 		defer panicRecover()
 	}

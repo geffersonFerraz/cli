@@ -25,13 +25,13 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, networkBackendService lbaasSdk.NetworkBackendService) {
 	
-	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_HealthCheckIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -49,10 +49,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkBackendService lb
 
 			
 			
-			if req_NameFlag.IsChanged() {
-				req.Name = *req_NameFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
@@ -63,6 +59,10 @@ func Create(ctx context.Context, parent *cobra.Command, networkBackendService lb
 			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_NameFlag.IsChanged() {
+				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -89,20 +89,20 @@ func Create(ctx context.Context, parent *cobra.Command, networkBackendService lb
 	}
 	
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "d", "", "")//CobraFlagsCreation
 	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
-	
-	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-i-d", "a", "", "")//CobraFlagsCreation
+	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-i-d", "e", "", "")//CobraFlagsCreation
 	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
-
-
+	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("name")//CobraFlagsRequired
+
+
 	
 	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 
