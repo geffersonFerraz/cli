@@ -25,17 +25,17 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, parameterGroupService dbaasSdk.ParameterGroupService) {
 	
+	var req_EngineIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_EngineIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
-		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
+		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -47,16 +47,16 @@ func Create(ctx context.Context, parent *cobra.Command, parameterGroupService db
 
 			
 			
+			if req_EngineIDFlag.IsChanged() {
+				req.EngineID = *req_EngineIDFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_EngineIDFlag.IsChanged() {
-				req.EngineID = *req_EngineIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -83,18 +83,18 @@ func Create(ctx context.Context, parent *cobra.Command, parameterGroupService db
 	}
 	
 	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "d", "", "")//CobraFlagsCreation
+	req_EngineIDFlag = flags.NewStrP(cmd, "engine-i-d", "e", "", "")//CobraFlagsCreation
+	
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "s", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
-	req_EngineIDFlag = flags.NewStrP(cmd, "engine-i-d", "e", "", "")//CobraFlagsCreation
-	
 
 
-	
-	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("engine-i-d")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

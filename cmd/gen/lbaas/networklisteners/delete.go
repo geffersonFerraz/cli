@@ -31,7 +31,7 @@ func Delete(ctx context.Context, parent *cobra.Command, networkListenerService l
 
 	cmd := &cobra.Command{
 		Use:     "delete",
-		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
+		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

@@ -31,7 +31,7 @@ func UnbookCIDR(ctx context.Context, parent *cobra.Command, subnetPoolService ne
 
 	cmd := &cobra.Command{
 		Use:     "unbook-c-i-d-r",
-		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
+		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

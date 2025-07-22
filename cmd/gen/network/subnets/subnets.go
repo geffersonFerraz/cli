@@ -19,7 +19,7 @@ import (
 func SubnetsCmd(ctx context.Context, parent *cobra.Command, subnetService networkSdk.SubnetService) {
 	cmd := &cobra.Command{
 		Use:     "subnets",
-		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
+		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
 		Long:    `defaultLongDesc 4`,
 		
 	}

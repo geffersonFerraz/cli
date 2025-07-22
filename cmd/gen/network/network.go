@@ -37,8 +37,10 @@ import (
 func NetworkCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
 	cmd := &cobra.Command{
 		Use:     "network",
-		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
-		Long:    `menu.LongDescription 3`,
+		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
+		Long:    `Package network provides a client for interacting with the Magalu Cloud Network API.
+This package allows you to manage VPCs, subnets, ports, security groups, rules, public IPs, subnet pools, and NAT gateways.
+`,
 		Aliases: []string{
 			"networks","net","vpc",
 		},

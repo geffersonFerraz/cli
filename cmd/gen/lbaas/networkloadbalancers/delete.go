@@ -23,15 +23,15 @@ import (
 
 func Delete(ctx context.Context, parent *cobra.Command, networkLoadBalancerService lbaasSdk.NetworkLoadBalancerService) {
 	
-	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_DeletePublicIPFlag *flags.BoolFlag //CobraFlagsDefinition
+	
+	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "delete",
-		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
+		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -43,12 +43,12 @@ func Delete(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 
 			
 			
-			if req_LoadBalancerIDFlag.IsChanged() {
-				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_DeletePublicIPFlag.IsChanged() {
 				req.DeletePublicIP = req_DeletePublicIPFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_LoadBalancerIDFlag.IsChanged() {
+				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -65,9 +65,9 @@ func Delete(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	}
 	
 	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
+	req_DeletePublicIPFlag = flags.NewBoolP(cmd, "delete-public-i-p", "d", false, "")//CobraFlagsCreation
 	
-	req_DeletePublicIPFlag = flags.NewBoolP(cmd, "delete-public-i-p", "e", false, "")//CobraFlagsCreation
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
 
 

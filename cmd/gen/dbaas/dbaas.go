@@ -35,8 +35,10 @@ import (
 func DbaasCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
 	cmd := &cobra.Command{
 		Use:     "dbaas",
-		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
-		Long:    `menu.LongDescription 3`,
+		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
+		Long:    `Package dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.
+This package allows you to manage database instances, clusters, replicas, engines, instance types, and parameters.
+`,
 		Aliases: []string{
 			"db","database",
 		},

@@ -25,11 +25,11 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, clusterService dbaasSdk.ClusterService) {
 	
+	var opts_VolumeSizeFlag *flags.IntFlag //CobraFlagsDefinition
+	
 	var opts_ParameterGroupIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
-	
-	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_EngineIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -41,13 +41,13 @@ func List(ctx context.Context, parent *cobra.Command, clusterService dbaasSdk.Cl
 	
 	var opts_VolumeSizeLteFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var opts_VolumeSizeFlag *flags.IntFlag //CobraFlagsDefinition
+	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list",
-		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
+		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -59,16 +59,16 @@ func List(ctx context.Context, parent *cobra.Command, clusterService dbaasSdk.Cl
 
 			
 			
+			if opts_VolumeSizeFlag.IsChanged() {
+				opts.VolumeSize = opts_VolumeSizeFlag.Value
+			}// CobraFlagsAssign
+			
 			if opts_ParameterGroupIDFlag.IsChanged() {
 				opts.ParameterGroupID = opts_ParameterGroupIDFlag.Value
 			}// CobraFlagsAssign
 			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_LimitFlag.IsChanged() {
-				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
 			
 			if opts_EngineIDFlag.IsChanged() {
@@ -91,8 +91,8 @@ func List(ctx context.Context, parent *cobra.Command, clusterService dbaasSdk.Cl
 				opts.VolumeSizeLte = opts_VolumeSizeLteFlag.Value
 			}// CobraFlagsAssign
 			
-			if opts_VolumeSizeFlag.IsChanged() {
-				opts.VolumeSize = opts_VolumeSizeFlag.Value
+			if opts_LimitFlag.IsChanged() {
+				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -119,15 +119,15 @@ func List(ctx context.Context, parent *cobra.Command, clusterService dbaasSdk.Cl
 	}
 	
 	
+	opts_VolumeSizeFlag = flags.NewIntP(cmd, "volume-size", "v", 0, "")//CobraFlagsCreation
+	
 	opts_ParameterGroupIDFlag = flags.NewStrP(cmd, "parameter-group-i-d", "p", "", "")//CobraFlagsCreation
 	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
-	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
-	
 	opts_EngineIDFlag = flags.NewStrP(cmd, "engine-i-d", "e", "", "")//CobraFlagsCreation
 	
-	opts_VolumeSizeGtFlag = flags.NewIntP(cmd, "volume-size-gt", "v", 0, "")//CobraFlagsCreation
+	opts_VolumeSizeGtFlag = flags.NewIntP(cmd, "volume-size-gt", "l", 0, "")//CobraFlagsCreation
 	
 	opts_VolumeSizeGteFlag = flags.NewIntP(cmd, "volume-size-gte", "u", 0, "")//CobraFlagsCreation
 	
@@ -135,7 +135,7 @@ func List(ctx context.Context, parent *cobra.Command, clusterService dbaasSdk.Cl
 	
 	opts_VolumeSizeLteFlag = flags.NewIntP(cmd, "volume-size-lte", "s", 0, "")//CobraFlagsCreation
 	
-	opts_VolumeSizeFlag = flags.NewIntP(cmd, "volume-size", "i", 0, "")//CobraFlagsCreation
+	opts_LimitFlag = flags.NewIntP(cmd, "limit", "i", 0, "")//CobraFlagsCreation
 	
 
 

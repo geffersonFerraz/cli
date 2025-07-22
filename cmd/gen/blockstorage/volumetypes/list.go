@@ -35,7 +35,7 @@ func List(ctx context.Context, parent *cobra.Command, volumeTypeService blocksto
 
 	cmd := &cobra.Command{
 		Use:     "list",
-		Short:   "Volumes, VolumeTypes, Snapshots.",
+		Short:   "Blockstorage provides functionality to interact with the MagaluCloud block storage service.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

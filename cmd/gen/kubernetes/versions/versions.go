@@ -19,7 +19,7 @@ import (
 func VersionsCmd(ctx context.Context, parent *cobra.Command, versionService kubernetesSdk.VersionService) {
 	cmd := &cobra.Command{
 		Use:     "versions",
-		Short:   "Clusters, Flavors, Nodepools, Versions.",
+		Short:   "Kubernetes provides a client for interacting with the Magalu Cloud Kubernetes API.",
 		Long:    `defaultLongDesc 4`,
 		
 	}

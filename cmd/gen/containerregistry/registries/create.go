@@ -31,7 +31,7 @@ func Create(ctx context.Context, parent *cobra.Command, registriesService contai
 
 	cmd := &cobra.Command{
 		Use:     "create",
-		Short:   "Credentials, Registries, Repositories, Images.",
+		Short:   "Containerregistry provides a client for interacting with the Magalu Cloud Container Registry API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

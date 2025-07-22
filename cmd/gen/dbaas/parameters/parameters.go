@@ -19,7 +19,7 @@ import (
 func ParametersCmd(ctx context.Context, parent *cobra.Command, parameterService dbaasSdk.ParameterService) {
 	cmd := &cobra.Command{
 		Use:     "parameters",
-		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
+		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
 		Long:    `defaultLongDesc 4`,
 		
 	}

@@ -29,8 +29,10 @@ import (
 func KubernetesCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
 	cmd := &cobra.Command{
 		Use:     "kubernetes",
-		Short:   "Clusters, Flavors, Nodepools, Versions.",
-		Long:    `menu.LongDescription 3`,
+		Short:   "Kubernetes provides a client for interacting with the Magalu Cloud Kubernetes API.",
+		Long:    `Package kubernetes provides a client for interacting with the Magalu Cloud Kubernetes API.
+This package allows you to manage Kubernetes clusters, node pools, flavors, and versions.
+`,
 		Aliases: []string{
 			"k8s",
 		},

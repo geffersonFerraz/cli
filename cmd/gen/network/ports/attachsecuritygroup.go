@@ -31,7 +31,7 @@ func AttachSecurityGroup(ctx context.Context, parent *cobra.Command, portService
 
 	cmd := &cobra.Command{
 		Use:     "attach-security-group",
-		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
+		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

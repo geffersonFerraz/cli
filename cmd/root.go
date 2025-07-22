@@ -149,7 +149,7 @@ func beautifulPrint(cmd *cobra.Command) {
 			if len(ungroupedCommands) > 0 {
 				fmt.Println()
 				ungroupedColor := color.New(color.FgMagenta, color.Bold)
-				ungroupedColor.Println("🔧 " + manager.T("cli.other_commands") + ":")
+				ungroupedColor.Println(manager.T("cli.other_commands") + ":")
 
 				for _, subCmd := range ungroupedCommands {
 					cmdName := color.New(color.FgCyan, color.Bold)
@@ -266,7 +266,7 @@ func beautifulPrint(cmd *cobra.Command) {
 			if len(ungroupedCommands) > 0 {
 				fmt.Println()
 				ungroupedColor := color.New(color.FgMagenta, color.Bold)
-				ungroupedColor.Println("🔧 " + manager.T("cli.other_commands") + ":")
+				ungroupedColor.Println(manager.T("cli.other_commands") + ":")
 
 				for _, subCmd := range ungroupedCommands {
 					cmdName := color.New(color.FgCyan)

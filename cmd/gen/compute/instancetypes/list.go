@@ -25,19 +25,19 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, instanceTypeService computeSdk.InstanceTypeService) {
 	
-	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var opts_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
+	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list",
-		Short:   "Instances, Images, InstanceTypes, Snapshots.",
+		Short:   "Compute provides functionality to interact with the MagaluCloud compute service.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -49,10 +49,6 @@ func List(ctx context.Context, parent *cobra.Command, instanceTypeService comput
 
 			
 			
-			if opts_LimitFlag.IsChanged() {
-				opts.Limit = opts_LimitFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
@@ -63,6 +59,10 @@ func List(ctx context.Context, parent *cobra.Command, instanceTypeService comput
 			
 			if opts_AvailabilityZoneFlag.IsChanged() {
 				opts.AvailabilityZone = *opts_AvailabilityZoneFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_LimitFlag.IsChanged() {
+				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -89,13 +89,13 @@ func List(ctx context.Context, parent *cobra.Command, instanceTypeService comput
 	}
 	
 	
-	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
-	
-	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
+	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "o", 0, "")//CobraFlagsCreation
 	
 	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
 	opts_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "a", "", "")//CobraFlagsCreation
+	
+	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 
 

@@ -29,7 +29,7 @@ func Delete(ctx context.Context, parent *cobra.Command, natGatewayService networ
 
 	cmd := &cobra.Command{
 		Use:     "delete",
-		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
+		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

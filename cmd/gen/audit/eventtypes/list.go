@@ -35,7 +35,7 @@ func List(ctx context.Context, parent *cobra.Command, eventTypeService auditSdk.
 
 	cmd := &cobra.Command{
 		Use:     "list",
-		Short:   "Events, EventTypes.",
+		Short:   "Audit provides functionality to interact with the MagaluCloud audit service.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

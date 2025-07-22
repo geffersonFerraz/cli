@@ -33,7 +33,7 @@ func InitLog(ctx context.Context, parent *cobra.Command, instanceService compute
 
 	cmd := &cobra.Command{
 		Use:     "init-log",
-		Short:   "Instances, Images, InstanceTypes, Snapshots.",
+		Short:   "Compute provides functionality to interact with the MagaluCloud compute service.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

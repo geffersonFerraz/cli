@@ -29,7 +29,7 @@ func Start(ctx context.Context, parent *cobra.Command, instanceService computeSd
 
 	cmd := &cobra.Command{
 		Use:     "start",
-		Short:   "Instances, Images, InstanceTypes, Snapshots.",
+		Short:   "Compute provides functionality to interact with the MagaluCloud compute service.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

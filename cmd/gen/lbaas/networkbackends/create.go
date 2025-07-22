@@ -25,19 +25,19 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, networkBackendService lbaasSdk.NetworkBackendService) {
 	
-	var req_HealthCheckIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_HealthCheckIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
-		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
+		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -49,20 +49,20 @@ func Create(ctx context.Context, parent *cobra.Command, networkBackendService lb
 
 			
 			
-			if req_HealthCheckIDFlag.IsChanged() {
-				req.HealthCheckID = req_HealthCheckIDFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_LoadBalancerIDFlag.IsChanged() {
-				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_HealthCheckIDFlag.IsChanged() {
+				req.HealthCheckID = req_HealthCheckIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_LoadBalancerIDFlag.IsChanged() {
+				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -89,20 +89,20 @@ func Create(ctx context.Context, parent *cobra.Command, networkBackendService lb
 	}
 	
 	
-	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-i-d", "h", "", "")//CobraFlagsCreation
-	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
-	
-	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
+	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
-
-
+	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-i-d", "a", "", "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
+	
+
+
 	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

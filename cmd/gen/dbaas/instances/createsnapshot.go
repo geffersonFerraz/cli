@@ -27,15 +27,15 @@ func CreateSnapshot(ctx context.Context, parent *cobra.Command, instanceService 
 	
 	var instanceIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create-snapshot",
-		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
+		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -53,12 +53,12 @@ func CreateSnapshot(ctx context.Context, parent *cobra.Command, instanceService 
 				instanceID = *instanceIDFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_DescriptionFlag.IsChanged() {
-				req.Description = req_DescriptionFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_DescriptionFlag.IsChanged() {
+				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -87,9 +87,9 @@ func CreateSnapshot(ctx context.Context, parent *cobra.Command, instanceService 
 	
 	instanceIDFlag = flags.NewStrP(cmd, "instance-i-d", "i", "", "")//CobraFlagsCreation
 	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
-	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
+	
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
 
 

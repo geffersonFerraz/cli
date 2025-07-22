@@ -31,7 +31,7 @@ func Get(ctx context.Context, parent *cobra.Command, clusterService dbaasSdk.Clu
 
 	cmd := &cobra.Command{
 		Use:     "get",
-		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
+		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

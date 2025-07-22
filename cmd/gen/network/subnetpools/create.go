@@ -25,19 +25,19 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, subnetPoolService networkSdk.SubnetPoolService) {
 	
+	var req_CIDRFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_TypeFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_CIDRFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
-		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
+		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -49,6 +49,10 @@ func Create(ctx context.Context, parent *cobra.Command, subnetPoolService networ
 
 			
 			
+			if req_CIDRFlag.IsChanged() {
+				req.CIDR = req_CIDRFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
@@ -59,10 +63,6 @@ func Create(ctx context.Context, parent *cobra.Command, subnetPoolService networ
 			
 			if req_TypeFlag.IsChanged() {
 				req.Type = req_TypeFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_CIDRFlag.IsChanged() {
-				req.CIDR = req_CIDRFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -89,13 +89,13 @@ func Create(ctx context.Context, parent *cobra.Command, subnetPoolService networ
 	}
 	
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
+	req_CIDRFlag = flags.NewStrP(cmd, "c-i-d-r", "c", "", "")//CobraFlagsCreation
+	
+	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
 	req_TypeFlag = flags.NewStrP(cmd, "type", "t", "", "")//CobraFlagsCreation
-	
-	req_CIDRFlag = flags.NewStrP(cmd, "c-i-d-r", "c", "", "")//CobraFlagsCreation
 	
 
 

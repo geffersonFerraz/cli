@@ -33,7 +33,7 @@ func Retype(ctx context.Context, parent *cobra.Command, volumeService blockstora
 
 	cmd := &cobra.Command{
 		Use:     "retype",
-		Short:   "Volumes, VolumeTypes, Snapshots.",
+		Short:   "Blockstorage provides functionality to interact with the MagaluCloud block storage service.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

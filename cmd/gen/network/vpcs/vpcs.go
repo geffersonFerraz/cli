@@ -19,7 +19,7 @@ import (
 func VPCsCmd(ctx context.Context, parent *cobra.Command, vPCService networkSdk.VPCService) {
 	cmd := &cobra.Command{
 		Use:     "v-p-cs",
-		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
+		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
 		Long:    `defaultLongDesc 4`,
 		
 	}

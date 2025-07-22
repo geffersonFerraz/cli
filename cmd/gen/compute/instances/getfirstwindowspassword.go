@@ -31,7 +31,7 @@ func GetFirstWindowsPassword(ctx context.Context, parent *cobra.Command, instanc
 
 	cmd := &cobra.Command{
 		Use:     "get-first-windows-password",
-		Short:   "Instances, Images, InstanceTypes, Snapshots.",
+		Short:   "Compute provides functionality to interact with the MagaluCloud compute service.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

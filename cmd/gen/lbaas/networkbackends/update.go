@@ -29,19 +29,19 @@ func Update(ctx context.Context, parent *cobra.Command, networkBackendService lb
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_TargetsInstancesFlag *flags.JSONArrayValue[lbaasSdk.NetworkBackendInstanceRequest] //CobraFlagsDefinition
-	
-	var req_HealthCheckIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var req_TargetsInstancesFlag *flags.JSONArrayValue[lbaasSdk.NetworkBackendInstanceRequest] //CobraFlagsDefinition
+	
 	var req_TargetsRawFlag *flags.JSONArrayValue[lbaasSdk.NetworkBackendRawTargetRequest] //CobraFlagsDefinition
+	
+	var req_HealthCheckIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "update",
-		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
+		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -65,20 +65,20 @@ func Update(ctx context.Context, parent *cobra.Command, networkBackendService lb
 				req.Name = req_NameFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_TargetsInstancesFlag.IsChanged() {
-				req.TargetsInstances = req_TargetsInstancesFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_HealthCheckIDFlag.IsChanged() {
-				req.HealthCheckID = req_HealthCheckIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_TargetsInstancesFlag.IsChanged() {
+				req.TargetsInstances = req_TargetsInstancesFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_TargetsRawFlag.IsChanged() {
 				req.TargetsRaw = req_TargetsRawFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_HealthCheckIDFlag.IsChanged() {
+				req.HealthCheckID = req_HealthCheckIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -101,13 +101,13 @@ func Update(ctx context.Context, parent *cobra.Command, networkBackendService lb
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
+	
 	req_TargetsInstancesFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkBackendInstanceRequest](cmd, "targets-instances", "t", "",)//CobraFlagsCreation
 	
-	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-i-d", "e", "", "")//CobraFlagsCreation
-	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "s", "", "")//CobraFlagsCreation
-	
 	req_TargetsRawFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkBackendRawTargetRequest](cmd, "targets-raw", "g", "",)//CobraFlagsCreation
+	
+	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-i-d", "c", "", "")//CobraFlagsCreation
 	
 
 

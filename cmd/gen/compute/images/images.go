@@ -19,7 +19,7 @@ import (
 func ImagesCmd(ctx context.Context, parent *cobra.Command, imageService computeSdk.ImageService) {
 	cmd := &cobra.Command{
 		Use:     "images",
-		Short:   "Instances, Images, InstanceTypes, Snapshots.",
+		Short:   "Compute provides functionality to interact with the MagaluCloud compute service.",
 		Long:    `defaultLongDesc 4`,
 		
 	}

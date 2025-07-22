@@ -19,7 +19,7 @@ import (
 func CredentialsCmd(ctx context.Context, parent *cobra.Command, credentialsService containerregistrySdk.CredentialsService) {
 	cmd := &cobra.Command{
 		Use:     "credentials",
-		Short:   "Credentials, Registries, Repositories, Images.",
+		Short:   "Containerregistry provides a client for interacting with the Magalu Cloud Container Registry API.",
 		Long:    `defaultLongDesc 4`,
 		
 	}

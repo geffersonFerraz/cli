@@ -27,15 +27,15 @@ func BookCIDR(ctx context.Context, parent *cobra.Command, subnetPoolService netw
 	
 	var idFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_MaskFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	var req_CIDRFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_MaskFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "book-c-i-d-r",
-		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
+		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -53,12 +53,12 @@ func BookCIDR(ctx context.Context, parent *cobra.Command, subnetPoolService netw
 				id = *idFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_MaskFlag.IsChanged() {
-				req.Mask = req_MaskFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_CIDRFlag.IsChanged() {
 				req.CIDR = req_CIDRFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_MaskFlag.IsChanged() {
+				req.Mask = req_MaskFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -87,9 +87,9 @@ func BookCIDR(ctx context.Context, parent *cobra.Command, subnetPoolService netw
 	
 	idFlag = flags.NewStrP(cmd, "id", "i", "", "")//CobraFlagsCreation
 	
-	req_MaskFlag = flags.NewIntP(cmd, "mask", "m", 0, "")//CobraFlagsCreation
-	
 	req_CIDRFlag = flags.NewStrP(cmd, "c-i-d-r", "c", "", "")//CobraFlagsCreation
+	
+	req_MaskFlag = flags.NewIntP(cmd, "mask", "m", 0, "")//CobraFlagsCreation
 	
 
 

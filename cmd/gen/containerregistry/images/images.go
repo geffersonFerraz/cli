@@ -19,7 +19,7 @@ import (
 func ImagesCmd(ctx context.Context, parent *cobra.Command, imagesService containerregistrySdk.ImagesService) {
 	cmd := &cobra.Command{
 		Use:     "images",
-		Short:   "Credentials, Registries, Repositories, Images.",
+		Short:   "Containerregistry provides a client for interacting with the Magalu Cloud Container Registry API.",
 		Long:    `defaultLongDesc 4`,
 		
 	}

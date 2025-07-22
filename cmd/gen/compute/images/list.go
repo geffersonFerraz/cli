@@ -39,7 +39,7 @@ func List(ctx context.Context, parent *cobra.Command, imageService computeSdk.Im
 
 	cmd := &cobra.Command{
 		Use:     "list",
-		Short:   "Instances, Images, InstanceTypes, Snapshots.",
+		Short:   "Compute provides functionality to interact with the MagaluCloud compute service.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			

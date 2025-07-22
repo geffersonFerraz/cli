@@ -25,19 +25,19 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, instanceTypeService dbaasSdk.InstanceTypeService) {
 	
-	var opts_EngineIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_StatusFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var opts_EngineIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list",
-		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
+		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -49,10 +49,6 @@ func List(ctx context.Context, parent *cobra.Command, instanceTypeService dbaasS
 
 			
 			
-			if opts_EngineIDFlag.IsChanged() {
-				opts.EngineID = opts_EngineIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
@@ -63,6 +59,10 @@ func List(ctx context.Context, parent *cobra.Command, instanceTypeService dbaasS
 			
 			if opts_StatusFlag.IsChanged() {
 				opts.Status = opts_StatusFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_EngineIDFlag.IsChanged() {
+				opts.EngineID = opts_EngineIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -89,13 +89,13 @@ func List(ctx context.Context, parent *cobra.Command, instanceTypeService dbaasS
 	}
 	
 	
-	opts_EngineIDFlag = flags.NewStrP(cmd, "engine-i-d", "e", "", "")//CobraFlagsCreation
-	
-	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
+	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "o", 0, "")//CobraFlagsCreation
 	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_StatusFlag = flags.NewStrP(cmd, "status", "s", "", "")//CobraFlagsCreation
+	
+	opts_EngineIDFlag = flags.NewStrP(cmd, "engine-i-d", "e", "", "")//CobraFlagsCreation
 	
 
 

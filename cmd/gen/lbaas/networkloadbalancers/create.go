@@ -25,9 +25,15 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerService lbaasSdk.NetworkLoadBalancerService) {
 	
-	var req_BackendsFlag *flags.JSONArrayValue[lbaasSdk.NetworkBackendRequest] //CobraFlagsDefinition
+	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_TypeFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_ListenersFlag *flags.JSONArrayValue[lbaasSdk.NetworkListenerRequest] //CobraFlagsDefinition
 	
 	var req_HealthChecksFlag *flags.JSONArrayValue[lbaasSdk.NetworkHealthCheckRequest] //CobraFlagsDefinition
+	
+	var req_TLSCertificatesFlag *flags.JSONArrayValue[lbaasSdk.NetworkTLSCertificateRequest] //CobraFlagsDefinition
 	
 	var req_ACLsFlag *flags.JSONArrayValue[lbaasSdk.NetworkAclRequest] //CobraFlagsDefinition
 	
@@ -35,9 +41,7 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_TLSCertificatesFlag *flags.JSONArrayValue[lbaasSdk.NetworkTLSCertificateRequest] //CobraFlagsDefinition
+	var req_BackendsFlag *flags.JSONArrayValue[lbaasSdk.NetworkBackendRequest] //CobraFlagsDefinition
 	
 	var req_SubnetPoolIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -45,15 +49,11 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	
 	var req_PanicThresholdFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var req_TypeFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_ListenersFlag *flags.JSONArrayValue[lbaasSdk.NetworkListenerRequest] //CobraFlagsDefinition
-	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
-		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
+		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
@@ -65,12 +65,24 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 
 			
 			
-			if req_BackendsFlag.IsChanged() {
-				req.Backends = *req_BackendsFlag.Value
+			if req_DescriptionFlag.IsChanged() {
+				req.Description = req_DescriptionFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_TypeFlag.IsChanged() {
+				req.Type = req_TypeFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_ListenersFlag.IsChanged() {
+				req.Listeners = *req_ListenersFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_HealthChecksFlag.IsChanged() {
 				req.HealthChecks = *req_HealthChecksFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_TLSCertificatesFlag.IsChanged() {
+				req.TLSCertificates = *req_TLSCertificatesFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_ACLsFlag.IsChanged() {
@@ -85,12 +97,8 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_DescriptionFlag.IsChanged() {
-				req.Description = req_DescriptionFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_TLSCertificatesFlag.IsChanged() {
-				req.TLSCertificates = *req_TLSCertificatesFlag.Value
+			if req_BackendsFlag.IsChanged() {
+				req.Backends = *req_BackendsFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_SubnetPoolIDFlag.IsChanged() {
@@ -103,14 +111,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 			
 			if req_PanicThresholdFlag.IsChanged() {
 				req.PanicThreshold = req_PanicThresholdFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_TypeFlag.IsChanged() {
-				req.Type = req_TypeFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_ListenersFlag.IsChanged() {
-				req.Listeners = *req_ListenersFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -137,9 +137,15 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	}
 	
 	
-	req_BackendsFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkBackendRequest](cmd, "backends", "b", "",)//CobraFlagsCreation
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "d", "", "")//CobraFlagsCreation
+	
+	req_TypeFlag = flags.NewStrP(cmd, "type", "t", "", "")//CobraFlagsCreation
+	
+	req_ListenersFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkListenerRequest](cmd, "listeners", "l", "",)//CobraFlagsCreation
 	
 	req_HealthChecksFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkHealthCheckRequest](cmd, "health-checks", "e", "",)//CobraFlagsCreation
+	
+	req_TLSCertificatesFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkTLSCertificateRequest](cmd, "t-l-s-certificates", "s", "",)//CobraFlagsCreation
 	
 	req_ACLsFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkAclRequest](cmd, "a-c-ls", "a", "",)//CobraFlagsCreation
 	
@@ -147,19 +153,13 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
 	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "s", "", "")//CobraFlagsCreation
-	
-	req_TLSCertificatesFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkTLSCertificateRequest](cmd, "t-l-s-certificates", "t", "",)//CobraFlagsCreation
+	req_BackendsFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkBackendRequest](cmd, "backends", "b", "",)//CobraFlagsCreation
 	
 	req_SubnetPoolIDFlag = flags.NewStrP(cmd, "subnet-pool-i-d", "u", "", "")//CobraFlagsCreation
 	
 	req_PublicIPIDFlag = flags.NewStrP(cmd, "public-i-p-i-d", "p", "", "")//CobraFlagsCreation
 	
 	req_PanicThresholdFlag = flags.NewIntP(cmd, "panic-threshold", "i", 0, "")//CobraFlagsCreation
-	
-	req_TypeFlag = flags.NewStrP(cmd, "type", "y", "", "")//CobraFlagsCreation
-	
-	req_ListenersFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkListenerRequest](cmd, "listeners", "l", "",)//CobraFlagsCreation
 	
 
 

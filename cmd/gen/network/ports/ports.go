@@ -19,7 +19,7 @@ import (
 func PortsCmd(ctx context.Context, parent *cobra.Command, portService networkSdk.PortService) {
 	cmd := &cobra.Command{
 		Use:     "ports",
-		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
+		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
 		Long:    `defaultLongDesc 4`,
 		
 	}

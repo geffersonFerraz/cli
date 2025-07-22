@@ -29,8 +29,10 @@ import (
 func ContainerregistryCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
 	cmd := &cobra.Command{
 		Use:     "container-registry",
-		Short:   "Credentials, Registries, Repositories, Images.",
-		Long:    `menu.LongDescription 3`,
+		Short:   "Containerregistry provides a client for interacting with the Magalu Cloud Container Registry API.",
+		Long:    `Package containerregistry provides a client for interacting with the Magalu Cloud Container Registry API.
+This package allows you to manage container registries, repositories, images, and credentials.
+`,
 		Aliases: []string{
 			"cr",
 		},

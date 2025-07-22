@@ -27,7 +27,7 @@ func List(ctx context.Context, parent *cobra.Command, securityGroupService netwo
 
 	cmd := &cobra.Command{
 		Use:     "list",
-		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
+		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
 		Long:    `defaultLongDesc 3`,
 		Run: func(cmd *cobra.Command, args []string) {
 			
