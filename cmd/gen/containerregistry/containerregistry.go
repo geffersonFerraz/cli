@@ -16,13 +16,13 @@ import (
 	
 	containerregistrySdk "github.com/MagaluCloud/mgc-sdk-go/containerregistry"
 	
-	"mgccli/cmd/gen/containerregistry/credentials"
+	"gfcli/cmd/gen/containerregistry/credentials"
 	
-	"mgccli/cmd/gen/containerregistry/registries"
+	"gfcli/cmd/gen/containerregistry/registries"
 	
-	"mgccli/cmd/gen/containerregistry/repositories"
+	"gfcli/cmd/gen/containerregistry/repositories"
 	
-	"mgccli/cmd/gen/containerregistry/images"
+	"gfcli/cmd/gen/containerregistry/images"
 	
 )
 
@@ -32,9 +32,7 @@ func ContainerregistryCmd(ctx context.Context, parent *cobra.Command, sdkCoreCon
 		Short:   "Credentials, Registries, Repositories, Images.",
 		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
-		//	
-		//	"cr",
-	//		
+			"cr",
 		},
 		GroupID: "products",
 	}

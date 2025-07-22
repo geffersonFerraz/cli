@@ -14,11 +14,11 @@ import (
 	
 	kubernetesSdk "github.com/MagaluCloud/mgc-sdk-go/kubernetes"
 	
-	flags "mgccli/cobra_utils/flags"
+	flags "gfcli/cobra_utils/flags"
 	
 	"encoding/json"
 	
-	"mgccli/cmd_utils"
+	"gfcli/cmd_utils"
 	
 	"fmt"
 )
@@ -26,8 +26,6 @@ import (
 func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernetesSdk.NodePoolService) {
 	
 	var clusterIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_TaintsFlag *flags.JSONArrayValue[kubernetesSdk.Taint] //CobraFlagsDefinition
 	
 	var req_MaxPodsPerNodeFlag *flags.IntFlag //CobraFlagsDefinition
 	
@@ -40,6 +38,8 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 	var req_ReplicasFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_TagsFlag *flags.StrSliceFlag //CobraFlagsDefinition
+	
+	var req_TaintsFlag *flags.JSONArrayValue[kubernetesSdk.Taint] //CobraFlagsDefinition
 	
 	
 
@@ -61,10 +61,6 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 			
 			if clusterIDFlag.IsChanged() {
 				clusterID = *clusterIDFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_TaintsFlag.IsChanged() {
-				req.Taints = req_TaintsFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_MaxPodsPerNodeFlag.IsChanged() {
@@ -89,6 +85,10 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 			
 			if req_TagsFlag.IsChanged() {
 				req.Tags = req_TagsFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_TaintsFlag.IsChanged() {
+				req.Taints = req_TaintsFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -117,8 +117,6 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 	
 	clusterIDFlag = flags.NewStrP(cmd, "cluster-i-d", "c", "", "")//CobraFlagsCreation
 	
-	req_TaintsFlag = flags.NewJSONArrayValueP[kubernetesSdk.Taint](cmd, "taints", "t", "",)//CobraFlagsCreation
-	
 	req_MaxPodsPerNodeFlag = flags.NewIntP(cmd, "max-pods-per-node", "m", 0, "")//CobraFlagsCreation
 	
 	req_AvailabilityZonesFlag = flags.NewStrSliceP(cmd, "availability-zones", "a", []string{}, "")//CobraFlagsCreation
@@ -129,7 +127,9 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 	
 	req_ReplicasFlag = flags.NewIntP(cmd, "replicas", "p", 0, "")//CobraFlagsCreation
 	
-	req_TagsFlag = flags.NewStrSliceP(cmd, "tags", "g", []string{}, "")//CobraFlagsCreation
+	req_TagsFlag = flags.NewStrSliceP(cmd, "tags", "t", []string{}, "")//CobraFlagsCreation
+	
+	req_TaintsFlag = flags.NewJSONArrayValueP[kubernetesSdk.Taint](cmd, "taints", "i", "",)//CobraFlagsCreation
 	
 
 

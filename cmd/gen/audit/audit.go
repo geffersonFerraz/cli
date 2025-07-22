@@ -16,9 +16,9 @@ import (
 	
 	auditSdk "github.com/MagaluCloud/mgc-sdk-go/audit"
 	
-	"mgccli/cmd/gen/audit/events"
+	"gfcli/cmd/gen/audit/events"
 	
-	"mgccli/cmd/gen/audit/eventtypes"
+	"gfcli/cmd/gen/audit/eventtypes"
 	
 )
 

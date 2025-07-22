@@ -16,7 +16,7 @@ import (
 	
 	"github.com/spf13/cobra"
 	
-	"mgccli/cmd/gen/profile/sshkeys/keys"
+	"gfcli/cmd/gen/profile/sshkeys/keys"
 	
 )
 

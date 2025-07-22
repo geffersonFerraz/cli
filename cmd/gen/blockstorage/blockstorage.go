@@ -16,11 +16,11 @@ import (
 	
 	blockstorageSdk "github.com/MagaluCloud/mgc-sdk-go/blockstorage"
 	
-	"mgccli/cmd/gen/blockstorage/volumes"
+	"gfcli/cmd/gen/blockstorage/volumes"
 	
-	"mgccli/cmd/gen/blockstorage/volumetypes"
+	"gfcli/cmd/gen/blockstorage/volumetypes"
 	
-	"mgccli/cmd/gen/blockstorage/snapshots"
+	"gfcli/cmd/gen/blockstorage/snapshots"
 	
 )
 
@@ -30,9 +30,7 @@ func BlockstorageCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig s
 		Short:   "Volumes, VolumeTypes, Snapshots.",
 		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
-		//	
-		//	"bs",
-	//		
+			"bs",
 		},
 		GroupID: "products",
 	}

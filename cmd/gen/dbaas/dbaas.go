@@ -16,19 +16,19 @@ import (
 	
 	dbaasSdk "github.com/MagaluCloud/mgc-sdk-go/dbaas"
 	
-	"mgccli/cmd/gen/dbaas/engines"
+	"gfcli/cmd/gen/dbaas/engines"
 	
-	"mgccli/cmd/gen/dbaas/instancetypes"
+	"gfcli/cmd/gen/dbaas/instancetypes"
 	
-	"mgccli/cmd/gen/dbaas/instances"
+	"gfcli/cmd/gen/dbaas/instances"
 	
-	"mgccli/cmd/gen/dbaas/replicas"
+	"gfcli/cmd/gen/dbaas/replicas"
 	
-	"mgccli/cmd/gen/dbaas/parametersgroup"
+	"gfcli/cmd/gen/dbaas/parametersgroup"
 	
-	"mgccli/cmd/gen/dbaas/parameters"
+	"gfcli/cmd/gen/dbaas/parameters"
 	
-	"mgccli/cmd/gen/dbaas/clusters"
+	"gfcli/cmd/gen/dbaas/clusters"
 	
 )
 
@@ -38,11 +38,7 @@ func DbaasCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.Core
 		Short:   "Engines, InstanceTypes, Instances, Replicas, ParametersGroup, Parameters...",
 		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
-		//	
-		//	"db",
-	//		
-		//	"database",
-	//		
+			"db","database",
 		},
 		GroupID: "products",
 	}

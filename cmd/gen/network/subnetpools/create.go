@@ -14,24 +14,24 @@ import (
 	
 	networkSdk "github.com/MagaluCloud/mgc-sdk-go/network"
 	
-	flags "mgccli/cobra_utils/flags"
+	flags "gfcli/cobra_utils/flags"
 	
 	"encoding/json"
 	
-	"mgccli/cmd_utils"
+	"gfcli/cmd_utils"
 	
 	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, subnetPoolService networkSdk.SubnetPoolService) {
 	
-	var req_TypeFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_CIDRFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_TypeFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_CIDRFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -49,20 +49,20 @@ func Create(ctx context.Context, parent *cobra.Command, subnetPoolService networ
 
 			
 			
-			if req_TypeFlag.IsChanged() {
-				req.Type = req_TypeFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_CIDRFlag.IsChanged() {
-				req.CIDR = req_CIDRFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = *req_DescriptionFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_TypeFlag.IsChanged() {
+				req.Type = req_TypeFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_CIDRFlag.IsChanged() {
+				req.CIDR = req_CIDRFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -89,13 +89,13 @@ func Create(ctx context.Context, parent *cobra.Command, subnetPoolService networ
 	}
 	
 	
+	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
+	
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
+	
 	req_TypeFlag = flags.NewStrP(cmd, "type", "t", "", "")//CobraFlagsCreation
 	
 	req_CIDRFlag = flags.NewStrP(cmd, "c-i-d-r", "c", "", "")//CobraFlagsCreation
-	
-	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
-	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
 
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"mgccli/i18n"
+	"gfcli/i18n"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -90,10 +90,10 @@ var i18nSetCmd = &cobra.Command{
 		fmt.Println()
 		noteColor := color.New(color.FgYellow)
 		noteColor.Println("Para persistir esta configuração, você pode:")
-		fmt.Println("  1. Definir a variável de ambiente MGC_LANG:")
-		fmt.Printf("     export MGC_LANG=%s\n", code)
+		fmt.Println("  1. Definir a variável de ambiente CLI_LANG:")
+		fmt.Printf("     export CLI_LANG=%s\n", code)
 		fmt.Println("  2. Usar a flag --lang em cada comando:")
-		fmt.Printf("     mgc --lang=%s [comando]\n", code)
+		fmt.Printf("     cli --lang=%s [comando]\n", code)
 
 		return nil
 	},
@@ -119,7 +119,6 @@ var i18nInfoCmd = &cobra.Command{
 
 		fmt.Printf("Código: %s\n", info.Code)
 		fmt.Printf("Nome: %s\n", info.Name)
-		fmt.Printf("Nome Nativo: %s\n", info.NativeName)
 		fmt.Printf("Total de Traduções: %d\n", len(info.Translations))
 
 		// Mostrar algumas traduções de exemplo
@@ -159,15 +158,14 @@ var i18nCurrentCmd = &cobra.Command{
 
 		fmt.Printf("Código: %s\n", info.Code)
 		fmt.Printf("Nome: %s\n", info.Name)
-		fmt.Printf("Nome Nativo: %s\n", info.NativeName)
 
 		// Mostrar como o idioma foi detectado
 		fmt.Println()
 		noteColor := color.New(color.FgYellow)
 		noteColor.Println("Detecção de idioma:")
 
-		if os.Getenv("MGC_LANG") != "" {
-			fmt.Printf("  Definido por MGC_LANG: %s\n", os.Getenv("MGC_LANG"))
+		if os.Getenv("CLI_LANG") != "" {
+			fmt.Printf("  Definido por CLI_LANG: %s\n", os.Getenv("CLI_LANG"))
 		} else if os.Getenv("LANG") != "" {
 			fmt.Printf("  Detectado de LANG: %s\n", os.Getenv("LANG"))
 		} else if os.Getenv("LC_ALL") != "" {

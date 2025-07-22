@@ -7,10 +7,10 @@ import (
 	"log/slog"
 	"os"
 
-	"mgccli/beautiful"
-	"mgccli/cmd/gen"
-	"mgccli/cmd/static"
-	"mgccli/i18n"
+	"gfcli/beautiful"
+	"gfcli/cmd/gen"
+	"gfcli/cmd/static"
+	"gfcli/i18n"
 	"runtime"
 
 	sdk "github.com/MagaluCloud/mgc-sdk-go/client"

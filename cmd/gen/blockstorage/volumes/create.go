@@ -14,28 +14,28 @@ import (
 	
 	blockstorageSdk "github.com/MagaluCloud/mgc-sdk-go/blockstorage"
 	
-	flags "mgccli/cobra_utils/flags"
+	flags "gfcli/cobra_utils/flags"
 	
 	"encoding/json"
 	
-	"mgccli/cmd_utils"
+	"gfcli/cmd_utils"
 	
 	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, volumeService blockstorageSdk.VolumeService) {
 	
+	var req_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_SizeFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var req_Type_IDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_Type_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_EncryptedFlag *flags.BoolFlag //CobraFlagsDefinition
+	var req_Type_IDFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
+	var req_EncryptedFlag *flags.BoolFlag //CobraFlagsDefinition
 	
 	
 
@@ -53,6 +53,10 @@ func Create(ctx context.Context, parent *cobra.Command, volumeService blockstora
 
 			
 			
+			if req_AvailabilityZoneFlag.IsChanged() {
+				req.AvailabilityZone = req_AvailabilityZoneFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
@@ -61,20 +65,16 @@ func Create(ctx context.Context, parent *cobra.Command, volumeService blockstora
 				req.Size = *req_SizeFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_Type_IDFlag.IsChanged() {
-				req.Type.ID = req_Type_IDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_Type_NameFlag.IsChanged() {
 				req.Type.Name = req_Type_NameFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_EncryptedFlag.IsChanged() {
-				req.Encrypted = req_EncryptedFlag.Value
+			if req_Type_IDFlag.IsChanged() {
+				req.Type.ID = req_Type_IDFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_AvailabilityZoneFlag.IsChanged() {
-				req.AvailabilityZone = req_AvailabilityZoneFlag.Value
+			if req_EncryptedFlag.IsChanged() {
+				req.Encrypted = req_EncryptedFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -101,17 +101,17 @@ func Create(ctx context.Context, parent *cobra.Command, volumeService blockstora
 	}
 	
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
+	req_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "a", "", "")//CobraFlagsCreation
+	
+	req_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
 	
 	req_SizeFlag = flags.NewIntP(cmd, "size", "s", 0, "")//CobraFlagsCreation
 	
+	req_Type_NameFlag = flags.NewStrP(cmd, "type.name", "e", "", "")//CobraFlagsCreation
+	
 	req_Type_IDFlag = flags.NewStrP(cmd, "type.id", "i", "", "")//CobraFlagsCreation
 	
-	req_Type_NameFlag = flags.NewStrP(cmd, "type.name", "a", "", "")//CobraFlagsCreation
-	
-	req_EncryptedFlag = flags.NewBoolP(cmd, "encrypted", "e", false, "")//CobraFlagsCreation
-	
-	req_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "v", "", "")//CobraFlagsCreation
+	req_EncryptedFlag = flags.NewBoolP(cmd, "encrypted", "c", false, "")//CobraFlagsCreation
 	
 
 

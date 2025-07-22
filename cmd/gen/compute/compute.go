@@ -16,13 +16,13 @@ import (
 	
 	computeSdk "github.com/MagaluCloud/mgc-sdk-go/compute"
 	
-	"mgccli/cmd/gen/compute/instances"
+	"gfcli/cmd/gen/compute/instances"
 	
-	"mgccli/cmd/gen/compute/images"
+	"gfcli/cmd/gen/compute/images"
 	
-	"mgccli/cmd/gen/compute/instancetypes"
+	"gfcli/cmd/gen/compute/instancetypes"
 	
-	"mgccli/cmd/gen/compute/snapshots"
+	"gfcli/cmd/gen/compute/snapshots"
 	
 )
 
@@ -32,15 +32,7 @@ func ComputeCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.Co
 		Short:   "Instances, Images, InstanceTypes, Snapshots.",
 		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
-		//	
-		//	"vm",
-	//		
-		//	"virtual-machines",
-	//		
-		//	"vms",
-	//		
-		//	"compute",
-	//		
+			"vm","virtual-machines","vms","compute",
 		},
 		GroupID: "products",
 	}

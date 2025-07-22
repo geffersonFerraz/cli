@@ -14,24 +14,16 @@ import (
 	
 	computeSdk "github.com/MagaluCloud/mgc-sdk-go/compute"
 	
-	flags "mgccli/cobra_utils/flags"
+	flags "gfcli/cobra_utils/flags"
 	
 	"encoding/json"
 	
-	"mgccli/cmd_utils"
+	"gfcli/cmd_utils"
 	
 	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, instanceService computeSdk.InstanceService) {
-	
-	var req_LabelsFlag *flags.StrSliceFlag //CobraFlagsDefinition
-	
-	var req_MachineType_IDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_MachineType_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_SshKeyNameFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -42,6 +34,14 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 	var req_Image_IDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_Image_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_LabelsFlag *flags.StrSliceFlag //CobraFlagsDefinition
+	
+	var req_MachineType_IDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_MachineType_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -58,22 +58,6 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 			
 
 			
-			
-			if req_LabelsFlag.IsChanged() {
-				req.Labels = req_LabelsFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_MachineType_IDFlag.IsChanged() {
-				req.MachineType.ID = req_MachineType_IDFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_MachineType_NameFlag.IsChanged() {
-				req.MachineType.Name = req_MachineType_NameFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_NameFlag.IsChanged() {
-				req.Name = *req_NameFlag.Value
-			}// CobraFlagsAssign
 			
 			if req_SshKeyNameFlag.IsChanged() {
 				req.SshKeyName = req_SshKeyNameFlag.Value
@@ -93,6 +77,22 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 			
 			if req_Image_NameFlag.IsChanged() {
 				req.Image.Name = req_Image_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_LabelsFlag.IsChanged() {
+				req.Labels = req_LabelsFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_MachineType_IDFlag.IsChanged() {
+				req.MachineType.ID = req_MachineType_IDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_MachineType_NameFlag.IsChanged() {
+				req.MachineType.Name = req_MachineType_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_NameFlag.IsChanged() {
+				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -119,23 +119,23 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 	}
 	
 	
-	req_LabelsFlag = flags.NewStrSliceP(cmd, "labels", "l", []string{}, "")//CobraFlagsCreation
-	
-	req_MachineType_IDFlag = flags.NewStrP(cmd, "machine-type.id", "i", "", "")//CobraFlagsCreation
-	
-	req_MachineType_NameFlag = flags.NewStrP(cmd, "machine-type.name", "a", "", "")//CobraFlagsCreation
-	
-	req_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
-	
 	req_SshKeyNameFlag = flags.NewStrP(cmd, "ssh-key-name", "s", "", "")//CobraFlagsCreation
 	
 	req_UserDataFlag = flags.NewStrP(cmd, "user-data", "u", "", "")//CobraFlagsCreation
 	
-	req_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "v", "", "")//CobraFlagsCreation
+	req_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "a", "", "")//CobraFlagsCreation
 	
-	req_Image_IDFlag = flags.NewStrP(cmd, "image.id", "b", "", "")//CobraFlagsCreation
+	req_Image_IDFlag = flags.NewStrP(cmd, "image.id", "i", "", "")//CobraFlagsCreation
 	
-	req_Image_NameFlag = flags.NewStrP(cmd, "image.name", "e", "", "")//CobraFlagsCreation
+	req_Image_NameFlag = flags.NewStrP(cmd, "image.name", "m", "", "")//CobraFlagsCreation
+	
+	req_LabelsFlag = flags.NewStrSliceP(cmd, "labels", "l", []string{}, "")//CobraFlagsCreation
+	
+	req_MachineType_IDFlag = flags.NewStrP(cmd, "machine-type.id", "b", "", "")//CobraFlagsCreation
+	
+	req_MachineType_NameFlag = flags.NewStrP(cmd, "machine-type.name", "e", "", "")//CobraFlagsCreation
+	
+	req_NameFlag = flags.NewStrP(cmd, "name", "c", "", "")//CobraFlagsCreation
 	
 
 

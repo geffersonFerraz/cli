@@ -14,11 +14,11 @@ import (
 	
 	lbaasSdk "github.com/MagaluCloud/mgc-sdk-go/lbaas"
 	
-	flags "mgccli/cobra_utils/flags"
+	flags "gfcli/cobra_utils/flags"
 	
 	"encoding/json"
 	
-	"mgccli/cmd_utils"
+	"gfcli/cmd_utils"
 	
 	"fmt"
 )
@@ -31,23 +31,23 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	
 	var req_ACLsFlag *flags.JSONArrayValue[lbaasSdk.NetworkAclRequest] //CobraFlagsDefinition
 	
-	var req_PublicIPIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_PanicThresholdFlag *flags.IntFlag //CobraFlagsDefinition
+	var req_VPCIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var req_TLSCertificatesFlag *flags.JSONArrayValue[lbaasSdk.NetworkTLSCertificateRequest] //CobraFlagsDefinition
+	
+	var req_SubnetPoolIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_PublicIPIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_PanicThresholdFlag *flags.IntFlag //CobraFlagsDefinition
+	
 	var req_TypeFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_ListenersFlag *flags.JSONArrayValue[lbaasSdk.NetworkListenerRequest] //CobraFlagsDefinition
-	
-	var req_TLSCertificatesFlag *flags.JSONArrayValue[lbaasSdk.NetworkTLSCertificateRequest] //CobraFlagsDefinition
-	
-	var req_VPCIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_SubnetPoolIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -77,12 +77,8 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 				req.ACLs = *req_ACLsFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_PublicIPIDFlag.IsChanged() {
-				req.PublicIPID = req_PublicIPIDFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_PanicThresholdFlag.IsChanged() {
-				req.PanicThreshold = req_PanicThresholdFlag.Value
+			if req_VPCIDFlag.IsChanged() {
+				req.VPCID = *req_VPCIDFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_NameFlag.IsChanged() {
@@ -93,24 +89,28 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_TLSCertificatesFlag.IsChanged() {
+				req.TLSCertificates = *req_TLSCertificatesFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_SubnetPoolIDFlag.IsChanged() {
+				req.SubnetPoolID = req_SubnetPoolIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_PublicIPIDFlag.IsChanged() {
+				req.PublicIPID = req_PublicIPIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_PanicThresholdFlag.IsChanged() {
+				req.PanicThreshold = req_PanicThresholdFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_TypeFlag.IsChanged() {
 				req.Type = req_TypeFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_ListenersFlag.IsChanged() {
 				req.Listeners = *req_ListenersFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_TLSCertificatesFlag.IsChanged() {
-				req.TLSCertificates = *req_TLSCertificatesFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_VPCIDFlag.IsChanged() {
-				req.VPCID = *req_VPCIDFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_SubnetPoolIDFlag.IsChanged() {
-				req.SubnetPoolID = req_SubnetPoolIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -143,30 +143,30 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	
 	req_ACLsFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkAclRequest](cmd, "a-c-ls", "a", "",)//CobraFlagsCreation
 	
-	req_PublicIPIDFlag = flags.NewStrP(cmd, "public-i-p-i-d", "p", "", "")//CobraFlagsCreation
-	
-	req_PanicThresholdFlag = flags.NewIntP(cmd, "panic-threshold", "i", 0, "")//CobraFlagsCreation
+	req_VPCIDFlag = flags.NewStrP(cmd, "v-p-c-i-d", "v", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "s", "", "")//CobraFlagsCreation
 	
-	req_TypeFlag = flags.NewStrP(cmd, "type", "t", "", "")//CobraFlagsCreation
-	
-	req_ListenersFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkListenerRequest](cmd, "listeners", "l", "",)//CobraFlagsCreation
-	
-	req_TLSCertificatesFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkTLSCertificateRequest](cmd, "t-l-s-certificates", "c", "",)//CobraFlagsCreation
-	
-	req_VPCIDFlag = flags.NewStrP(cmd, "v-p-c-i-d", "v", "", "")//CobraFlagsCreation
+	req_TLSCertificatesFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkTLSCertificateRequest](cmd, "t-l-s-certificates", "t", "",)//CobraFlagsCreation
 	
 	req_SubnetPoolIDFlag = flags.NewStrP(cmd, "subnet-pool-i-d", "u", "", "")//CobraFlagsCreation
 	
-
-
+	req_PublicIPIDFlag = flags.NewStrP(cmd, "public-i-p-i-d", "p", "", "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("name")//CobraFlagsRequired
+	req_PanicThresholdFlag = flags.NewIntP(cmd, "panic-threshold", "i", 0, "")//CobraFlagsCreation
+	
+	req_TypeFlag = flags.NewStrP(cmd, "type", "y", "", "")//CobraFlagsCreation
+	
+	req_ListenersFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkListenerRequest](cmd, "listeners", "l", "",)//CobraFlagsCreation
+	
+
+
 	
 	cmd.MarkFlagRequired("v-p-c-i-d")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

@@ -13,44 +13,44 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"mgccli/cmd/gen/network"
+	"gfcli/cmd/gen/lbaas"
 
-	"mgccli/cmd/gen/kubernetes"
+	"gfcli/cmd/gen/audit"
 
-	"mgccli/cmd/gen/lbaas"
+	"gfcli/cmd/gen/containerregistry"
 
-	"mgccli/cmd/gen/audit"
+	"gfcli/cmd/gen/dbaas"
 
-	"mgccli/cmd/gen/profile"
+	"gfcli/cmd/gen/kubernetes"
 
-	"mgccli/cmd/gen/compute"
+	"gfcli/cmd/gen/blockstorage"
 
-	"mgccli/cmd/gen/blockstorage"
+	"gfcli/cmd/gen/network"
 
-	"mgccli/cmd/gen/containerregistry"
+	"gfcli/cmd/gen/profile"
 
-	"mgccli/cmd/gen/dbaas"
+	"gfcli/cmd/gen/compute"
 
 )
 
 func RootGen(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.CoreClient) {
 
-	network.NetworkCmd(ctx, parent, sdkCoreConfig)
-
-	kubernetes.KubernetesCmd(ctx, parent, sdkCoreConfig)
-
 	lbaas.LbaasCmd(ctx, parent, sdkCoreConfig)
 
 	audit.AuditCmd(ctx, parent, sdkCoreConfig)
 
-	profile.ProfileCmd(ctx, parent, sdkCoreConfig)
-
-	compute.ComputeCmd(ctx, parent, sdkCoreConfig)
-
-	blockstorage.BlockstorageCmd(ctx, parent, sdkCoreConfig)
-
 	containerregistry.ContainerregistryCmd(ctx, parent, sdkCoreConfig)
 
 	dbaas.DbaasCmd(ctx, parent, sdkCoreConfig)
+
+	kubernetes.KubernetesCmd(ctx, parent, sdkCoreConfig)
+
+	blockstorage.BlockstorageCmd(ctx, parent, sdkCoreConfig)
+
+	network.NetworkCmd(ctx, parent, sdkCoreConfig)
+
+	profile.ProfileCmd(ctx, parent, sdkCoreConfig)
+
+	compute.ComputeCmd(ctx, parent, sdkCoreConfig)
 
 }

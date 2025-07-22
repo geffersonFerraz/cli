@@ -16,13 +16,13 @@ import (
 	
 	kubernetesSdk "github.com/MagaluCloud/mgc-sdk-go/kubernetes"
 	
-	"mgccli/cmd/gen/kubernetes/clusters"
+	"gfcli/cmd/gen/kubernetes/clusters"
 	
-	"mgccli/cmd/gen/kubernetes/flavors"
+	"gfcli/cmd/gen/kubernetes/flavors"
 	
-	"mgccli/cmd/gen/kubernetes/nodepools"
+	"gfcli/cmd/gen/kubernetes/nodepools"
 	
-	"mgccli/cmd/gen/kubernetes/versions"
+	"gfcli/cmd/gen/kubernetes/versions"
 	
 )
 
@@ -32,9 +32,7 @@ func KubernetesCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk
 		Short:   "Clusters, Flavors, Nodepools, Versions.",
 		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
-		//	
-		//	"k8s",
-	//		
+			"k8s",
 		},
 		GroupID: "products",
 	}

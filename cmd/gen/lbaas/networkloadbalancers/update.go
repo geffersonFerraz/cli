@@ -14,14 +14,16 @@ import (
 	
 	lbaasSdk "github.com/MagaluCloud/mgc-sdk-go/lbaas"
 	
-	flags "mgccli/cobra_utils/flags"
+	flags "gfcli/cobra_utils/flags"
 	
-	"mgccli/cmd_utils"
+	"gfcli/cmd_utils"
 	
 	"fmt"
 )
 
 func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerService lbaasSdk.NetworkLoadBalancerService) {
+	
+	var req_HealthChecksFlag *flags.JSONArrayValue[lbaasSdk.NetworkHealthCheckUpdateRequest] //CobraFlagsDefinition
 	
 	var req_TLSCertificatesFlag *flags.JSONArrayValue[lbaasSdk.NetworkTLSCertificateUpdateRequest] //CobraFlagsDefinition
 	
@@ -34,8 +36,6 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_BackendsFlag *flags.JSONArrayValue[lbaasSdk.NetworkBackendUpdateRequest] //CobraFlagsDefinition
-	
-	var req_HealthChecksFlag *flags.JSONArrayValue[lbaasSdk.NetworkHealthCheckUpdateRequest] //CobraFlagsDefinition
 	
 	
 
@@ -52,6 +52,10 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 			
 
 			
+			
+			if req_HealthChecksFlag.IsChanged() {
+				req.HealthChecks = *req_HealthChecksFlag.Value
+			}// CobraFlagsAssign
 			
 			if req_TLSCertificatesFlag.IsChanged() {
 				req.TLSCertificates = *req_TLSCertificatesFlag.Value
@@ -77,10 +81,6 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 				req.Backends = *req_BackendsFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_HealthChecksFlag.IsChanged() {
-				req.HealthChecks = *req_HealthChecksFlag.Value
-			}// CobraFlagsAssign
-			
 
 			err := networkLoadBalancerService.Update(ctx, req)
 			
@@ -95,6 +95,8 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	}
 	
 	
+	req_HealthChecksFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkHealthCheckUpdateRequest](cmd, "health-checks", "h", "",)//CobraFlagsCreation
+	
 	req_TLSCertificatesFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkTLSCertificateUpdateRequest](cmd, "t-l-s-certificates", "t", "",)//CobraFlagsCreation
 	
 	req_PanicThresholdFlag = flags.NewIntP(cmd, "panic-threshold", "p", 0, "")//CobraFlagsCreation
@@ -106,8 +108,6 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
 	req_BackendsFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkBackendUpdateRequest](cmd, "backends", "b", "",)//CobraFlagsCreation
-	
-	req_HealthChecksFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkHealthCheckUpdateRequest](cmd, "health-checks", "c", "",)//CobraFlagsCreation
 	
 
 

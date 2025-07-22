@@ -16,17 +16,17 @@ import (
 	
 	lbaasSdk "github.com/MagaluCloud/mgc-sdk-go/lbaas"
 	
-	"mgccli/cmd/gen/lbaas/networkacls"
+	"gfcli/cmd/gen/lbaas/networkacls"
 	
-	"mgccli/cmd/gen/lbaas/networkbackends"
+	"gfcli/cmd/gen/lbaas/networkbackends"
 	
-	"mgccli/cmd/gen/lbaas/networkcertificates"
+	"gfcli/cmd/gen/lbaas/networkcertificates"
 	
-	"mgccli/cmd/gen/lbaas/networkhealthchecks"
+	"gfcli/cmd/gen/lbaas/networkhealthchecks"
 	
-	"mgccli/cmd/gen/lbaas/networklisteners"
+	"gfcli/cmd/gen/lbaas/networklisteners"
 	
-	"mgccli/cmd/gen/lbaas/networkloadbalancers"
+	"gfcli/cmd/gen/lbaas/networkloadbalancers"
 	
 )
 
@@ -36,9 +36,7 @@ func LbaasCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.Core
 		Short:   "NetworkACLs, NetworkBackends, NetworkCertificates, NetworkHealthChecks, NetworkListeners...",
 		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
-		//	
-		//	"load-balancer",
-	//		
+			"load-balancer",
 		},
 		GroupID: "products",
 	}

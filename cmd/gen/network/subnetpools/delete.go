@@ -14,9 +14,9 @@ import (
 	
 	networkSdk "github.com/MagaluCloud/mgc-sdk-go/network"
 	
-	flags "mgccli/cobra_utils/flags"
+	flags "gfcli/cobra_utils/flags"
 	
-	"mgccli/cmd_utils"
+	"gfcli/cmd_utils"
 	
 	"fmt"
 )

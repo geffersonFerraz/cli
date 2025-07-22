@@ -5,7 +5,7 @@
 //
 // github.com/MagaluCloud/mgc-sdk-go v0.3.45
 
-module mgccli
+module gfcli
 
 go 1.24.2
 

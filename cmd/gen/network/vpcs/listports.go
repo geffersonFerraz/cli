@@ -14,11 +14,11 @@ import (
 	
 	networkSdk "github.com/MagaluCloud/mgc-sdk-go/network"
 	
-	flags "mgccli/cobra_utils/flags"
+	flags "gfcli/cobra_utils/flags"
 	
 	"encoding/json"
 	
-	"mgccli/cmd_utils"
+	"gfcli/cmd_utils"
 	
 	"fmt"
 )
@@ -29,11 +29,11 @@ func ListPorts(ctx context.Context, parent *cobra.Command, vPCService networkSdk
 	
 	var detailedFlag *flags.BoolFlag //CobraFlagsDefinition
 	
+	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
-	
-	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -63,16 +63,16 @@ func ListPorts(ctx context.Context, parent *cobra.Command, vPCService networkSdk
 				detailed = *detailedFlag.Value
 			}// CobraFlagsAssign
 			
+			if opts_SortFlag.IsChanged() {
+				opts.Sort = opts_SortFlag.Value
+			}// CobraFlagsAssign
+			
 			if opts_LimitFlag.IsChanged() {
 				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
 			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_SortFlag.IsChanged() {
-				opts.Sort = opts_SortFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -103,11 +103,11 @@ func ListPorts(ctx context.Context, parent *cobra.Command, vPCService networkSdk
 	
 	detailedFlag = flags.NewBoolP(cmd, "detailed", "e", false, "")//CobraFlagsCreation
 	
+	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
+	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
-	
-	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
 
 

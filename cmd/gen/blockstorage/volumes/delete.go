@@ -14,9 +14,9 @@ import (
 	
 	blockstorageSdk "github.com/MagaluCloud/mgc-sdk-go/blockstorage"
 	
-	flags "mgccli/cobra_utils/flags"
+	flags "gfcli/cobra_utils/flags"
 	
-	"mgccli/cmd_utils"
+	"gfcli/cmd_utils"
 	
 	"fmt"
 )

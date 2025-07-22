@@ -16,21 +16,21 @@ import (
 	
 	networkSdk "github.com/MagaluCloud/mgc-sdk-go/network"
 	
-	"mgccli/cmd/gen/network/vpcs"
+	"gfcli/cmd/gen/network/vpcs"
 	
-	"mgccli/cmd/gen/network/subnets"
+	"gfcli/cmd/gen/network/subnets"
 	
-	"mgccli/cmd/gen/network/ports"
+	"gfcli/cmd/gen/network/ports"
 	
-	"mgccli/cmd/gen/network/securitygroups"
+	"gfcli/cmd/gen/network/securitygroups"
 	
-	"mgccli/cmd/gen/network/rules"
+	"gfcli/cmd/gen/network/rules"
 	
-	"mgccli/cmd/gen/network/publicips"
+	"gfcli/cmd/gen/network/publicips"
 	
-	"mgccli/cmd/gen/network/subnetpools"
+	"gfcli/cmd/gen/network/subnetpools"
 	
-	"mgccli/cmd/gen/network/natgateways"
+	"gfcli/cmd/gen/network/natgateways"
 	
 )
 
@@ -40,13 +40,7 @@ func NetworkCmd(ctx context.Context, parent *cobra.Command, sdkCoreConfig sdk.Co
 		Short:   "VPCs, Subnets, Ports, SecurityGroups, Rules, PublicIPs...",
 		Long:    `menu.LongDescription 3`,
 		Aliases: []string{
-		//	
-		//	"networks",
-	//		
-		//	"net",
-	//		
-		//	"vpc",
-	//		
+			"networks","net","vpc",
 		},
 		GroupID: "products",
 	}

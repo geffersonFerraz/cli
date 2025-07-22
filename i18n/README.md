@@ -19,7 +19,7 @@ i18n/
 
 O sistema detecta automaticamente o idioma preferido do usuário na seguinte ordem:
 
-1. **Variável de ambiente `MGC_LANG`** (ex: `export MGC_LANG=pt-BR`)
+1. **Variável de ambiente `CLI_LANG`** (ex: `export CLI_LANG=pt-BR`)
 2. **Variável de ambiente `LANG`** (ex: `export LANG=pt_BR.UTF-8`)
 3. **Variável de ambiente `LC_ALL`** (ex: `export LC_ALL=pt_BR.UTF-8`)
 4. **Idioma padrão** (pt-BR)
@@ -84,7 +84,7 @@ Use uma hierarquia de chaves para organizar as traduções:
 ### 3. Usando Traduções no Código
 
 ```go
-import "mgccli/i18n"
+import "gfcli/i18n"
 
 func myFunction() {
     manager := i18n.GetInstance()
@@ -114,7 +114,7 @@ Use códigos de idioma no formato ISO 639-1 + ISO 3166-1:
 
 | Variável | Descrição | Exemplo |
 |----------|-----------|---------|
-| `MGC_LANG` | Idioma preferido da CLI | `export MGC_LANG=pt-BR` |
+| `CLI_LANG` | Idioma preferido da CLI | `export CLI_LANG=pt-BR` |
 | `LANG` | Idioma do sistema | `export LANG=pt_BR.UTF-8` |
 | `LC_ALL` | Localização completa | `export LC_ALL=pt_BR.UTF-8` |
 
@@ -138,15 +138,15 @@ Se uma tradução não for encontrada:
 
 ```bash
 # Testar com português
-export MGC_LANG=pt-BR
-./mgccli --help
+export CLI_LANG=pt-BR
+./gfcli --help
 
 # Testar com inglês
-export MGC_LANG=en-US
-./mgccli --help
+export CLI_LANG=en-US
+./gfcli --help
 
 # Testar com flag
-./mgccli --lang=en-US --help
+./gfcli --lang=en-US --help
 ```
 
 ## Boas Práticas

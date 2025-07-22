@@ -1,5 +1,7 @@
 # CLI
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/geffersonFerraz/cli)
+
 ## Disclaimer
 
 > ⚠️ **WARNING / AVISO** ⚠️

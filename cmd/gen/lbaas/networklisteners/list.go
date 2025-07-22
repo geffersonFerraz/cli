@@ -14,24 +14,24 @@ import (
 	
 	lbaasSdk "github.com/MagaluCloud/mgc-sdk-go/lbaas"
 	
-	flags "mgccli/cobra_utils/flags"
+	flags "gfcli/cobra_utils/flags"
 	
 	"encoding/json"
 	
-	"mgccli/cmd_utils"
+	"gfcli/cmd_utils"
 	
 	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, networkListenerService lbaasSdk.NetworkListenerService) {
 	
-	var req_SortFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_LimitFlag *flags.IntFlag //CobraFlagsDefinition
+	
+	var req_SortFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -49,10 +49,6 @@ func List(ctx context.Context, parent *cobra.Command, networkListenerService lba
 
 			
 			
-			if req_SortFlag.IsChanged() {
-				req.Sort = req_SortFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
 			}// CobraFlagsAssign
@@ -63,6 +59,10 @@ func List(ctx context.Context, parent *cobra.Command, networkListenerService lba
 			
 			if req_LimitFlag.IsChanged() {
 				req.Limit = req_LimitFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_SortFlag.IsChanged() {
+				req.Sort = req_SortFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -89,13 +89,13 @@ func List(ctx context.Context, parent *cobra.Command, networkListenerService lba
 	}
 	
 	
-	req_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
-	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
 	
 	req_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 	req_LimitFlag = flags.NewIntP(cmd, "limit", "i", 0, "")//CobraFlagsCreation
+	
+	req_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
 
 

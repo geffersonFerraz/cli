@@ -14,11 +14,11 @@ import (
 	
 	kubernetesSdk "github.com/MagaluCloud/mgc-sdk-go/kubernetes"
 	
-	flags "mgccli/cobra_utils/flags"
+	flags "gfcli/cobra_utils/flags"
 	
 	"encoding/json"
 	
-	"mgccli/cmd_utils"
+	"gfcli/cmd_utils"
 	
 	"fmt"
 )

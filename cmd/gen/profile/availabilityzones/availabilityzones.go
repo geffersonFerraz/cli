@@ -16,7 +16,7 @@ import (
 	
 	"github.com/spf13/cobra"
 	
-	"mgccli/cmd/gen/profile/availabilityzones/availabilityzones"
+	"gfcli/cmd/gen/profile/availabilityzones/availabilityzones"
 	
 )
 

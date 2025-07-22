@@ -100,8 +100,8 @@ func (m *Manager) loadLocaleFile(filepath string) (*Locale, error) {
 
 // detectLanguage detecta o idioma preferido do usuário
 func (m *Manager) detectLanguage() string {
-	// 1. Verificar variável de ambiente MGC_LANG
-	if lang := os.Getenv("MGC_LANG"); lang != "" {
+	// 1. Verificar variável de ambiente CLI_LANG
+	if lang := os.Getenv("CLI_LANG"); lang != "" {
 		if m.isValidLocale(lang) {
 			return lang
 		}

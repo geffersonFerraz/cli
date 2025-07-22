@@ -14,11 +14,11 @@ import (
 	
 	availabilityzonesSdk "github.com/MagaluCloud/mgc-sdk-go/availabilityzones"
 	
-	flags "mgccli/cobra_utils/flags"
+	flags "gfcli/cobra_utils/flags"
 	
 	"encoding/json"
 	
-	"mgccli/cmd_utils"
+	"gfcli/cmd_utils"
 	
 	"fmt"
 )

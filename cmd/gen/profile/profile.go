@@ -14,9 +14,9 @@ import (
 	
 	"github.com/spf13/cobra"
 	
-	"mgccli/cmd/gen/profile/availabilityzones"
+	"gfcli/cmd/gen/profile/availabilityzones"
 	
-	"mgccli/cmd/gen/profile/sshkeys"
+	"gfcli/cmd/gen/profile/sshkeys"
 	
 )
 

@@ -14,11 +14,11 @@ import (
 	
 	dbaasSdk "github.com/MagaluCloud/mgc-sdk-go/dbaas"
 	
-	flags "mgccli/cobra_utils/flags"
+	flags "gfcli/cobra_utils/flags"
 	
 	"encoding/json"
 	
-	"mgccli/cmd_utils"
+	"gfcli/cmd_utils"
 	
 	"fmt"
 )
@@ -27,13 +27,13 @@ func ListEngineParameters(ctx context.Context, parent *cobra.Command, engineServ
 	
 	var engineIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var opts_ModifiableFlag *flags.BoolFlag //CobraFlagsDefinition
+	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_DynamicFlag *flags.BoolFlag //CobraFlagsDefinition
-	
-	var opts_ModifiableFlag *flags.BoolFlag //CobraFlagsDefinition
 	
 	
 
@@ -57,6 +57,10 @@ func ListEngineParameters(ctx context.Context, parent *cobra.Command, engineServ
 				engineID = *engineIDFlag.Value
 			}// CobraFlagsAssign
 			
+			if opts_ModifiableFlag.IsChanged() {
+				opts.Modifiable = opts_ModifiableFlag.Value
+			}// CobraFlagsAssign
+			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
@@ -67,10 +71,6 @@ func ListEngineParameters(ctx context.Context, parent *cobra.Command, engineServ
 			
 			if opts_DynamicFlag.IsChanged() {
 				opts.Dynamic = opts_DynamicFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_ModifiableFlag.IsChanged() {
-				opts.Modifiable = opts_ModifiableFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -99,13 +99,13 @@ func ListEngineParameters(ctx context.Context, parent *cobra.Command, engineServ
 	
 	engineIDFlag = flags.NewStrP(cmd, "engine-i-d", "e", "", "")//CobraFlagsCreation
 	
+	opts_ModifiableFlag = flags.NewBoolP(cmd, "modifiable", "m", false, "")//CobraFlagsCreation
+	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_DynamicFlag = flags.NewBoolP(cmd, "dynamic", "y", false, "")//CobraFlagsCreation
-	
-	opts_ModifiableFlag = flags.NewBoolP(cmd, "modifiable", "m", false, "")//CobraFlagsCreation
 	
 
 
