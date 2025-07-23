@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func RestoreSnapshot(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk.InstanceService) {
@@ -29,21 +26,21 @@ func RestoreSnapshot(ctx context.Context, parent *cobra.Command, instanceService
 	
 	var snapshotIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var req_BackupStartAtFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_InstanceTypeIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_BackupRetentionDaysFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var req_BackupStartAtFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	
 
 	cmd := &cobra.Command{
 		Use:     "restore-snapshot",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var instanceID string// ServiceSDKParamCreate
@@ -65,6 +62,10 @@ func RestoreSnapshot(ctx context.Context, parent *cobra.Command, instanceService
 				snapshotID = *snapshotIDFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_BackupStartAtFlag.IsChanged() {
+				req.BackupStartAt = req_BackupStartAtFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
@@ -77,45 +78,31 @@ func RestoreSnapshot(ctx context.Context, parent *cobra.Command, instanceService
 				req.BackupRetentionDays = req_BackupRetentionDaysFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_BackupStartAtFlag.IsChanged() {
-				req.BackupStartAt = req_BackupStartAtFlag.Value
-			}// CobraFlagsAssign
-			
 
 			instanceresponse, err := instanceService.RestoreSnapshot(ctx, instanceID, snapshotID, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(instanceresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(instanceresponse)
+			return nil
 		},
 	}
 	
 	
-	instanceIDFlag = flags.NewStrP(cmd, "instance-i-d", "i", "", "")//CobraFlagsCreation
+	instanceIDFlag = flags.NewStrP(cmd, "instance-id", "i", "", "")//CobraFlagsCreation
 	
-	snapshotIDFlag = flags.NewStrP(cmd, "snapshot-i-d", "s", "", "")//CobraFlagsCreation
+	snapshotIDFlag = flags.NewStrP(cmd, "snapshot-id", "s", "", "")//CobraFlagsCreation
+	
+	req_BackupStartAtFlag = flags.NewStrP(cmd, "backup-start-at", "b", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
-	req_InstanceTypeIDFlag = flags.NewStrP(cmd, "instance-type-i-d", "t", "", "")//CobraFlagsCreation
+	req_InstanceTypeIDFlag = flags.NewStrP(cmd, "instance-type-id", "t", "", "")//CobraFlagsCreation
 	
-	req_BackupRetentionDaysFlag = flags.NewIntP(cmd, "backup-retention-days", "b", 0, "")//CobraFlagsCreation
-	
-	req_BackupStartAtFlag = flags.NewStrP(cmd, "backup-start-at", "c", "", "")//CobraFlagsCreation
+	req_BackupRetentionDaysFlag = flags.NewIntP(cmd, "backup-retention-days", "c", 0, "")//CobraFlagsCreation
 	
 
 
@@ -126,7 +113,7 @@ func RestoreSnapshot(ctx context.Context, parent *cobra.Command, instanceService
 	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
-	cmd.MarkFlagRequired("instance-type-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("instance-type-id")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

@@ -14,11 +14,8 @@ import (
 	
 	containerregistrySdk "github.com/MagaluCloud/mgc-sdk-go/containerregistry"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Get(ctx context.Context, parent *cobra.Command, credentialsService containerregistrySdk.CredentialsService) {
@@ -28,8 +25,8 @@ func Get(ctx context.Context, parent *cobra.Command, credentialsService containe
 	cmd := &cobra.Command{
 		Use:     "get",
 		Short:   "Containerregistry provides a client for interacting with the Magalu Cloud Container Registry API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			
@@ -41,22 +38,12 @@ func Get(ctx context.Context, parent *cobra.Command, credentialsService containe
 			credentialsresponse, err := credentialsService.Get(ctx)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(credentialsresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(credentialsresponse)
+			return nil
 		},
 	}
 	

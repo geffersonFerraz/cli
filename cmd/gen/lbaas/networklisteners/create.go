@@ -16,14 +16,13 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, networkListenerService lbaasSdk.NetworkListenerService) {
+	
+	var req_PortFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -35,15 +34,13 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_PortFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req lbaasSdk.CreateNetworkListenerRequest// ServiceSDKParamCreate
@@ -52,6 +49,10 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 			
 
 			
+			
+			if req_PortFlag.IsChanged() {
+				req.Port = *req_PortFlag.Value
+			}// CobraFlagsAssign
 			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
@@ -73,56 +74,42 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_PortFlag.IsChanged() {
-				req.Port = *req_PortFlag.Value
-			}// CobraFlagsAssign
-			
 
 			networklistenerresponse, err := networkListenerService.Create(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(networklistenerresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(networklistenerresponse)
+			return nil
 		},
 	}
 	
 	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
+	req_PortFlag = flags.NewIntP(cmd, "port", "p", 0, "")//CobraFlagsCreation
 	
-	req_BackendIDFlag = flags.NewStrP(cmd, "backend-i-d", "b", "", "")//CobraFlagsCreation
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
 	
-	req_TLSCertificateIDFlag = flags.NewStrP(cmd, "t-l-s-certificate-i-d", "t", "", "")//CobraFlagsCreation
+	req_BackendIDFlag = flags.NewStrP(cmd, "backend-id", "b", "", "")//CobraFlagsCreation
+	
+	req_TLSCertificateIDFlag = flags.NewStrP(cmd, "t-l-s-certificate-id", "t", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
-	req_PortFlag = flags.NewIntP(cmd, "port", "p", 0, "")//CobraFlagsCreation
-	
 
 
-	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
-	
-	cmd.MarkFlagRequired("backend-i-d")//CobraFlagsRequired
-	
-	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("port")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("load-balancer-id")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("backend-id")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

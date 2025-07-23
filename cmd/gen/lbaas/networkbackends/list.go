@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, networkBackendService lbaasSdk.NetworkBackendService) {
@@ -32,8 +29,8 @@ func List(ctx context.Context, parent *cobra.Command, networkBackendService lbaa
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req lbaasSdk.ListNetworkBackendRequest// ServiceSDKParamCreate
@@ -51,32 +48,22 @@ func List(ctx context.Context, parent *cobra.Command, networkBackendService lbaa
 			networkbackendresponse, err := networkBackendService.List(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(networkbackendresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(networkbackendresponse)
+			return nil
 		},
 	}
 	
 	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
 	
 
 
 	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("load-balancer-id")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

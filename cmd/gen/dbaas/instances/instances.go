@@ -20,7 +20,7 @@ func InstancesCmd(ctx context.Context, parent *cobra.Command, instanceService db
 	cmd := &cobra.Command{
 		Use:     "instances",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

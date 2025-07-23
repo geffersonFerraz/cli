@@ -16,28 +16,25 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Update(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk.InstanceService) {
 	
 	var idFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_BackupRetentionDaysFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	var req_BackupStartAtFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_BackupRetentionDaysFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "update",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var id string// ServiceSDKParamCreate
@@ -53,43 +50,33 @@ func Update(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk
 				id = *idFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_BackupRetentionDaysFlag.IsChanged() {
-				req.BackupRetentionDays = req_BackupRetentionDaysFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_BackupStartAtFlag.IsChanged() {
 				req.BackupStartAt = req_BackupStartAtFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_BackupRetentionDaysFlag.IsChanged() {
+				req.BackupRetentionDays = req_BackupRetentionDaysFlag.Value
 			}// CobraFlagsAssign
 			
 
 			instancedetail, err := instanceService.Update(ctx, id, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(instancedetail, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(instancedetail)
+			return nil
 		},
 	}
 	
 	
 	idFlag = flags.NewStrP(cmd, "id", "i", "", "")//CobraFlagsCreation
 	
-	req_BackupRetentionDaysFlag = flags.NewIntP(cmd, "backup-retention-days", "b", 0, "")//CobraFlagsCreation
+	req_BackupStartAtFlag = flags.NewStrP(cmd, "backup-start-at", "b", "", "")//CobraFlagsCreation
 	
-	req_BackupStartAtFlag = flags.NewStrP(cmd, "backup-start-at", "a", "", "")//CobraFlagsCreation
+	req_BackupRetentionDaysFlag = flags.NewIntP(cmd, "backup-retention-days", "a", 0, "")//CobraFlagsCreation
 	
 
 

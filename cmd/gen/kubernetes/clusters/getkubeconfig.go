@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func GetKubeConfig(ctx context.Context, parent *cobra.Command, clusterService kubernetesSdk.ClusterService) {
@@ -32,8 +29,8 @@ func GetKubeConfig(ctx context.Context, parent *cobra.Command, clusterService ku
 	cmd := &cobra.Command{
 		Use:     "get-kube-config",
 		Short:   "Kubernetes provides a client for interacting with the Magalu Cloud Kubernetes API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var clusterID string// ServiceSDKParamCreate
@@ -51,27 +48,17 @@ func GetKubeConfig(ctx context.Context, parent *cobra.Command, clusterService ku
 			kubeconfig, err := clusterService.GetKubeConfig(ctx, clusterID)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(kubeconfig, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(kubeconfig)
+			return nil
 		},
 	}
 	
 	
-	clusterIDFlag = flags.NewStrP(cmd, "cluster-i-d", "c", "", "")//CobraFlagsCreation
+	clusterIDFlag = flags.NewStrP(cmd, "cluster-id", "c", "", "")//CobraFlagsCreation
 	
 
 

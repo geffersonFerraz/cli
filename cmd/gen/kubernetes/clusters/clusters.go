@@ -20,7 +20,7 @@ func ClustersCmd(ctx context.Context, parent *cobra.Command, clusterService kube
 	cmd := &cobra.Command{
 		Use:     "clusters",
 		Short:   "Kubernetes provides a client for interacting with the Magalu Cloud Kubernetes API.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

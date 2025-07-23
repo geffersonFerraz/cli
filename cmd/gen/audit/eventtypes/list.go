@@ -16,28 +16,25 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, eventTypeService auditSdk.EventTypeService) {
 	
-	var params_LimitFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	var params_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var params_TenantIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var params_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "Audit provides functionality to interact with the MagaluCloud audit service.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var params *auditSdk.ListEventTypesParams// ServiceSDKParamCreate
@@ -47,10 +44,6 @@ func List(ctx context.Context, parent *cobra.Command, eventTypeService auditSdk.
 
 			
 			
-			if params_LimitFlag.IsChanged() {
-				params.Limit = params_LimitFlag.Value
-			}// CobraFlagsAssign
-			
 			if params_OffsetFlag.IsChanged() {
 				params.Offset = params_OffsetFlag.Value
 			}// CobraFlagsAssign
@@ -59,35 +52,29 @@ func List(ctx context.Context, parent *cobra.Command, eventTypeService auditSdk.
 				params.TenantID = params_TenantIDFlag.Value
 			}// CobraFlagsAssign
 			
+			if params_LimitFlag.IsChanged() {
+				params.Limit = params_LimitFlag.Value
+			}// CobraFlagsAssign
+			
 
 			eventtype, err := eventTypeService.List(ctx, params)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(eventtype, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(eventtype)
+			return nil
 		},
 	}
 	
 	
+	params_OffsetFlag = flags.NewIntP(cmd, "offset", "o", 0, "")//CobraFlagsCreation
+	
+	params_TenantIDFlag = flags.NewStrP(cmd, "tenant-id", "t", "", "")//CobraFlagsCreation
+	
 	params_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
-	
-	params_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
-	
-	params_TenantIDFlag = flags.NewStrP(cmd, "tenant-i-d", "t", "", "")//CobraFlagsCreation
 	
 
 

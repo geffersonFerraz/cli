@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Get(ctx context.Context, parent *cobra.Command, networkCertificateService lbaasSdk.NetworkCertificateService) {
@@ -34,8 +31,8 @@ func Get(ctx context.Context, parent *cobra.Command, networkCertificateService l
 	cmd := &cobra.Command{
 		Use:     "get",
 		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req lbaasSdk.GetNetworkCertificateRequest// ServiceSDKParamCreate
@@ -57,36 +54,26 @@ func Get(ctx context.Context, parent *cobra.Command, networkCertificateService l
 			networktlscertificateresponse, err := networkCertificateService.Get(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(networktlscertificateresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(networktlscertificateresponse)
+			return nil
 		},
 	}
 	
 	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
 	
-	req_TLSCertificateIDFlag = flags.NewStrP(cmd, "t-l-s-certificate-i-d", "t", "", "")//CobraFlagsCreation
+	req_TLSCertificateIDFlag = flags.NewStrP(cmd, "t-l-s-certificate-id", "t", "", "")//CobraFlagsCreation
 	
 
 
 	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("load-balancer-id")//CobraFlagsRequired
 	
-	cmd.MarkFlagRequired("t-l-s-certificate-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("t-l-s-certificate-id")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

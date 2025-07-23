@@ -20,7 +20,7 @@ func SubnetsCmd(ctx context.Context, parent *cobra.Command, subnetService networ
 	cmd := &cobra.Command{
 		Use:     "subnets",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

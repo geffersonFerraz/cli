@@ -16,9 +16,6 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Suspend(ctx context.Context, parent *cobra.Command, instanceService computeSdk.InstanceService) {
@@ -30,8 +27,8 @@ func Suspend(ctx context.Context, parent *cobra.Command, instanceService compute
 	cmd := &cobra.Command{
 		Use:     "suspend",
 		Short:   "Compute provides functionality to interact with the MagaluCloud compute service.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var id string// ServiceSDKParamCreate
@@ -49,12 +46,10 @@ func Suspend(ctx context.Context, parent *cobra.Command, instanceService compute
 			err := instanceService.Suspend(ctx, id)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
+			return nil
 		},
 	}
 	

@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, keyService sshkeysSdk.KeyService) {
@@ -34,8 +31,8 @@ func Create(ctx context.Context, parent *cobra.Command, keyService sshkeysSdk.Ke
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req sshkeysSdk.CreateSSHKeyRequest// ServiceSDKParamCreate
@@ -57,22 +54,12 @@ func Create(ctx context.Context, parent *cobra.Command, keyService sshkeysSdk.Ke
 			sshkey, err := keyService.Create(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(sshkey, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(sshkey)
+			return nil
 		},
 	}
 	

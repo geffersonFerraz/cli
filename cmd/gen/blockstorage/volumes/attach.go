@@ -16,9 +16,6 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Attach(ctx context.Context, parent *cobra.Command, volumeService blockstorageSdk.VolumeService) {
@@ -32,8 +29,8 @@ func Attach(ctx context.Context, parent *cobra.Command, volumeService blockstora
 	cmd := &cobra.Command{
 		Use:     "attach",
 		Short:   "Blockstorage provides functionality to interact with the MagaluCloud block storage service.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var volumeID string// ServiceSDKParamCreate
@@ -57,19 +54,17 @@ func Attach(ctx context.Context, parent *cobra.Command, volumeService blockstora
 			err := volumeService.Attach(ctx, volumeID, instanceID)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
+			return nil
 		},
 	}
 	
 	
-	volumeIDFlag = flags.NewStrP(cmd, "volume-i-d", "v", "", "")//CobraFlagsCreation
+	volumeIDFlag = flags.NewStrP(cmd, "volume-id", "v", "", "")//CobraFlagsCreation
 	
-	instanceIDFlag = flags.NewStrP(cmd, "instance-i-d", "i", "", "")//CobraFlagsCreation
+	instanceIDFlag = flags.NewStrP(cmd, "instance-id", "i", "", "")//CobraFlagsCreation
 	
 
 

@@ -16,9 +16,6 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Rename(ctx context.Context, parent *cobra.Command, vPCService networkSdk.VPCService) {
@@ -32,8 +29,8 @@ func Rename(ctx context.Context, parent *cobra.Command, vPCService networkSdk.VP
 	cmd := &cobra.Command{
 		Use:     "rename",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var id string// ServiceSDKParamCreate
@@ -57,12 +54,10 @@ func Rename(ctx context.Context, parent *cobra.Command, vPCService networkSdk.VP
 			err := vPCService.Rename(ctx, id, newName)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
+			return nil
 		},
 	}
 	

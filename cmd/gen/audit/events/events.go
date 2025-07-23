@@ -20,7 +20,7 @@ func EventsCmd(ctx context.Context, parent *cobra.Command, eventService auditSdk
 	cmd := &cobra.Command{
 		Use:     "events",
 		Short:   "Audit provides functionality to interact with the MagaluCloud audit service.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

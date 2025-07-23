@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, volumeService blockstorageSdk.VolumeService) {
@@ -38,8 +35,8 @@ func List(ctx context.Context, parent *cobra.Command, volumeService blockstorage
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "Blockstorage provides functionality to interact with the MagaluCloud block storage service.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var opts blockstorageSdk.ListOptions// ServiceSDKParamCreate
@@ -69,22 +66,12 @@ func List(ctx context.Context, parent *cobra.Command, volumeService blockstorage
 			volume, err := volumeService.List(ctx, opts)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(volume, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(volume)
+			return nil
 		},
 	}
 	

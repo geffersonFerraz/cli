@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func GetFirstWindowsPassword(ctx context.Context, parent *cobra.Command, instanceService computeSdk.InstanceService) {
@@ -32,8 +29,8 @@ func GetFirstWindowsPassword(ctx context.Context, parent *cobra.Command, instanc
 	cmd := &cobra.Command{
 		Use:     "get-first-windows-password",
 		Short:   "Compute provides functionality to interact with the MagaluCloud compute service.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var id string// ServiceSDKParamCreate
@@ -51,22 +48,12 @@ func GetFirstWindowsPassword(ctx context.Context, parent *cobra.Command, instanc
 			windowspasswordresponse, err := instanceService.GetFirstWindowsPassword(ctx, id)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(windowspasswordresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(windowspasswordresponse)
+			return nil
 		},
 	}
 	

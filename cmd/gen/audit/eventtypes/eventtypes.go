@@ -20,7 +20,7 @@ func EventTypesCmd(ctx context.Context, parent *cobra.Command, eventTypeService 
 	cmd := &cobra.Command{
 		Use:     "event-types",
 		Short:   "Audit provides functionality to interact with the MagaluCloud audit service.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

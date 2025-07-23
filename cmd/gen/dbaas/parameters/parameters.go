@@ -20,7 +20,7 @@ func ParametersCmd(ctx context.Context, parent *cobra.Command, parameterService 
 	cmd := &cobra.Command{
 		Use:     "parameters",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

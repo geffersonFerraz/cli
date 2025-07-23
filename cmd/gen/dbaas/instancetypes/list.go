@@ -16,16 +16,11 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, instanceTypeService dbaasSdk.InstanceTypeService) {
-	
-	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
@@ -33,13 +28,15 @@ func List(ctx context.Context, parent *cobra.Command, instanceTypeService dbaasS
 	
 	var opts_EngineIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
+	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var opts dbaasSdk.ListInstanceTypeOptions// ServiceSDKParamCreate
@@ -48,10 +45,6 @@ func List(ctx context.Context, parent *cobra.Command, instanceTypeService dbaasS
 			
 
 			
-			
-			if opts_OffsetFlag.IsChanged() {
-				opts.Offset = opts_OffsetFlag.Value
-			}// CobraFlagsAssign
 			
 			if opts_LimitFlag.IsChanged() {
 				opts.Limit = opts_LimitFlag.Value
@@ -65,37 +58,31 @@ func List(ctx context.Context, parent *cobra.Command, instanceTypeService dbaasS
 				opts.EngineID = opts_EngineIDFlag.Value
 			}// CobraFlagsAssign
 			
+			if opts_OffsetFlag.IsChanged() {
+				opts.Offset = opts_OffsetFlag.Value
+			}// CobraFlagsAssign
+			
 
 			instancetype, err := instanceTypeService.List(ctx, opts)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(instancetype, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(instancetype)
+			return nil
 		},
 	}
 	
-	
-	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "o", 0, "")//CobraFlagsCreation
 	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_StatusFlag = flags.NewStrP(cmd, "status", "s", "", "")//CobraFlagsCreation
 	
-	opts_EngineIDFlag = flags.NewStrP(cmd, "engine-i-d", "e", "", "")//CobraFlagsCreation
+	opts_EngineIDFlag = flags.NewStrP(cmd, "engine-id", "e", "", "")//CobraFlagsCreation
+	
+	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 
 

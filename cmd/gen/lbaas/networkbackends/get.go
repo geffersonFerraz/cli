@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Get(ctx context.Context, parent *cobra.Command, networkBackendService lbaasSdk.NetworkBackendService) {
@@ -34,8 +31,8 @@ func Get(ctx context.Context, parent *cobra.Command, networkBackendService lbaas
 	cmd := &cobra.Command{
 		Use:     "get",
 		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req lbaasSdk.GetNetworkBackendRequest// ServiceSDKParamCreate
@@ -57,36 +54,26 @@ func Get(ctx context.Context, parent *cobra.Command, networkBackendService lbaas
 			networkbackendresponse, err := networkBackendService.Get(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(networkbackendresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(networkbackendresponse)
+			return nil
 		},
 	}
 	
 	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
 	
-	req_BackendIDFlag = flags.NewStrP(cmd, "backend-i-d", "b", "", "")//CobraFlagsCreation
+	req_BackendIDFlag = flags.NewStrP(cmd, "backend-id", "b", "", "")//CobraFlagsCreation
 	
 
 
 	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("load-balancer-id")//CobraFlagsRequired
 	
-	cmd.MarkFlagRequired("backend-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("backend-id")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

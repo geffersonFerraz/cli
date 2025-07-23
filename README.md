@@ -17,6 +17,11 @@
 > Este projeto é destinado apenas para fins de desenvolvimento e aprendizado. O uso em produção ainda NÃO é recomendado.
 
 
+## Experimental:
+`EXPLORE_JSON=1`
+
+![exp-json](exp-json.png )
+
 :brazil: ![cli-br](cli-br.png)
 :us:![cli](cli.png)
 :es:![cli-es](cli-es.png)

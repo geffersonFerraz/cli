@@ -20,7 +20,7 @@ func ImagesCmd(ctx context.Context, parent *cobra.Command, imageService computeS
 	cmd := &cobra.Command{
 		Use:     "images",
 		Short:   "Compute provides functionality to interact with the MagaluCloud compute service.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

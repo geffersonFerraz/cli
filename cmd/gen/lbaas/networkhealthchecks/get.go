@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Get(ctx context.Context, parent *cobra.Command, networkHealthCheckService lbaasSdk.NetworkHealthCheckService) {
@@ -34,8 +31,8 @@ func Get(ctx context.Context, parent *cobra.Command, networkHealthCheckService l
 	cmd := &cobra.Command{
 		Use:     "get",
 		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req lbaasSdk.GetNetworkHealthCheckRequest// ServiceSDKParamCreate
@@ -57,36 +54,26 @@ func Get(ctx context.Context, parent *cobra.Command, networkHealthCheckService l
 			networkhealthcheckresponse, err := networkHealthCheckService.Get(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(networkhealthcheckresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(networkhealthcheckresponse)
+			return nil
 		},
 	}
 	
 	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
 	
-	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-i-d", "e", "", "")//CobraFlagsCreation
+	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-id", "e", "", "")//CobraFlagsCreation
 	
 
 
 	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("load-balancer-id")//CobraFlagsRequired
 	
-	cmd.MarkFlagRequired("health-check-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("health-check-id")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, registriesService containerregistrySdk.RegistriesService) {
@@ -32,8 +29,8 @@ func Create(ctx context.Context, parent *cobra.Command, registriesService contai
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Containerregistry provides a client for interacting with the Magalu Cloud Container Registry API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var request *containerregistrySdk.RegistryRequest// ServiceSDKParamCreate
@@ -51,22 +48,12 @@ func Create(ctx context.Context, parent *cobra.Command, registriesService contai
 			registryresponse, err := registriesService.Create(ctx, request)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(registryresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(registryresponse)
+			return nil
 		},
 	}
 	

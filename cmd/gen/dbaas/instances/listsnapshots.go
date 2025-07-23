@@ -16,28 +16,25 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func ListSnapshots(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk.InstanceService) {
 	
 	var instanceIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
+	
+	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list-snapshots",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var instanceID string// ServiceSDKParamCreate
@@ -53,43 +50,33 @@ func ListSnapshots(ctx context.Context, parent *cobra.Command, instanceService d
 				instanceID = *instanceIDFlag.Value
 			}// CobraFlagsAssign
 			
-			if opts_LimitFlag.IsChanged() {
-				opts.Limit = opts_LimitFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_LimitFlag.IsChanged() {
+				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
 			
 
 			snapshotdetailresponse, err := instanceService.ListSnapshots(ctx, instanceID, opts)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(snapshotdetailresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(snapshotdetailresponse)
+			return nil
 		},
 	}
 	
 	
-	instanceIDFlag = flags.NewStrP(cmd, "instance-i-d", "i", "", "")//CobraFlagsCreation
-	
-	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
+	instanceIDFlag = flags.NewStrP(cmd, "instance-id", "i", "", "")//CobraFlagsCreation
 	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
+	
+	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 
 

@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, parameterGroupService dbaasSdk.ParameterGroupService) {
@@ -36,8 +33,8 @@ func Create(ctx context.Context, parent *cobra.Command, parameterGroupService db
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req dbaasSdk.ParameterGroupCreateRequest// ServiceSDKParamCreate
@@ -63,27 +60,17 @@ func Create(ctx context.Context, parent *cobra.Command, parameterGroupService db
 			parametergroupresponse, err := parameterGroupService.Create(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(parametergroupresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(parametergroupresponse)
+			return nil
 		},
 	}
 	
 	
-	req_EngineIDFlag = flags.NewStrP(cmd, "engine-i-d", "e", "", "")//CobraFlagsCreation
+	req_EngineIDFlag = flags.NewStrP(cmd, "engine-id", "e", "", "")//CobraFlagsCreation
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "s", "", "")//CobraFlagsCreation
 	
@@ -92,7 +79,7 @@ func Create(ctx context.Context, parent *cobra.Command, parameterGroupService db
 
 
 	
-	cmd.MarkFlagRequired("engine-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("engine-id")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	

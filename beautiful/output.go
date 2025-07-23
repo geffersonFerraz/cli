@@ -12,13 +12,45 @@ import (
 // Output fornece funções para embelezar diferentes tipos de output
 type Output struct {
 	rawMode bool
+	data    interface{}
 }
 
 // NewOutput cria uma nova instância do embelezador de output
 func NewOutput(rawMode bool) *Output {
+
 	return &Output{
 		rawMode: rawMode,
 	}
+}
+
+func (bo *Output) PrintData(data interface{}) {
+	bo.data = data
+
+	if bo.rawMode {
+		jsonData, err := json.MarshalIndent(data, "", "  ")
+		if err != nil {
+			return
+		}
+		fmt.Println(string(jsonData))
+		return
+	}
+	jsonData, err := json.MarshalIndent(data, "", "  ")
+	if err != nil {
+		return
+	}
+
+	expFlag := os.Getenv("EXPLORE_JSON") == "1"
+	if expFlag {
+		explorer := NewJSONExplorer(bo)
+		if err := explorer.ExploreJSON(jsonData); err != nil {
+			fmt.Println(err)
+			return
+		}
+		return
+	}
+
+	coloredJSON := bo.colorizeJSON(string(jsonData))
+	fmt.Println(coloredJSON)
 }
 
 // PrintJSON embelezar output JSON com cores e formatação
@@ -57,14 +89,18 @@ func (bo *Output) PrintSuccess(message string) {
 }
 
 // PrintError embelezar mensagens de erro
-func (bo *Output) PrintError(message string) {
+func (bo *Output) PrintError(message string, emoji bool) {
 	if bo.rawMode {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", message)
 		return
 	}
 
 	errorColor := color.New(color.FgRed, color.Bold)
-	errorColor.Printf("❌ %s\n", message)
+	if emoji {
+		errorColor.Printf("❌ %s\n", message)
+		return
+	}
+	errorColor.Printf("Error: %s\n", message)
 }
 
 // PrintWarning embelezar mensagens de aviso
@@ -223,21 +259,110 @@ func (bo *Output) colorizeJSONLine(line string, braceColor, keyColor, stringColo
 		return line
 	}
 
-	// Identificar e colorir diferentes elementos
-	line = strings.ReplaceAll(line, `"`, stringColor.Sprint(`"`))
-	line = strings.ReplaceAll(line, `{`, braceColor.Sprint(`{`))
-	line = strings.ReplaceAll(line, `}`, braceColor.Sprint(`}`))
-	line = strings.ReplaceAll(line, `[`, braceColor.Sprint(`[`))
-	line = strings.ReplaceAll(line, `]`, braceColor.Sprint(`]`))
-	line = strings.ReplaceAll(line, `,`, braceColor.Sprint(`,`))
-	line = strings.ReplaceAll(line, `:`, braceColor.Sprint(`:`))
+	// Processar a linha caractere por caractere
+	var result strings.Builder
+	inString := false
+	escapeNext := false
+	afterColon := false
+	i := 0
 
-	// Colorir valores booleanos
-	line = strings.ReplaceAll(line, `true`, booleanColor.Sprint(`true`))
-	line = strings.ReplaceAll(line, `false`, booleanColor.Sprint(`false`))
-	line = strings.ReplaceAll(line, `null`, nullColor.Sprint(`null`))
+	for i < len(line) {
+		char := rune(line[i])
 
-	return line
+		if escapeNext {
+			// Caractere escapado - sempre parte de uma string
+			result.WriteRune(char)
+			escapeNext = false
+			i++
+			continue
+		}
+
+		if char == '\\' {
+			escapeNext = true
+			result.WriteRune(char)
+			i++
+			continue
+		}
+
+		if char == '"' {
+			if !inString {
+				// Início de string
+				inString = true
+				// Determinar se é chave ou valor baseado na posição após ':'
+				if afterColon {
+					result.WriteString(stringColor.Sprint(string(char)))
+				} else {
+					result.WriteString(keyColor.Sprint(string(char)))
+				}
+			} else {
+				// Fim de string
+				inString = false
+				if afterColon {
+					result.WriteString(stringColor.Sprint(string(char)))
+				} else {
+					result.WriteString(keyColor.Sprint(string(char)))
+				}
+			}
+			i++
+			continue
+		}
+
+		if inString {
+			// Dentro de uma string - aplicar cor baseada no contexto
+			if afterColon {
+				result.WriteString(stringColor.Sprint(string(char)))
+			} else {
+				result.WriteString(keyColor.Sprint(string(char)))
+			}
+			i++
+			continue
+		}
+
+		// Fora de string - processar outros elementos
+		switch char {
+		case '{', '}', '[', ']':
+			result.WriteString(braceColor.Sprint(string(char)))
+			i++
+		case ',':
+			result.WriteString(braceColor.Sprint(string(char)))
+			afterColon = false
+			i++
+		case ':':
+			result.WriteString(braceColor.Sprint(string(char)))
+			afterColon = true
+			i++
+		case ' ', '\t':
+			result.WriteRune(char)
+			i++
+		default:
+			// Verificar se é um número, booleano ou null
+			if afterColon {
+				// Pode ser um valor
+				if char == 't' && i+3 < len(line) && line[i:i+4] == "true" {
+					result.WriteString(booleanColor.Sprint("true"))
+					i += 4 // Pular os próximos 4 caracteres
+				} else if char == 'f' && i+4 < len(line) && line[i:i+5] == "false" {
+					result.WriteString(booleanColor.Sprint("false"))
+					i += 5 // Pular os próximos 5 caracteres
+				} else if char == 'n' && i+3 < len(line) && line[i:i+4] == "null" {
+					result.WriteString(nullColor.Sprint("null"))
+					i += 4 // Pular os próximos 4 caracteres
+				} else if (char >= '0' && char <= '9') || char == '-' {
+					// Número
+					result.WriteString(numberColor.Sprint(string(char)))
+					i++
+				} else {
+					result.WriteRune(char)
+					i++
+				}
+			} else {
+				result.WriteRune(char)
+				i++
+			}
+		}
+	}
+
+	return result.String()
 }
 
 // PrintProgress embelezar barras de progresso

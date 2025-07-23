@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService networkSdk.VPCService) {
@@ -46,8 +43,8 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 	cmd := &cobra.Command{
 		Use:     "create-subnet",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var vpcID string// ServiceSDKParamCreate
@@ -97,37 +94,27 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 			result, err := vPCService.CreateSubnet(ctx, vpcID, req, opts)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(result, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(result)
+			return nil
 		},
 	}
 	
 	
-	vpcIDFlag = flags.NewStrP(cmd, "vpc-i-d", "v", "", "")//CobraFlagsCreation
+	vpcIDFlag = flags.NewStrP(cmd, "vpc-id", "v", "", "")//CobraFlagsCreation
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
-	req_CIDRBlockFlag = flags.NewStrP(cmd, "c-i-d-r-block", "c", "", "")//CobraFlagsCreation
+	req_CIDRBlockFlag = flags.NewStrP(cmd, "c-id-r-block", "c", "", "")//CobraFlagsCreation
 	
 	req_IPVersionFlag = flags.NewIntP(cmd, "i-p-version", "i", 0, "")//CobraFlagsCreation
 	
 	req_DNSNameserversFlag = flags.NewStrSliceP(cmd, "d-n-s-nameservers", "s", []string{}, "")//CobraFlagsCreation
 	
-	req_SubnetPoolIDFlag = flags.NewStrP(cmd, "subnet-pool-i-d", "u", "", "")//CobraFlagsCreation
+	req_SubnetPoolIDFlag = flags.NewStrP(cmd, "subnet-pool-id", "u", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
@@ -138,7 +125,7 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 	
 	cmd.MarkFlagRequired("vpcID")//CobraFlagsRequired
 	
-	cmd.MarkFlagRequired("c-i-d-r-block")//CobraFlagsRequired
+	cmd.MarkFlagRequired("c-id-r-block")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("i-p-version")//CobraFlagsRequired
 	

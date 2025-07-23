@@ -16,14 +16,15 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, volumeService blockstorageSdk.VolumeService) {
+	
+	var req_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_SizeFlag *flags.IntFlag //CobraFlagsDefinition
 	
@@ -33,17 +34,13 @@ func Create(ctx context.Context, parent *cobra.Command, volumeService blockstora
 	
 	var req_EncryptedFlag *flags.BoolFlag //CobraFlagsDefinition
 	
-	var req_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Blockstorage provides functionality to interact with the MagaluCloud block storage service.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req blockstorageSdk.CreateVolumeRequest// ServiceSDKParamCreate
@@ -52,6 +49,14 @@ func Create(ctx context.Context, parent *cobra.Command, volumeService blockstora
 			
 
 			
+			
+			if req_AvailabilityZoneFlag.IsChanged() {
+				req.AvailabilityZone = req_AvailabilityZoneFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_NameFlag.IsChanged() {
+				req.Name = *req_NameFlag.Value
+			}// CobraFlagsAssign
 			
 			if req_SizeFlag.IsChanged() {
 				req.Size = *req_SizeFlag.Value
@@ -69,56 +74,38 @@ func Create(ctx context.Context, parent *cobra.Command, volumeService blockstora
 				req.Encrypted = req_EncryptedFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_AvailabilityZoneFlag.IsChanged() {
-				req.AvailabilityZone = req_AvailabilityZoneFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_NameFlag.IsChanged() {
-				req.Name = *req_NameFlag.Value
-			}// CobraFlagsAssign
-			
 
 			result, err := volumeService.Create(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(result, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(result)
+			return nil
 		},
 	}
 	
+	
+	req_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "a", "", "")//CobraFlagsCreation
+	
+	req_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
 	
 	req_SizeFlag = flags.NewIntP(cmd, "size", "s", 0, "")//CobraFlagsCreation
 	
 	req_Type_IDFlag = flags.NewStrP(cmd, "type.id", "i", "", "")//CobraFlagsCreation
 	
-	req_Type_NameFlag = flags.NewStrP(cmd, "type.name", "a", "", "")//CobraFlagsCreation
+	req_Type_NameFlag = flags.NewStrP(cmd, "type.name", "e", "", "")//CobraFlagsCreation
 	
-	req_EncryptedFlag = flags.NewBoolP(cmd, "encrypted", "e", false, "")//CobraFlagsCreation
-	
-	req_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "v", "", "")//CobraFlagsCreation
-	
-	req_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
+	req_EncryptedFlag = flags.NewBoolP(cmd, "encrypted", "c", false, "")//CobraFlagsCreation
 	
 
 
-	
-	cmd.MarkFlagRequired("size")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("size")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

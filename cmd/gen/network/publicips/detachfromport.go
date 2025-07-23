@@ -16,9 +16,6 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func DetachFromPort(ctx context.Context, parent *cobra.Command, publicIPService networkSdk.PublicIPService) {
@@ -32,8 +29,8 @@ func DetachFromPort(ctx context.Context, parent *cobra.Command, publicIPService 
 	cmd := &cobra.Command{
 		Use:     "detach-from-port",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var publicIPID string// ServiceSDKParamCreate
@@ -57,19 +54,17 @@ func DetachFromPort(ctx context.Context, parent *cobra.Command, publicIPService 
 			err := publicIPService.DetachFromPort(ctx, publicIPID, portID)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
+			return nil
 		},
 	}
 	
 	
-	publicIPIDFlag = flags.NewStrP(cmd, "public-i-p-i-d", "p", "", "")//CobraFlagsCreation
+	publicIPIDFlag = flags.NewStrP(cmd, "public-i-p-id", "p", "", "")//CobraFlagsCreation
 	
-	portIDFlag = flags.NewStrP(cmd, "port-i-d", "t", "", "")//CobraFlagsCreation
+	portIDFlag = flags.NewStrP(cmd, "port-id", "t", "", "")//CobraFlagsCreation
 	
 
 

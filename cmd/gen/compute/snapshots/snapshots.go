@@ -20,7 +20,7 @@ func SnapshotsCmd(ctx context.Context, parent *cobra.Command, snapshotService co
 	cmd := &cobra.Command{
 		Use:     "snapshots",
 		Short:   "Compute provides functionality to interact with the MagaluCloud compute service.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

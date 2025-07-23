@@ -16,9 +16,6 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Delete(ctx context.Context, parent *cobra.Command, nodePoolService kubernetesSdk.NodePoolService) {
@@ -32,8 +29,8 @@ func Delete(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 	cmd := &cobra.Command{
 		Use:     "delete",
 		Short:   "Kubernetes provides a client for interacting with the Magalu Cloud Kubernetes API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var clusterID string// ServiceSDKParamCreate
@@ -57,19 +54,17 @@ func Delete(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 			err := nodePoolService.Delete(ctx, clusterID, nodePoolID)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
+			return nil
 		},
 	}
 	
 	
-	clusterIDFlag = flags.NewStrP(cmd, "cluster-i-d", "c", "", "")//CobraFlagsCreation
+	clusterIDFlag = flags.NewStrP(cmd, "cluster-id", "c", "", "")//CobraFlagsCreation
 	
-	nodePoolIDFlag = flags.NewStrP(cmd, "node-pool-i-d", "e", "", "")//CobraFlagsCreation
+	nodePoolIDFlag = flags.NewStrP(cmd, "node-pool-id", "e", "", "")//CobraFlagsCreation
 	
 
 

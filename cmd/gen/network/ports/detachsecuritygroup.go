@@ -16,9 +16,6 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func DetachSecurityGroup(ctx context.Context, parent *cobra.Command, portService networkSdk.PortService) {
@@ -32,8 +29,8 @@ func DetachSecurityGroup(ctx context.Context, parent *cobra.Command, portService
 	cmd := &cobra.Command{
 		Use:     "detach-security-group",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var portID string// ServiceSDKParamCreate
@@ -57,19 +54,17 @@ func DetachSecurityGroup(ctx context.Context, parent *cobra.Command, portService
 			err := portService.DetachSecurityGroup(ctx, portID, securityGroupID)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
+			return nil
 		},
 	}
 	
 	
-	portIDFlag = flags.NewStrP(cmd, "port-i-d", "p", "", "")//CobraFlagsCreation
+	portIDFlag = flags.NewStrP(cmd, "port-id", "p", "", "")//CobraFlagsCreation
 	
-	securityGroupIDFlag = flags.NewStrP(cmd, "security-group-i-d", "s", "", "")//CobraFlagsCreation
+	securityGroupIDFlag = flags.NewStrP(cmd, "security-group-id", "s", "", "")//CobraFlagsCreation
 	
 
 

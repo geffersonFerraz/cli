@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Delete(ctx context.Context, parent *cobra.Command, keyService sshkeysSdk.KeyService) {
@@ -32,8 +29,8 @@ func Delete(ctx context.Context, parent *cobra.Command, keyService sshkeysSdk.Ke
 	cmd := &cobra.Command{
 		Use:     "delete",
 		Short:   "",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var keyID string// ServiceSDKParamCreate
@@ -51,27 +48,17 @@ func Delete(ctx context.Context, parent *cobra.Command, keyService sshkeysSdk.Ke
 			sshkey, err := keyService.Delete(ctx, keyID)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(sshkey, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(sshkey)
+			return nil
 		},
 	}
 	
 	
-	keyIDFlag = flags.NewStrP(cmd, "key-i-d", "k", "", "")//CobraFlagsCreation
+	keyIDFlag = flags.NewStrP(cmd, "key-id", "k", "", "")//CobraFlagsCreation
 	
 
 

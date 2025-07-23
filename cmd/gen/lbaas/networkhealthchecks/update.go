@@ -16,12 +16,19 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Update(ctx context.Context, parent *cobra.Command, networkHealthCheckService lbaasSdk.NetworkHealthCheckService) {
+	
+	var req_PathFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_PortFlag *flags.IntFlag //CobraFlagsDefinition
+	
+	var req_HealthyThresholdCountFlag *flags.IntFlag //CobraFlagsDefinition
+	
+	var req_UnhealthyThresholdCountFlag *flags.IntFlag //CobraFlagsDefinition
+	
+	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_HealthCheckIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -33,23 +40,13 @@ func Update(ctx context.Context, parent *cobra.Command, networkHealthCheckServic
 	
 	var req_InitialDelaySecondsFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var req_HealthyThresholdCountFlag *flags.IntFlag //CobraFlagsDefinition
-	
-	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_PathFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_PortFlag *flags.IntFlag //CobraFlagsDefinition
-	
-	var req_UnhealthyThresholdCountFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	
 
 	cmd := &cobra.Command{
 		Use:     "update",
 		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req lbaasSdk.UpdateNetworkHealthCheckRequest// ServiceSDKParamCreate
@@ -58,6 +55,26 @@ func Update(ctx context.Context, parent *cobra.Command, networkHealthCheckServic
 			
 
 			
+			
+			if req_PathFlag.IsChanged() {
+				req.Path = req_PathFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_PortFlag.IsChanged() {
+				req.Port = *req_PortFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_HealthyThresholdCountFlag.IsChanged() {
+				req.HealthyThresholdCount = req_HealthyThresholdCountFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_UnhealthyThresholdCountFlag.IsChanged() {
+				req.UnhealthyThresholdCount = req_UnhealthyThresholdCountFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_LoadBalancerIDFlag.IsChanged() {
+				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
+			}// CobraFlagsAssign
 			
 			if req_HealthCheckIDFlag.IsChanged() {
 				req.HealthCheckID = *req_HealthCheckIDFlag.Value
@@ -79,68 +96,46 @@ func Update(ctx context.Context, parent *cobra.Command, networkHealthCheckServic
 				req.InitialDelaySeconds = req_InitialDelaySecondsFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_HealthyThresholdCountFlag.IsChanged() {
-				req.HealthyThresholdCount = req_HealthyThresholdCountFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_LoadBalancerIDFlag.IsChanged() {
-				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_PathFlag.IsChanged() {
-				req.Path = req_PathFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_PortFlag.IsChanged() {
-				req.Port = *req_PortFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_UnhealthyThresholdCountFlag.IsChanged() {
-				req.UnhealthyThresholdCount = req_UnhealthyThresholdCountFlag.Value
-			}// CobraFlagsAssign
-			
 
 			err := networkHealthCheckService.Update(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
+			return nil
 		},
 	}
 	
 	
-	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-i-d", "h", "", "")//CobraFlagsCreation
-	
-	req_HealthyStatusCodeFlag = flags.NewIntP(cmd, "healthy-status-code", "e", 0, "")//CobraFlagsCreation
-	
-	req_IntervalSecondsFlag = flags.NewIntP(cmd, "interval-seconds", "i", 0, "")//CobraFlagsCreation
-	
-	req_TimeoutSecondsFlag = flags.NewIntP(cmd, "timeout-seconds", "t", 0, "")//CobraFlagsCreation
-	
-	req_InitialDelaySecondsFlag = flags.NewIntP(cmd, "initial-delay-seconds", "a", 0, "")//CobraFlagsCreation
-	
-	req_HealthyThresholdCountFlag = flags.NewIntP(cmd, "healthy-threshold-count", "l", 0, "")//CobraFlagsCreation
-	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "b", "", "")//CobraFlagsCreation
-	
 	req_PathFlag = flags.NewStrP(cmd, "path", "p", "", "")//CobraFlagsCreation
 	
-	req_PortFlag = flags.NewIntP(cmd, "port", "c", 0, "")//CobraFlagsCreation
+	req_PortFlag = flags.NewIntP(cmd, "port", "t", 0, "")//CobraFlagsCreation
+	
+	req_HealthyThresholdCountFlag = flags.NewIntP(cmd, "healthy-threshold-count", "e", 0, "")//CobraFlagsCreation
 	
 	req_UnhealthyThresholdCountFlag = flags.NewIntP(cmd, "unhealthy-threshold-count", "u", 0, "")//CobraFlagsCreation
 	
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
+	
+	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-id", "a", "", "")//CobraFlagsCreation
+	
+	req_HealthyStatusCodeFlag = flags.NewIntP(cmd, "healthy-status-code", "y", 0, "")//CobraFlagsCreation
+	
+	req_IntervalSecondsFlag = flags.NewIntP(cmd, "interval-seconds", "i", 0, "")//CobraFlagsCreation
+	
+	req_TimeoutSecondsFlag = flags.NewIntP(cmd, "timeout-seconds", "m", 0, "")//CobraFlagsCreation
+	
+	req_InitialDelaySecondsFlag = flags.NewIntP(cmd, "initial-delay-seconds", "s", 0, "")//CobraFlagsCreation
+	
 
 
-	
-	cmd.MarkFlagRequired("health-check-i-d")//CobraFlagsRequired
-	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("port")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("load-balancer-id")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("health-check-id")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

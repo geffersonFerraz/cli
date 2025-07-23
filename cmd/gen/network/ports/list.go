@@ -14,11 +14,8 @@ import (
 	
 	networkSdk "github.com/MagaluCloud/mgc-sdk-go/network"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, portService networkSdk.PortService) {
@@ -28,8 +25,8 @@ func List(ctx context.Context, parent *cobra.Command, portService networkSdk.Por
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			
@@ -41,22 +38,12 @@ func List(ctx context.Context, parent *cobra.Command, portService networkSdk.Por
 			portresponse, err := portService.List(ctx)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(portresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(portresponse)
+			return nil
 		},
 	}
 	

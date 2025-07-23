@@ -20,7 +20,7 @@ func VersionsCmd(ctx context.Context, parent *cobra.Command, versionService kube
 	cmd := &cobra.Command{
 		Use:     "versions",
 		Short:   "Kubernetes provides a client for interacting with the Magalu Cloud Kubernetes API.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

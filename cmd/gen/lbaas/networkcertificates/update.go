@@ -16,28 +16,25 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Update(ctx context.Context, parent *cobra.Command, networkCertificateService lbaasSdk.NetworkCertificateService) {
 	
-	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_TLSCertificateIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_CertificateFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_PrivateKeyFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_TLSCertificateIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "update",
 		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req lbaasSdk.UpdateNetworkCertificateRequest// ServiceSDKParamCreate
@@ -47,14 +44,6 @@ func Update(ctx context.Context, parent *cobra.Command, networkCertificateServic
 
 			
 			
-			if req_LoadBalancerIDFlag.IsChanged() {
-				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_TLSCertificateIDFlag.IsChanged() {
-				req.TLSCertificateID = *req_TLSCertificateIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_CertificateFlag.IsChanged() {
 				req.Certificate = *req_CertificateFlag.Value
 			}// CobraFlagsAssign
@@ -63,38 +52,44 @@ func Update(ctx context.Context, parent *cobra.Command, networkCertificateServic
 				req.PrivateKey = *req_PrivateKeyFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_LoadBalancerIDFlag.IsChanged() {
+				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_TLSCertificateIDFlag.IsChanged() {
+				req.TLSCertificateID = *req_TLSCertificateIDFlag.Value
+			}// CobraFlagsAssign
+			
 
 			err := networkCertificateService.Update(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
+			return nil
 		},
 	}
 	
-	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
-	
-	req_TLSCertificateIDFlag = flags.NewStrP(cmd, "t-l-s-certificate-i-d", "t", "", "")//CobraFlagsCreation
 	
 	req_CertificateFlag = flags.NewStrP(cmd, "certificate", "c", "", "")//CobraFlagsCreation
 	
 	req_PrivateKeyFlag = flags.NewStrP(cmd, "private-key", "p", "", "")//CobraFlagsCreation
 	
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
+	
+	req_TLSCertificateIDFlag = flags.NewStrP(cmd, "t-l-s-certificate-id", "t", "", "")//CobraFlagsCreation
+	
 
 
-	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
-	
-	cmd.MarkFlagRequired("t-l-s-certificate-i-d")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("certificate")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("private-key")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("load-balancer-id")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("t-l-s-certificate-id")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

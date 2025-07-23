@@ -16,30 +16,27 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, snapshotService blockstorageSdk.SnapshotService) {
 	
-	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var opts_ExpandFlag *flags.StrSliceFlag //CobraFlagsDefinition
-	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
+	
+	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var opts_ExpandFlag *flags.StrSliceFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "Blockstorage provides functionality to interact with the MagaluCloud block storage service.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var opts blockstorageSdk.ListOptions// ServiceSDKParamCreate
@@ -49,14 +46,6 @@ func List(ctx context.Context, parent *cobra.Command, snapshotService blockstora
 
 			
 			
-			if opts_SortFlag.IsChanged() {
-				opts.Sort = opts_SortFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_ExpandFlag.IsChanged() {
-				opts.Expand = *opts_ExpandFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_LimitFlag.IsChanged() {
 				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
@@ -65,37 +54,35 @@ func List(ctx context.Context, parent *cobra.Command, snapshotService blockstora
 				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
 			
+			if opts_SortFlag.IsChanged() {
+				opts.Sort = opts_SortFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_ExpandFlag.IsChanged() {
+				opts.Expand = *opts_ExpandFlag.Value
+			}// CobraFlagsAssign
+			
 
 			snapshot, err := snapshotService.List(ctx, opts)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(snapshot, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(snapshot)
+			return nil
 		},
 	}
 	
 	
-	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
-	
-	opts_ExpandFlag = flags.NewStrSliceP(cmd, "expand", "e", []string{}, "")//CobraFlagsCreation
-	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
+	
+	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
+	
+	opts_ExpandFlag = flags.NewStrSliceP(cmd, "expand", "e", []string{}, "")//CobraFlagsCreation
 	
 
 

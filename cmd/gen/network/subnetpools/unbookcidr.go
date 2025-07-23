@@ -16,9 +16,6 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func UnbookCIDR(ctx context.Context, parent *cobra.Command, subnetPoolService networkSdk.SubnetPoolService) {
@@ -32,8 +29,8 @@ func UnbookCIDR(ctx context.Context, parent *cobra.Command, subnetPoolService ne
 	cmd := &cobra.Command{
 		Use:     "unbook-c-i-d-r",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var id string// ServiceSDKParamCreate
@@ -57,26 +54,24 @@ func UnbookCIDR(ctx context.Context, parent *cobra.Command, subnetPoolService ne
 			err := subnetPoolService.UnbookCIDR(ctx, id, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
+			return nil
 		},
 	}
 	
 	
 	idFlag = flags.NewStrP(cmd, "id", "i", "", "")//CobraFlagsCreation
 	
-	req_CIDRFlag = flags.NewStrP(cmd, "c-i-d-r", "c", "", "")//CobraFlagsCreation
+	req_CIDRFlag = flags.NewStrP(cmd, "c-id-r", "c", "", "")//CobraFlagsCreation
 	
 
 
 	
 	cmd.MarkFlagRequired("id")//CobraFlagsRequired
 	
-	cmd.MarkFlagRequired("c-i-d-r")//CobraFlagsRequired
+	cmd.MarkFlagRequired("c-id-r")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

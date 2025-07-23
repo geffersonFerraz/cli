@@ -84,9 +84,9 @@ func main() {
 	manager := i18n.GetInstance()
 	manager.SetLanguage(lang)
 
-	err := cmd.RootCmd(ctx, version, manager).Execute()
+	rootCmd := cmd.RootCmd(ctx, version, manager)
+	err := rootCmd.Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
 		os.Exit(1)
 	}
 }

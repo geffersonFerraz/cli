@@ -16,28 +16,25 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func BookCIDR(ctx context.Context, parent *cobra.Command, subnetPoolService networkSdk.SubnetPoolService) {
 	
 	var idFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_CIDRFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_MaskFlag *flags.IntFlag //CobraFlagsDefinition
+	
+	var req_CIDRFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "book-c-i-d-r",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var id string// ServiceSDKParamCreate
@@ -53,43 +50,33 @@ func BookCIDR(ctx context.Context, parent *cobra.Command, subnetPoolService netw
 				id = *idFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_CIDRFlag.IsChanged() {
-				req.CIDR = req_CIDRFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_MaskFlag.IsChanged() {
 				req.Mask = req_MaskFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_CIDRFlag.IsChanged() {
+				req.CIDR = req_CIDRFlag.Value
 			}// CobraFlagsAssign
 			
 
 			bookcidrresponse, err := subnetPoolService.BookCIDR(ctx, id, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(bookcidrresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(bookcidrresponse)
+			return nil
 		},
 	}
 	
 	
 	idFlag = flags.NewStrP(cmd, "id", "i", "", "")//CobraFlagsCreation
 	
-	req_CIDRFlag = flags.NewStrP(cmd, "c-i-d-r", "c", "", "")//CobraFlagsCreation
-	
 	req_MaskFlag = flags.NewIntP(cmd, "mask", "m", 0, "")//CobraFlagsCreation
+	
+	req_CIDRFlag = flags.NewStrP(cmd, "c-id-r", "c", "", "")//CobraFlagsCreation
 	
 
 

@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Get(ctx context.Context, parent *cobra.Command, parameterGroupService dbaasSdk.ParameterGroupService) {
@@ -32,8 +29,8 @@ func Get(ctx context.Context, parent *cobra.Command, parameterGroupService dbaas
 	cmd := &cobra.Command{
 		Use:     "get",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var ID string// ServiceSDKParamCreate
@@ -51,27 +48,17 @@ func Get(ctx context.Context, parent *cobra.Command, parameterGroupService dbaas
 			parametergroupdetailresponse, err := parameterGroupService.Get(ctx, ID)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(parametergroupdetailresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(parametergroupdetailresponse)
+			return nil
 		},
 	}
 	
 	
-	IDFlag = flags.NewStrP(cmd, "i-d", "i", "", "")//CobraFlagsCreation
+	IDFlag = flags.NewStrP(cmd, "id", "i", "", "")//CobraFlagsCreation
 	
 
 

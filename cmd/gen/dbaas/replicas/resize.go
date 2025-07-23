@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Resize(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.ReplicaService) {
@@ -34,8 +31,8 @@ func Resize(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.
 	cmd := &cobra.Command{
 		Use:     "resize",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var id string// ServiceSDKParamCreate
@@ -59,36 +56,26 @@ func Resize(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.
 			replicadetailresponse, err := replicaService.Resize(ctx, id, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(replicadetailresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(replicadetailresponse)
+			return nil
 		},
 	}
 	
 	
 	idFlag = flags.NewStrP(cmd, "id", "i", "", "")//CobraFlagsCreation
 	
-	req_InstanceTypeIDFlag = flags.NewStrP(cmd, "instance-type-i-d", "s", "", "")//CobraFlagsCreation
+	req_InstanceTypeIDFlag = flags.NewStrP(cmd, "instance-type-id", "s", "", "")//CobraFlagsCreation
 	
 
 
 	
 	cmd.MarkFlagRequired("id")//CobraFlagsRequired
 	
-	cmd.MarkFlagRequired("instance-type-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("instance-type-id")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

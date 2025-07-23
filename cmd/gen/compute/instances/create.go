@@ -16,14 +16,13 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, instanceService computeSdk.InstanceService) {
+	
+	var req_UserDataFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_AvailabilityZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -33,23 +32,21 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 	
 	var req_LabelsFlag *flags.StrSliceFlag //CobraFlagsDefinition
 	
-	var req_MachineType_IDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_MachineType_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_MachineType_IDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_SshKeyNameFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_UserDataFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Compute provides functionality to interact with the MagaluCloud compute service.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req computeSdk.CreateRequest// ServiceSDKParamCreate
@@ -58,6 +55,10 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 			
 
 			
+			
+			if req_UserDataFlag.IsChanged() {
+				req.UserData = req_UserDataFlag.Value
+			}// CobraFlagsAssign
 			
 			if req_AvailabilityZoneFlag.IsChanged() {
 				req.AvailabilityZone = req_AvailabilityZoneFlag.Value
@@ -75,12 +76,12 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 				req.Labels = req_LabelsFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_MachineType_IDFlag.IsChanged() {
-				req.MachineType.ID = req_MachineType_IDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_MachineType_NameFlag.IsChanged() {
 				req.MachineType.Name = req_MachineType_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_MachineType_IDFlag.IsChanged() {
+				req.MachineType.ID = req_MachineType_IDFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_NameFlag.IsChanged() {
@@ -91,33 +92,21 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 				req.SshKeyName = req_SshKeyNameFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_UserDataFlag.IsChanged() {
-				req.UserData = req_UserDataFlag.Value
-			}// CobraFlagsAssign
-			
 
 			result, err := instanceService.Create(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(result, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(result)
+			return nil
 		},
 	}
 	
+	
+	req_UserDataFlag = flags.NewStrP(cmd, "user-data", "u", "", "")//CobraFlagsCreation
 	
 	req_AvailabilityZoneFlag = flags.NewStrP(cmd, "availability-zone", "a", "", "")//CobraFlagsCreation
 	
@@ -127,15 +116,13 @@ func Create(ctx context.Context, parent *cobra.Command, instanceService computeS
 	
 	req_LabelsFlag = flags.NewStrSliceP(cmd, "labels", "l", []string{}, "")//CobraFlagsCreation
 	
-	req_MachineType_IDFlag = flags.NewStrP(cmd, "machine-type.id", "b", "", "")//CobraFlagsCreation
-	
 	req_MachineType_NameFlag = flags.NewStrP(cmd, "machine-type.name", "e", "", "")//CobraFlagsCreation
+	
+	req_MachineType_IDFlag = flags.NewStrP(cmd, "machine-type.id", "b", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "c", "", "")//CobraFlagsCreation
 	
 	req_SshKeyNameFlag = flags.NewStrP(cmd, "ssh-key-name", "s", "", "")//CobraFlagsCreation
-	
-	req_UserDataFlag = flags.NewStrP(cmd, "user-data", "u", "", "")//CobraFlagsCreation
 	
 
 

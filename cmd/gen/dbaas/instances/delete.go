@@ -16,9 +16,6 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Delete(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk.InstanceService) {
@@ -30,8 +27,8 @@ func Delete(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk
 	cmd := &cobra.Command{
 		Use:     "delete",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var id string// ServiceSDKParamCreate
@@ -49,12 +46,10 @@ func Delete(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk
 			err := instanceService.Delete(ctx, id)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
+			return nil
 		},
 	}
 	

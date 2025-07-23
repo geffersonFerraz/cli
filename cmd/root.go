@@ -13,6 +13,8 @@ import (
 	"gfcli/i18n"
 	"runtime"
 
+	cmdutils "gfcli/cmd_utils"
+
 	sdk "github.com/MagaluCloud/mgc-sdk-go/client"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -28,6 +30,7 @@ func RootCmd(ctx context.Context, version string, manager *i18n.Manager) *cobra.
 	}
 
 	rootCmd.SetContext(ctx)
+	rootCmd.SilenceErrors = true
 
 	rootCmd.AddGroup(&cobra.Group{
 		ID:    "products",
@@ -215,14 +218,19 @@ func beautifulPrint(cmd *cobra.Command) {
 		}
 	})
 
-	// Configurar função de erro personalizada
+	// // Configurar função de erro personalizada
 	cmd.SetUsageFunc(func(cmd *cobra.Command) error {
-		errorColor := color.New(color.FgRed, color.Bold)
-		errorColor.Print("❌ " + manager.T("cli.error") + ": ")
-		errorText := color.New(color.FgWhite)
-		errorText.Printf("Uso incorreto do comando\n\n")
+		if cmd.Context() != nil {
+			if errorHandled, ok := cmd.Context().Value("error_already_handled").(bool); ok && errorHandled {
+				return nil
+			}
+		}
 
-		usageColor := color.New(color.FgYellow, color.Bold)
+		help := cmd.HelpFunc()
+		help(cmd, []string{})
+		fmt.Println()
+
+		usageColor := color.New(color.FgRed, color.Bold)
 		usageColor.Print(manager.T("cli.usage") + ": ")
 		usageText := color.New(color.FgWhite)
 		usageText.Printf("%s\n", cmd.UseLine())
@@ -284,16 +292,17 @@ func beautifulPrint(cmd *cobra.Command) {
 	originalRunE := cmd.RunE
 	if originalRunE != nil {
 		cmd.RunE = func(cmd *cobra.Command, args []string) error {
-			// Interceptar e embelezar outputs antes de executar
 			rawMode := getRawOutputFlag(cmd)
 			beautifulOutput := beautiful.NewOutput(rawMode)
 
-			// Executar o comando original
 			err := originalRunE(cmd, args)
 
-			// Se houver erro, embelezar a mensagem
 			if err != nil {
-				beautifulOutput.PrintError(err.Error())
+				msg, detail := cmdutils.ParseSDKError(err)
+				beautifulOutput.PrintError(msg, true)
+				beautifulOutput.PrintError(detail, false)
+
+				cmd.SetContext(context.WithValue(cmd.Context(), "error_already_handled", true))
 			}
 
 			return err

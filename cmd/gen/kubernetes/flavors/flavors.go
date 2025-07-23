@@ -20,7 +20,7 @@ func FlavorsCmd(ctx context.Context, parent *cobra.Command, flavorService kubern
 	cmd := &cobra.Command{
 		Use:     "flavors",
 		Short:   "Kubernetes provides a client for interacting with the Magalu Cloud Kubernetes API.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

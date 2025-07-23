@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, clusterService kubernetesSdk.ClusterService) {
@@ -46,8 +43,8 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Kubernetes provides a client for interacting with the Magalu Cloud Kubernetes API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req kubernetesSdk.ClusterRequest// ServiceSDKParamCreate
@@ -93,22 +90,12 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 			createclusterresponse, err := clusterService.Create(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(createclusterresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(createclusterresponse)
+			return nil
 		},
 	}
 	
@@ -119,11 +106,11 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 	
 	req_NodePoolsFlag = flags.NewJSONArrayValueP[kubernetesSdk.CreateNodePoolRequest](cmd, "node-pools", "p", "",)//CobraFlagsCreation
 	
-	req_AllowedCIDRsFlag = flags.NewStrSliceP(cmd, "allowed-c-i-d-rs", "a", []string{}, "")//CobraFlagsCreation
+	req_AllowedCIDRsFlag = flags.NewStrSliceP(cmd, "allowed-c-id-rs", "a", []string{}, "")//CobraFlagsCreation
 	
-	req_ServicesIpV4CIDRFlag = flags.NewStrP(cmd, "services-ip-v4-c-i-d-r", "s", "", "")//CobraFlagsCreation
+	req_ServicesIpV4CIDRFlag = flags.NewStrP(cmd, "services-ip-v4-c-id-r", "s", "", "")//CobraFlagsCreation
 	
-	req_ClusterIPv4CIDRFlag = flags.NewStrP(cmd, "cluster-i-pv4-c-i-d-r", "c", "", "")//CobraFlagsCreation
+	req_ClusterIPv4CIDRFlag = flags.NewStrP(cmd, "cluster-i-pv4-c-id-r", "c", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
 	

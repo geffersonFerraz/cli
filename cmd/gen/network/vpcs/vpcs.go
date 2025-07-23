@@ -20,7 +20,7 @@ func VPCsCmd(ctx context.Context, parent *cobra.Command, vPCService networkSdk.V
 	cmd := &cobra.Command{
 		Use:     "v-p-cs",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

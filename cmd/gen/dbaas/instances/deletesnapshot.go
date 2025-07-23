@@ -16,9 +16,6 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func DeleteSnapshot(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk.InstanceService) {
@@ -32,8 +29,8 @@ func DeleteSnapshot(ctx context.Context, parent *cobra.Command, instanceService 
 	cmd := &cobra.Command{
 		Use:     "delete-snapshot",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var instanceID string// ServiceSDKParamCreate
@@ -57,19 +54,17 @@ func DeleteSnapshot(ctx context.Context, parent *cobra.Command, instanceService 
 			err := instanceService.DeleteSnapshot(ctx, instanceID, snapshotID)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
+			return nil
 		},
 	}
 	
 	
-	instanceIDFlag = flags.NewStrP(cmd, "instance-i-d", "i", "", "")//CobraFlagsCreation
+	instanceIDFlag = flags.NewStrP(cmd, "instance-id", "i", "", "")//CobraFlagsCreation
 	
-	snapshotIDFlag = flags.NewStrP(cmd, "snapshot-i-d", "s", "", "")//CobraFlagsCreation
+	snapshotIDFlag = flags.NewStrP(cmd, "snapshot-id", "s", "", "")//CobraFlagsCreation
 	
 
 

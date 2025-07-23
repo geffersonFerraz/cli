@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func ListPorts(ctx context.Context, parent *cobra.Command, vPCService networkSdk.VPCService) {
@@ -40,8 +37,8 @@ func ListPorts(ctx context.Context, parent *cobra.Command, vPCService networkSdk
 	cmd := &cobra.Command{
 		Use:     "list-ports",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var vpcID string// ServiceSDKParamCreate
@@ -79,27 +76,17 @@ func ListPorts(ctx context.Context, parent *cobra.Command, vPCService networkSdk
 			portslist, err := vPCService.ListPorts(ctx, vpcID, detailed, opts)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(portslist, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(portslist)
+			return nil
 		},
 	}
 	
 	
-	vpcIDFlag = flags.NewStrP(cmd, "vpc-i-d", "v", "", "")//CobraFlagsCreation
+	vpcIDFlag = flags.NewStrP(cmd, "vpc-id", "v", "", "")//CobraFlagsCreation
 	
 	detailedFlag = flags.NewBoolP(cmd, "detailed", "e", false, "")//CobraFlagsCreation
 	

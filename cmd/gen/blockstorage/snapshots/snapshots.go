@@ -20,7 +20,7 @@ func SnapshotsCmd(ctx context.Context, parent *cobra.Command, snapshotService bl
 	cmd := &cobra.Command{
 		Use:     "snapshots",
 		Short:   "Blockstorage provides functionality to interact with the MagaluCloud block storage service.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

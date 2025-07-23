@@ -20,7 +20,7 @@ func SubnetPoolsCmd(ctx context.Context, parent *cobra.Command, subnetPoolServic
 	cmd := &cobra.Command{
 		Use:     "subnet-pools",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

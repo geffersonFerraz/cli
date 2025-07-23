@@ -16,16 +16,17 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.RuleService) {
 	
 	var securityGroupIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_ProtocolFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_RemoteIPPrefixFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_EtherTypeFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -37,17 +38,13 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 	
 	var req_PortRangeMaxFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var req_ProtocolFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_RemoteIPPrefixFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var securityGroupID string// ServiceSDKParamCreate
@@ -61,6 +58,14 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 			
 			if securityGroupIDFlag.IsChanged() {
 				securityGroupID = *securityGroupIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_ProtocolFlag.IsChanged() {
+				req.Protocol = req_ProtocolFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_RemoteIPPrefixFlag.IsChanged() {
+				req.RemoteIPPrefix = req_RemoteIPPrefixFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_EtherTypeFlag.IsChanged() {
@@ -83,53 +88,35 @@ func Create(ctx context.Context, parent *cobra.Command, ruleService networkSdk.R
 				req.PortRangeMax = req_PortRangeMaxFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_ProtocolFlag.IsChanged() {
-				req.Protocol = req_ProtocolFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_RemoteIPPrefixFlag.IsChanged() {
-				req.RemoteIPPrefix = req_RemoteIPPrefixFlag.Value
-			}// CobraFlagsAssign
-			
 
 			result, err := ruleService.Create(ctx, securityGroupID, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(result, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(result)
+			return nil
 		},
 	}
 	
 	
-	securityGroupIDFlag = flags.NewStrP(cmd, "security-group-i-d", "s", "", "")//CobraFlagsCreation
+	securityGroupIDFlag = flags.NewStrP(cmd, "security-group-id", "s", "", "")//CobraFlagsCreation
 	
-	req_EtherTypeFlag = flags.NewStrP(cmd, "ether-type", "e", "", "")//CobraFlagsCreation
+	req_ProtocolFlag = flags.NewStrP(cmd, "protocol", "p", "", "")//CobraFlagsCreation
+	
+	req_RemoteIPPrefixFlag = flags.NewStrP(cmd, "remote-i-p-prefix", "e", "", "")//CobraFlagsCreation
+	
+	req_EtherTypeFlag = flags.NewStrP(cmd, "ether-type", "t", "", "")//CobraFlagsCreation
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "c", "", "")//CobraFlagsCreation
 	
 	req_DirectionFlag = flags.NewStrP(cmd, "direction", "i", "", "")//CobraFlagsCreation
 	
-	req_PortRangeMinFlag = flags.NewIntP(cmd, "port-range-min", "p", 0, "")//CobraFlagsCreation
+	req_PortRangeMinFlag = flags.NewIntP(cmd, "port-range-min", "a", 0, "")//CobraFlagsCreation
 	
-	req_PortRangeMaxFlag = flags.NewIntP(cmd, "port-range-max", "t", 0, "")//CobraFlagsCreation
-	
-	req_ProtocolFlag = flags.NewStrP(cmd, "protocol", "l", "", "")//CobraFlagsCreation
-	
-	req_RemoteIPPrefixFlag = flags.NewStrP(cmd, "remote-i-p-prefix", "m", "", "")//CobraFlagsCreation
+	req_PortRangeMaxFlag = flags.NewIntP(cmd, "port-range-max", "g", 0, "")//CobraFlagsCreation
 	
 
 

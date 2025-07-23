@@ -16,28 +16,25 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.ReplicaService) {
 	
+	var req_InstanceTypeIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var req_SourceIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_InstanceTypeIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req dbaasSdk.ReplicaCreateRequest// ServiceSDKParamCreate
@@ -47,6 +44,10 @@ func Create(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.
 
 			
 			
+			if req_InstanceTypeIDFlag.IsChanged() {
+				req.InstanceTypeID = req_InstanceTypeIDFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_SourceIDFlag.IsChanged() {
 				req.SourceID = *req_SourceIDFlag.Value
 			}// CobraFlagsAssign
@@ -55,44 +56,30 @@ func Create(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.
 				req.Name = *req_NameFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_InstanceTypeIDFlag.IsChanged() {
-				req.InstanceTypeID = req_InstanceTypeIDFlag.Value
-			}// CobraFlagsAssign
-			
 
 			replicaresponse, err := replicaService.Create(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(replicaresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(replicaresponse)
+			return nil
 		},
 	}
 	
 	
-	req_SourceIDFlag = flags.NewStrP(cmd, "source-i-d", "s", "", "")//CobraFlagsCreation
+	req_InstanceTypeIDFlag = flags.NewStrP(cmd, "instance-type-id", "i", "", "")//CobraFlagsCreation
+	
+	req_SourceIDFlag = flags.NewStrP(cmd, "source-id", "s", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
-	req_InstanceTypeIDFlag = flags.NewStrP(cmd, "instance-type-i-d", "i", "", "")//CobraFlagsCreation
-	
 
 
 	
-	cmd.MarkFlagRequired("source-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("source-id")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	

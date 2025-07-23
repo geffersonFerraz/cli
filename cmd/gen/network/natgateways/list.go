@@ -16,30 +16,27 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, natGatewayService networkSdk.NatGatewayService) {
 	
 	var vpcIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
+	
+	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var vpcID string// ServiceSDKParamCreate
@@ -55,10 +52,6 @@ func List(ctx context.Context, parent *cobra.Command, natGatewayService networkS
 				vpcID = *vpcIDFlag.Value
 			}// CobraFlagsAssign
 			
-			if opts_SortFlag.IsChanged() {
-				opts.Sort = opts_SortFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_LimitFlag.IsChanged() {
 				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
@@ -67,37 +60,31 @@ func List(ctx context.Context, parent *cobra.Command, natGatewayService networkS
 				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
 			
+			if opts_SortFlag.IsChanged() {
+				opts.Sort = opts_SortFlag.Value
+			}// CobraFlagsAssign
+			
 
 			natgatewayresponse, err := natGatewayService.List(ctx, vpcID, opts)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(natgatewayresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(natgatewayresponse)
+			return nil
 		},
 	}
 	
 	
-	vpcIDFlag = flags.NewStrP(cmd, "vpc-i-d", "v", "", "")//CobraFlagsCreation
-	
-	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
+	vpcIDFlag = flags.NewStrP(cmd, "vpc-id", "v", "", "")//CobraFlagsCreation
 	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
+	
+	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
 	
 
 

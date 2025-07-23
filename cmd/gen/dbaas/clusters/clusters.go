@@ -20,7 +20,7 @@ func ClustersCmd(ctx context.Context, parent *cobra.Command, clusterService dbaa
 	cmd := &cobra.Command{
 		Use:     "clusters",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

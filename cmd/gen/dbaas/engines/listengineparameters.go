@@ -16,18 +16,13 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func ListEngineParameters(ctx context.Context, parent *cobra.Command, engineService dbaasSdk.EngineService) {
 	
 	var engineIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var opts_ModifiableFlag *flags.BoolFlag //CobraFlagsDefinition
 	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
@@ -35,13 +30,15 @@ func ListEngineParameters(ctx context.Context, parent *cobra.Command, engineServ
 	
 	var opts_DynamicFlag *flags.BoolFlag //CobraFlagsDefinition
 	
+	var opts_ModifiableFlag *flags.BoolFlag //CobraFlagsDefinition
+	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list-engine-parameters",
 		Short:   "Dbaas provides a client for interacting with the Magalu Cloud Database as a Service (DBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var engineID string// ServiceSDKParamCreate
@@ -57,10 +54,6 @@ func ListEngineParameters(ctx context.Context, parent *cobra.Command, engineServ
 				engineID = *engineIDFlag.Value
 			}// CobraFlagsAssign
 			
-			if opts_ModifiableFlag.IsChanged() {
-				opts.Modifiable = opts_ModifiableFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_OffsetFlag.IsChanged() {
 				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
@@ -73,39 +66,33 @@ func ListEngineParameters(ctx context.Context, parent *cobra.Command, engineServ
 				opts.Dynamic = opts_DynamicFlag.Value
 			}// CobraFlagsAssign
 			
+			if opts_ModifiableFlag.IsChanged() {
+				opts.Modifiable = opts_ModifiableFlag.Value
+			}// CobraFlagsAssign
+			
 
 			engineparameterdetail, err := engineService.ListEngineParameters(ctx, engineID, opts)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(engineparameterdetail, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(engineparameterdetail)
+			return nil
 		},
 	}
 	
 	
-	engineIDFlag = flags.NewStrP(cmd, "engine-i-d", "e", "", "")//CobraFlagsCreation
-	
-	opts_ModifiableFlag = flags.NewBoolP(cmd, "modifiable", "m", false, "")//CobraFlagsCreation
+	engineIDFlag = flags.NewStrP(cmd, "engine-id", "e", "", "")//CobraFlagsCreation
 	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_DynamicFlag = flags.NewBoolP(cmd, "dynamic", "y", false, "")//CobraFlagsCreation
+	
+	opts_ModifiableFlag = flags.NewBoolP(cmd, "modifiable", "m", false, "")//CobraFlagsCreation
 	
 
 

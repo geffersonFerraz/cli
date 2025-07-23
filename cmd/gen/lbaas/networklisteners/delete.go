@@ -16,9 +16,6 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Delete(ctx context.Context, parent *cobra.Command, networkListenerService lbaasSdk.NetworkListenerService) {
@@ -32,8 +29,8 @@ func Delete(ctx context.Context, parent *cobra.Command, networkListenerService l
 	cmd := &cobra.Command{
 		Use:     "delete",
 		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req lbaasSdk.DeleteNetworkListenerRequest// ServiceSDKParamCreate
@@ -55,26 +52,24 @@ func Delete(ctx context.Context, parent *cobra.Command, networkListenerService l
 			err := networkListenerService.Delete(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
+			return nil
 		},
 	}
 	
 	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
 	
-	req_ListenerIDFlag = flags.NewStrP(cmd, "listener-i-d", "i", "", "")//CobraFlagsCreation
+	req_ListenerIDFlag = flags.NewStrP(cmd, "listener-id", "i", "", "")//CobraFlagsCreation
 	
 
 
 	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("load-balancer-id")//CobraFlagsRequired
 	
-	cmd.MarkFlagRequired("listener-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("listener-id")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

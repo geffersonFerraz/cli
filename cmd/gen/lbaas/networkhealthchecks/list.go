@@ -16,14 +16,13 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func List(ctx context.Context, parent *cobra.Command, networkHealthCheckService lbaasSdk.NetworkHealthCheckService) {
+	
+	var req_SortFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -31,15 +30,13 @@ func List(ctx context.Context, parent *cobra.Command, networkHealthCheckService 
 	
 	var req_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var req_SortFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	
 
 	cmd := &cobra.Command{
 		Use:     "list",
 		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req lbaasSdk.ListNetworkHealthCheckRequest// ServiceSDKParamCreate
@@ -48,6 +45,10 @@ func List(ctx context.Context, parent *cobra.Command, networkHealthCheckService 
 			
 
 			
+			
+			if req_SortFlag.IsChanged() {
+				req.Sort = req_SortFlag.Value
+			}// CobraFlagsAssign
 			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
@@ -61,46 +62,32 @@ func List(ctx context.Context, parent *cobra.Command, networkHealthCheckService 
 				req.Limit = req_LimitFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_SortFlag.IsChanged() {
-				req.Sort = req_SortFlag.Value
-			}// CobraFlagsAssign
-			
 
 			networkhealthcheckresponse, err := networkHealthCheckService.List(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(networkhealthcheckresponse, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(networkhealthcheckresponse)
+			return nil
 		},
 	}
 	
 	
-	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-i-d", "l", "", "")//CobraFlagsCreation
+	req_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
+	
+	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
 	
 	req_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 	req_LimitFlag = flags.NewIntP(cmd, "limit", "i", 0, "")//CobraFlagsCreation
 	
-	req_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
-	
 
 
 	
-	cmd.MarkFlagRequired("load-balancer-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("load-balancer-id")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

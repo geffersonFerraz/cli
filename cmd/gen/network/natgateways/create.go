@@ -16,11 +16,8 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, natGatewayService networkSdk.NatGatewayService) {
@@ -38,8 +35,8 @@ func Create(ctx context.Context, parent *cobra.Command, natGatewayService networ
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Network provides a client for interacting with the Magalu Cloud Network API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var req networkSdk.CreateNatGatewayRequest// ServiceSDKParamCreate
@@ -69,22 +66,12 @@ func Create(ctx context.Context, parent *cobra.Command, natGatewayService networ
 			result, err := natGatewayService.Create(ctx, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(result, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(result)
+			return nil
 		},
 	}
 	
@@ -95,7 +82,7 @@ func Create(ctx context.Context, parent *cobra.Command, natGatewayService networ
 	
 	req_ZoneFlag = flags.NewStrP(cmd, "zone", "z", "", "")//CobraFlagsCreation
 	
-	req_VPCIDFlag = flags.NewStrP(cmd, "v-p-c-i-d", "v", "", "")//CobraFlagsCreation
+	req_VPCIDFlag = flags.NewStrP(cmd, "v-p-c-id", "v", "", "")//CobraFlagsCreation
 	
 
 
@@ -104,7 +91,7 @@ func Create(ctx context.Context, parent *cobra.Command, natGatewayService networ
 	
 	cmd.MarkFlagRequired("zone")//CobraFlagsRequired
 	
-	cmd.MarkFlagRequired("v-p-c-i-d")//CobraFlagsRequired
+	cmd.MarkFlagRequired("v-p-c-id")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

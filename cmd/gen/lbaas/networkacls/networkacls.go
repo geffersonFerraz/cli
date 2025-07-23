@@ -20,7 +20,7 @@ func NetworkACLsCmd(ctx context.Context, parent *cobra.Command, networkACLServic
 	cmd := &cobra.Command{
 		Use:     "network-a-c-ls",
 		Short:   "Lbaas provides a client for interacting with the Magalu Cloud Load Balancer as a Service (LBaaS) API.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

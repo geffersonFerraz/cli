@@ -20,7 +20,7 @@ func CredentialsCmd(ctx context.Context, parent *cobra.Command, credentialsServi
 	cmd := &cobra.Command{
 		Use:     "credentials",
 		Short:   "Containerregistry provides a client for interacting with the Magalu Cloud Container Registry API.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 

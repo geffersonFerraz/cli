@@ -16,16 +16,17 @@ import (
 	
 	flags "gfcli/cobra_utils/flags"
 	
-	"encoding/json"
+	"gfcli/beautiful"
 	
-	"gfcli/cmd_utils"
-	
-	"fmt"
 )
 
 func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernetesSdk.NodePoolService) {
 	
 	var clusterIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_TagsFlag *flags.StrSliceFlag //CobraFlagsDefinition
+	
+	var req_TaintsFlag *flags.JSONArrayValue[kubernetesSdk.Taint] //CobraFlagsDefinition
 	
 	var req_MaxPodsPerNodeFlag *flags.IntFlag //CobraFlagsDefinition
 	
@@ -37,17 +38,13 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 	
 	var req_ReplicasFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var req_TagsFlag *flags.StrSliceFlag //CobraFlagsDefinition
-	
-	var req_TaintsFlag *flags.JSONArrayValue[kubernetesSdk.Taint] //CobraFlagsDefinition
-	
 	
 
 	cmd := &cobra.Command{
 		Use:     "create",
 		Short:   "Kubernetes provides a client for interacting with the Magalu Cloud Kubernetes API.",
-		Long:    `defaultLongDesc 3`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Long:    `doto3`,
+		RunE: func(cmd *cobra.Command, args []string) error{
 			
 			
 			var clusterID string// ServiceSDKParamCreate
@@ -61,6 +58,14 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 			
 			if clusterIDFlag.IsChanged() {
 				clusterID = *clusterIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_TagsFlag.IsChanged() {
+				req.Tags = req_TagsFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_TaintsFlag.IsChanged() {
+				req.Taints = req_TaintsFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_MaxPodsPerNodeFlag.IsChanged() {
@@ -83,53 +88,35 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 				req.Replicas = *req_ReplicasFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_TagsFlag.IsChanged() {
-				req.Tags = req_TagsFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_TaintsFlag.IsChanged() {
-				req.Taints = req_TaintsFlag.Value
-			}// CobraFlagsAssign
-			
 
 			nodepool, err := nodePoolService.Create(ctx, clusterID, req)
 			
 			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
+				return err
+			}
 			
-			sdkResult, err := json.MarshalIndent(nodepool, "", "  ")
-
-			if err != nil {
-			msg, detail := cmdutils.ParseSDKError(err)
-					fmt.Println(msg)
-					fmt.Println(detail)
-					return
-				}
-			
-			fmt.Println(string(sdkResult))
+			raw, _ := cmd.Root().PersistentFlags().GetBool("raw")
+			beautiful.NewOutput(raw).PrintData(nodepool)
+			return nil
 		},
 	}
 	
 	
-	clusterIDFlag = flags.NewStrP(cmd, "cluster-i-d", "c", "", "")//CobraFlagsCreation
+	clusterIDFlag = flags.NewStrP(cmd, "cluster-id", "c", "", "")//CobraFlagsCreation
+	
+	req_TagsFlag = flags.NewStrSliceP(cmd, "tags", "t", []string{}, "")//CobraFlagsCreation
+	
+	req_TaintsFlag = flags.NewJSONArrayValueP[kubernetesSdk.Taint](cmd, "taints", "a", "",)//CobraFlagsCreation
 	
 	req_MaxPodsPerNodeFlag = flags.NewIntP(cmd, "max-pods-per-node", "m", 0, "")//CobraFlagsCreation
 	
-	req_AvailabilityZonesFlag = flags.NewStrSliceP(cmd, "availability-zones", "a", []string{}, "")//CobraFlagsCreation
+	req_AvailabilityZonesFlag = flags.NewStrSliceP(cmd, "availability-zones", "v", []string{}, "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "e", "", "")//CobraFlagsCreation
 	
 	req_FlavorFlag = flags.NewStrP(cmd, "flavor", "f", "", "")//CobraFlagsCreation
 	
 	req_ReplicasFlag = flags.NewIntP(cmd, "replicas", "p", 0, "")//CobraFlagsCreation
-	
-	req_TagsFlag = flags.NewStrSliceP(cmd, "tags", "t", []string{}, "")//CobraFlagsCreation
-	
-	req_TaintsFlag = flags.NewJSONArrayValueP[kubernetesSdk.Taint](cmd, "taints", "i", "",)//CobraFlagsCreation
 	
 
 

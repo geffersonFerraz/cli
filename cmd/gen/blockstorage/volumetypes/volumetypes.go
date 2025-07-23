@@ -20,7 +20,7 @@ func VolumeTypesCmd(ctx context.Context, parent *cobra.Command, volumeTypeServic
 	cmd := &cobra.Command{
 		Use:     "volume-types",
 		Short:   "Blockstorage provides functionality to interact with the MagaluCloud block storage service.",
-		Long:    `defaultLongDesc 4`,
+		Long:    `Dqui1`,
 		
 	}
 
