@@ -20,13 +20,13 @@ import (
 
 func Update(ctx context.Context, parent *cobra.Command, networkCertificateService lbaasSdk.NetworkCertificateService) {
 	
-	var req_CertificateFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_PrivateKeyFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_TLSCertificateIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_CertificateFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_PrivateKeyFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -44,20 +44,20 @@ func Update(ctx context.Context, parent *cobra.Command, networkCertificateServic
 
 			
 			
-			if req_CertificateFlag.IsChanged() {
-				req.Certificate = *req_CertificateFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_PrivateKeyFlag.IsChanged() {
-				req.PrivateKey = *req_PrivateKeyFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_TLSCertificateIDFlag.IsChanged() {
 				req.TLSCertificateID = *req_TLSCertificateIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_CertificateFlag.IsChanged() {
+				req.Certificate = *req_CertificateFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_PrivateKeyFlag.IsChanged() {
+				req.PrivateKey = *req_PrivateKeyFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -72,24 +72,24 @@ func Update(ctx context.Context, parent *cobra.Command, networkCertificateServic
 	}
 	
 	
-	req_CertificateFlag = flags.NewStrP(cmd, "certificate", "c", "", "")//CobraFlagsCreation
-	
-	req_PrivateKeyFlag = flags.NewStrP(cmd, "private-key", "p", "", "")//CobraFlagsCreation
-	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
 	
 	req_TLSCertificateIDFlag = flags.NewStrP(cmd, "t-l-s-certificate-id", "t", "", "")//CobraFlagsCreation
 	
+	req_CertificateFlag = flags.NewStrP(cmd, "certificate", "c", "", "")//CobraFlagsCreation
+	
+	req_PrivateKeyFlag = flags.NewStrP(cmd, "private-key", "p", "", "")//CobraFlagsCreation
+	
 
 
-	
-	cmd.MarkFlagRequired("certificate")//CobraFlagsRequired
-	
-	cmd.MarkFlagRequired("private-key")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("load-balancer-id")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("t-l-s-certificate-id")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("certificate")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("private-key")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

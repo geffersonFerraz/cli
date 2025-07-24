@@ -20,8 +20,6 @@ import (
 
 func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerService lbaasSdk.NetworkLoadBalancerService) {
 	
-	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_BackendsFlag *flags.JSONArrayValue[lbaasSdk.NetworkBackendUpdateRequest] //CobraFlagsDefinition
 	
 	var req_HealthChecksFlag *flags.JSONArrayValue[lbaasSdk.NetworkHealthCheckUpdateRequest] //CobraFlagsDefinition
@@ -33,6 +31,8 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -49,10 +49,6 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 			
 
 			
-			
-			if req_DescriptionFlag.IsChanged() {
-				req.Description = req_DescriptionFlag.Value
-			}// CobraFlagsAssign
 			
 			if req_BackendsFlag.IsChanged() {
 				req.Backends = *req_BackendsFlag.Value
@@ -78,6 +74,10 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 				req.Name = req_NameFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_DescriptionFlag.IsChanged() {
+				req.Description = req_DescriptionFlag.Value
+			}// CobraFlagsAssign
+			
 
 			err := networkLoadBalancerService.Update(ctx, req)
 			
@@ -90,8 +90,6 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	}
 	
 	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "d", "", "")//CobraFlagsCreation
-	
 	req_BackendsFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkBackendUpdateRequest](cmd, "backends", "b", "",)//CobraFlagsCreation
 	
 	req_HealthChecksFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkHealthCheckUpdateRequest](cmd, "health-checks", "e", "",)//CobraFlagsCreation
@@ -103,6 +101,8 @@ func Update(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
+	
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "s", "", "")//CobraFlagsCreation
 	
 
 

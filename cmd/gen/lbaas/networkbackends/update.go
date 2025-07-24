@@ -20,19 +20,19 @@ import (
 
 func Update(ctx context.Context, parent *cobra.Command, networkBackendService lbaasSdk.NetworkBackendService) {
 	
-	var req_BackendIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_TargetsRawFlag *flags.JSONArrayValue[lbaasSdk.NetworkBackendRawTargetRequest] //CobraFlagsDefinition
 	
 	var req_HealthCheckIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var req_BackendIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_TargetsInstancesFlag *flags.JSONArrayValue[lbaasSdk.NetworkBackendInstanceRequest] //CobraFlagsDefinition
+	
+	var req_TargetsRawFlag *flags.JSONArrayValue[lbaasSdk.NetworkBackendRawTargetRequest] //CobraFlagsDefinition
 	
 	
 
@@ -50,16 +50,8 @@ func Update(ctx context.Context, parent *cobra.Command, networkBackendService lb
 
 			
 			
-			if req_BackendIDFlag.IsChanged() {
-				req.BackendID = *req_BackendIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_NameFlag.IsChanged() {
 				req.Name = req_NameFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_TargetsRawFlag.IsChanged() {
-				req.TargetsRaw = req_TargetsRawFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_HealthCheckIDFlag.IsChanged() {
@@ -70,12 +62,20 @@ func Update(ctx context.Context, parent *cobra.Command, networkBackendService lb
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_BackendIDFlag.IsChanged() {
+				req.BackendID = *req_BackendIDFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_TargetsInstancesFlag.IsChanged() {
 				req.TargetsInstances = req_TargetsInstancesFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_TargetsRawFlag.IsChanged() {
+				req.TargetsRaw = req_TargetsRawFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -90,26 +90,26 @@ func Update(ctx context.Context, parent *cobra.Command, networkBackendService lb
 	}
 	
 	
-	req_BackendIDFlag = flags.NewStrP(cmd, "backend-id", "b", "", "")//CobraFlagsCreation
-	
-	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
-	
-	req_TargetsRawFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkBackendRawTargetRequest](cmd, "targets-raw", "t", "",)//CobraFlagsCreation
+	req_NameFlag = flags.NewStrP(cmd, "name", "n", "", "")//CobraFlagsCreation
 	
 	req_HealthCheckIDFlag = flags.NewStrP(cmd, "health-check-id", "e", "", "")//CobraFlagsCreation
 	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
 	
+	req_BackendIDFlag = flags.NewStrP(cmd, "backend-id", "b", "", "")//CobraFlagsCreation
+	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "s", "", "")//CobraFlagsCreation
 	
-	req_TargetsInstancesFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkBackendInstanceRequest](cmd, "targets-instances", "g", "",)//CobraFlagsCreation
+	req_TargetsInstancesFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkBackendInstanceRequest](cmd, "targets-instances", "t", "",)//CobraFlagsCreation
+	
+	req_TargetsRawFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkBackendRawTargetRequest](cmd, "targets-raw", "a", "",)//CobraFlagsCreation
 	
 
 
-	
-	cmd.MarkFlagRequired("backend-id")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("load-balancer-id")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("backend-id")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

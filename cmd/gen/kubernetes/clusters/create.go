@@ -22,14 +22,6 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, clusterService kubernetesSdk.ClusterService) {
 	
-	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_EnabledServerGroupFlag *flags.BoolFlag //CobraFlagsDefinition
-	
-	var req_NodePoolsFlag *flags.JSONArrayValue[kubernetesSdk.CreateNodePoolRequest] //CobraFlagsDefinition
-	
-	var req_AllowedCIDRsFlag *flags.StrSliceFlag //CobraFlagsDefinition
-	
 	var req_ServicesIpV4CIDRFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_ClusterIPv4CIDRFlag *flags.StrFlag //CobraFlagsDefinition
@@ -37,6 +29,14 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_VersionFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_EnabledServerGroupFlag *flags.BoolFlag //CobraFlagsDefinition
+	
+	var req_NodePoolsFlag *flags.JSONArrayValue[kubernetesSdk.CreateNodePoolRequest] //CobraFlagsDefinition
+	
+	var req_AllowedCIDRsFlag *flags.StrSliceFlag //CobraFlagsDefinition
 	
 	
 
@@ -54,22 +54,6 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 
 			
 			
-			if req_DescriptionFlag.IsChanged() {
-				req.Description = req_DescriptionFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_EnabledServerGroupFlag.IsChanged() {
-				req.EnabledServerGroup = req_EnabledServerGroupFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_NodePoolsFlag.IsChanged() {
-				req.NodePools = req_NodePoolsFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_AllowedCIDRsFlag.IsChanged() {
-				req.AllowedCIDRs = req_AllowedCIDRsFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_ServicesIpV4CIDRFlag.IsChanged() {
 				req.ServicesIpV4CIDR = req_ServicesIpV4CIDRFlag.Value
 			}// CobraFlagsAssign
@@ -86,6 +70,22 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 				req.Version = req_VersionFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_DescriptionFlag.IsChanged() {
+				req.Description = req_DescriptionFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_EnabledServerGroupFlag.IsChanged() {
+				req.EnabledServerGroup = req_EnabledServerGroupFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_NodePoolsFlag.IsChanged() {
+				req.NodePools = req_NodePoolsFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_AllowedCIDRsFlag.IsChanged() {
+				req.AllowedCIDRs = req_AllowedCIDRsFlag.Value
+			}// CobraFlagsAssign
+			
 
 			createclusterresponse, err := clusterService.Create(ctx, req)
 			
@@ -100,21 +100,21 @@ func Create(ctx context.Context, parent *cobra.Command, clusterService kubernete
 	}
 	
 	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "d", "", "")//CobraFlagsCreation
-	
-	req_EnabledServerGroupFlag = flags.NewBoolP(cmd, "enabled-server-group", "e", false, "")//CobraFlagsCreation
-	
-	req_NodePoolsFlag = flags.NewJSONArrayValueP[kubernetesSdk.CreateNodePoolRequest](cmd, "node-pools", "p", "",)//CobraFlagsCreation
-	
-	req_AllowedCIDRsFlag = flags.NewStrSliceP(cmd, "allowed-c-id-rs", "a", []string{}, "")//CobraFlagsCreation
-	
 	req_ServicesIpV4CIDRFlag = flags.NewStrP(cmd, "services-ip-v4-c-id-r", "s", "", "")//CobraFlagsCreation
 	
 	req_ClusterIPv4CIDRFlag = flags.NewStrP(cmd, "cluster-i-pv4-c-id-r", "c", "", "")//CobraFlagsCreation
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "m", "", "")//CobraFlagsCreation
+	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
 	req_VersionFlag = flags.NewStrP(cmd, "version", "v", "", "")//CobraFlagsCreation
+	
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
+	
+	req_EnabledServerGroupFlag = flags.NewBoolP(cmd, "enabled-server-group", "b", false, "")//CobraFlagsCreation
+	
+	req_NodePoolsFlag = flags.NewJSONArrayValueP[kubernetesSdk.CreateNodePoolRequest](cmd, "node-pools", "p", "",)//CobraFlagsCreation
+	
+	req_AllowedCIDRsFlag = flags.NewStrSliceP(cmd, "allowed-c-id-rs", "l", []string{}, "")//CobraFlagsCreation
 	
 
 

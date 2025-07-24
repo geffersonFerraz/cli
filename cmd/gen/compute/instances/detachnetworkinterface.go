@@ -20,9 +20,9 @@ import (
 
 func DetachNetworkInterface(ctx context.Context, parent *cobra.Command, instanceService computeSdk.InstanceService) {
 	
-	var req_Instance_IDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_Instance_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_Instance_IDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_Network_Interface_IDFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -44,12 +44,12 @@ func DetachNetworkInterface(ctx context.Context, parent *cobra.Command, instance
 
 			
 			
-			if req_Instance_IDFlag.IsChanged() {
-				req.Instance.ID = req_Instance_IDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_Instance_NameFlag.IsChanged() {
 				req.Instance.Name = req_Instance_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_Instance_IDFlag.IsChanged() {
+				req.Instance.ID = req_Instance_IDFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_Network_Interface_IDFlag.IsChanged() {
@@ -72,11 +72,11 @@ func DetachNetworkInterface(ctx context.Context, parent *cobra.Command, instance
 	}
 	
 	
+	req_Instance_NameFlag = flags.NewStrP(cmd, "instance.name", "n", "", "")//CobraFlagsCreation
+	
 	req_Instance_IDFlag = flags.NewStrP(cmd, "instance.id", "i", "", "")//CobraFlagsCreation
 	
-	req_Instance_NameFlag = flags.NewStrP(cmd, "instance.name", "a", "", "")//CobraFlagsCreation
-	
-	req_Network_Interface_IDFlag = flags.NewStrP(cmd, "network.interface.id", "b", "", "")//CobraFlagsCreation
+	req_Network_Interface_IDFlag = flags.NewStrP(cmd, "network.interface.id", "a", "", "")//CobraFlagsCreation
 	
 	req_Network_Interface_NameFlag = flags.NewStrP(cmd, "network.interface.name", "m", "", "")//CobraFlagsCreation
 	

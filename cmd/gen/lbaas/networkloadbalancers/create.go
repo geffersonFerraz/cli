@@ -22,6 +22,8 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerService lbaasSdk.NetworkLoadBalancerService) {
 	
+	var req_SubnetPoolIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var req_PublicIPIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_PanicThresholdFlag *flags.IntFlag //CobraFlagsDefinition
@@ -29,10 +31,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_TypeFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_ListenersFlag *flags.JSONArrayValue[lbaasSdk.NetworkListenerRequest] //CobraFlagsDefinition
 	
 	var req_BackendsFlag *flags.JSONArrayValue[lbaasSdk.NetworkBackendRequest] //CobraFlagsDefinition
 	
@@ -44,7 +42,9 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	
 	var req_VPCIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_SubnetPoolIDFlag *flags.StrFlag //CobraFlagsDefinition
+	var req_TypeFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_ListenersFlag *flags.JSONArrayValue[lbaasSdk.NetworkListenerRequest] //CobraFlagsDefinition
 	
 	
 
@@ -62,6 +62,10 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 
 			
 			
+			if req_SubnetPoolIDFlag.IsChanged() {
+				req.SubnetPoolID = req_SubnetPoolIDFlag.Value
+			}// CobraFlagsAssign
+			
 			if req_PublicIPIDFlag.IsChanged() {
 				req.PublicIPID = req_PublicIPIDFlag.Value
 			}// CobraFlagsAssign
@@ -76,14 +80,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 			
 			if req_DescriptionFlag.IsChanged() {
 				req.Description = req_DescriptionFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_TypeFlag.IsChanged() {
-				req.Type = req_TypeFlag.Value
-			}// CobraFlagsAssign
-			
-			if req_ListenersFlag.IsChanged() {
-				req.Listeners = *req_ListenersFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_BackendsFlag.IsChanged() {
@@ -106,8 +102,12 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 				req.VPCID = *req_VPCIDFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_SubnetPoolIDFlag.IsChanged() {
-				req.SubnetPoolID = req_SubnetPoolIDFlag.Value
+			if req_TypeFlag.IsChanged() {
+				req.Type = req_TypeFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_ListenersFlag.IsChanged() {
+				req.Listeners = *req_ListenersFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -124,6 +124,8 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	}
 	
 	
+	req_SubnetPoolIDFlag = flags.NewStrP(cmd, "subnet-pool-id", "s", "", "")//CobraFlagsCreation
+	
 	req_PublicIPIDFlag = flags.NewStrP(cmd, "public-i-p-id", "p", "", "")//CobraFlagsCreation
 	
 	req_PanicThresholdFlag = flags.NewIntP(cmd, "panic-threshold", "a", 0, "")//CobraFlagsCreation
@@ -132,21 +134,19 @@ func Create(ctx context.Context, parent *cobra.Command, networkLoadBalancerServi
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
-	req_TypeFlag = flags.NewStrP(cmd, "type", "t", "", "")//CobraFlagsCreation
-	
-	req_ListenersFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkListenerRequest](cmd, "listeners", "l", "",)//CobraFlagsCreation
-	
 	req_BackendsFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkBackendRequest](cmd, "backends", "b", "",)//CobraFlagsCreation
 	
-	req_HealthChecksFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkHealthCheckRequest](cmd, "health-checks", "c", "",)//CobraFlagsCreation
+	req_HealthChecksFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkHealthCheckRequest](cmd, "health-checks", "l", "",)//CobraFlagsCreation
 	
-	req_TLSCertificatesFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkTLSCertificateRequest](cmd, "t-l-s-certificates", "s", "",)//CobraFlagsCreation
+	req_TLSCertificatesFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkTLSCertificateRequest](cmd, "t-l-s-certificates", "t", "",)//CobraFlagsCreation
 	
-	req_ACLsFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkAclRequest](cmd, "a-c-ls", "f", "",)//CobraFlagsCreation
+	req_ACLsFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkAclRequest](cmd, "a-c-ls", "c", "",)//CobraFlagsCreation
 	
 	req_VPCIDFlag = flags.NewStrP(cmd, "v-p-c-id", "v", "", "")//CobraFlagsCreation
 	
-	req_SubnetPoolIDFlag = flags.NewStrP(cmd, "subnet-pool-id", "u", "", "")//CobraFlagsCreation
+	req_TypeFlag = flags.NewStrP(cmd, "type", "y", "", "")//CobraFlagsCreation
+	
+	req_ListenersFlag = flags.NewJSONArrayValueP[lbaasSdk.NetworkListenerRequest](cmd, "listeners", "i", "",)//CobraFlagsCreation
 	
 
 

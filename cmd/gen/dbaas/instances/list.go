@@ -22,23 +22,23 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk.InstanceService) {
 	
-	var opts_VolumeSizeLtFlag *flags.IntFlag //CobraFlagsDefinition
-	
-	var opts_VolumeSizeLteFlag *flags.IntFlag //CobraFlagsDefinition
+	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_EngineIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var opts_VolumeSizeFlag *flags.IntFlag //CobraFlagsDefinition
+	
+	var opts_VolumeSizeGteFlag *flags.IntFlag //CobraFlagsDefinition
+	
+	var opts_VolumeSizeLtFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_ExpandedFieldsFlag *flags.StrSliceFlag //CobraFlagsDefinition
 	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
-	
-	var opts_VolumeSizeFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	var opts_VolumeSizeGtFlag *flags.IntFlag //CobraFlagsDefinition
 	
-	var opts_VolumeSizeGteFlag *flags.IntFlag //CobraFlagsDefinition
+	var opts_VolumeSizeLteFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
@@ -56,16 +56,24 @@ func List(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk.I
 
 			
 			
-			if opts_VolumeSizeLtFlag.IsChanged() {
-				opts.VolumeSizeLt = opts_VolumeSizeLtFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_VolumeSizeLteFlag.IsChanged() {
-				opts.VolumeSizeLte = opts_VolumeSizeLteFlag.Value
+			if opts_LimitFlag.IsChanged() {
+				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
 			
 			if opts_EngineIDFlag.IsChanged() {
 				opts.EngineID = opts_EngineIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_VolumeSizeFlag.IsChanged() {
+				opts.VolumeSize = opts_VolumeSizeFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_VolumeSizeGteFlag.IsChanged() {
+				opts.VolumeSizeGte = opts_VolumeSizeGteFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_VolumeSizeLtFlag.IsChanged() {
+				opts.VolumeSizeLt = opts_VolumeSizeLtFlag.Value
 			}// CobraFlagsAssign
 			
 			if opts_ExpandedFieldsFlag.IsChanged() {
@@ -76,20 +84,12 @@ func List(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk.I
 				opts.Offset = opts_OffsetFlag.Value
 			}// CobraFlagsAssign
 			
-			if opts_LimitFlag.IsChanged() {
-				opts.Limit = opts_LimitFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_VolumeSizeFlag.IsChanged() {
-				opts.VolumeSize = opts_VolumeSizeFlag.Value
-			}// CobraFlagsAssign
-			
 			if opts_VolumeSizeGtFlag.IsChanged() {
 				opts.VolumeSizeGt = opts_VolumeSizeGtFlag.Value
 			}// CobraFlagsAssign
 			
-			if opts_VolumeSizeGteFlag.IsChanged() {
-				opts.VolumeSizeGte = opts_VolumeSizeGteFlag.Value
+			if opts_VolumeSizeLteFlag.IsChanged() {
+				opts.VolumeSizeLte = opts_VolumeSizeLteFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -106,23 +106,23 @@ func List(ctx context.Context, parent *cobra.Command, instanceService dbaasSdk.I
 	}
 	
 	
-	opts_VolumeSizeLtFlag = flags.NewIntP(cmd, "volume-size-lt", "v", 0, "")//CobraFlagsCreation
-	
-	opts_VolumeSizeLteFlag = flags.NewIntP(cmd, "volume-size-lte", "l", 0, "")//CobraFlagsCreation
+	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_EngineIDFlag = flags.NewStrP(cmd, "engine-id", "e", "", "")//CobraFlagsCreation
+	
+	opts_VolumeSizeFlag = flags.NewIntP(cmd, "volume-size", "v", 0, "")//CobraFlagsCreation
+	
+	opts_VolumeSizeGteFlag = flags.NewIntP(cmd, "volume-size-gte", "u", 0, "")//CobraFlagsCreation
+	
+	opts_VolumeSizeLtFlag = flags.NewIntP(cmd, "volume-size-lt", "m", 0, "")//CobraFlagsCreation
 	
 	opts_ExpandedFieldsFlag = flags.NewStrSliceP(cmd, "expanded-fields", "x", []string{}, "")//CobraFlagsCreation
 	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
-	opts_LimitFlag = flags.NewIntP(cmd, "limit", "i", 0, "")//CobraFlagsCreation
+	opts_VolumeSizeGtFlag = flags.NewIntP(cmd, "volume-size-gt", "s", 0, "")//CobraFlagsCreation
 	
-	opts_VolumeSizeFlag = flags.NewIntP(cmd, "volume-size", "u", 0, "")//CobraFlagsCreation
-	
-	opts_VolumeSizeGtFlag = flags.NewIntP(cmd, "volume-size-gt", "m", 0, "")//CobraFlagsCreation
-	
-	opts_VolumeSizeGteFlag = flags.NewIntP(cmd, "volume-size-gte", "s", 0, "")//CobraFlagsCreation
+	opts_VolumeSizeLteFlag = flags.NewIntP(cmd, "volume-size-lte", "i", 0, "")//CobraFlagsCreation
 	
 
 

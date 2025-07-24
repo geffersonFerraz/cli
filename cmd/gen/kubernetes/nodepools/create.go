@@ -24,6 +24,8 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 	
 	var clusterIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
+	var req_ReplicasFlag *flags.IntFlag //CobraFlagsDefinition
+	
 	var req_TagsFlag *flags.StrSliceFlag //CobraFlagsDefinition
 	
 	var req_TaintsFlag *flags.JSONArrayValue[kubernetesSdk.Taint] //CobraFlagsDefinition
@@ -35,8 +37,6 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_FlavorFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var req_ReplicasFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
@@ -58,6 +58,10 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 			
 			if clusterIDFlag.IsChanged() {
 				clusterID = *clusterIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_ReplicasFlag.IsChanged() {
+				req.Replicas = *req_ReplicasFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_TagsFlag.IsChanged() {
@@ -84,10 +88,6 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 				req.Flavor = *req_FlavorFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_ReplicasFlag.IsChanged() {
-				req.Replicas = *req_ReplicasFlag.Value
-			}// CobraFlagsAssign
-			
 
 			nodepool, err := nodePoolService.Create(ctx, clusterID, req)
 			
@@ -104,6 +104,8 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 	
 	clusterIDFlag = flags.NewStrP(cmd, "cluster-id", "c", "", "")//CobraFlagsCreation
 	
+	req_ReplicasFlag = flags.NewIntP(cmd, "replicas", "e", 0, "")//CobraFlagsCreation
+	
 	req_TagsFlag = flags.NewStrSliceP(cmd, "tags", "t", []string{}, "")//CobraFlagsCreation
 	
 	req_TaintsFlag = flags.NewJSONArrayValueP[kubernetesSdk.Taint](cmd, "taints", "a", "",)//CobraFlagsCreation
@@ -112,22 +114,20 @@ func Create(ctx context.Context, parent *cobra.Command, nodePoolService kubernet
 	
 	req_AvailabilityZonesFlag = flags.NewStrSliceP(cmd, "availability-zones", "v", []string{}, "")//CobraFlagsCreation
 	
-	req_NameFlag = flags.NewStrP(cmd, "name", "e", "", "")//CobraFlagsCreation
+	req_NameFlag = flags.NewStrP(cmd, "name", "b", "", "")//CobraFlagsCreation
 	
 	req_FlavorFlag = flags.NewStrP(cmd, "flavor", "f", "", "")//CobraFlagsCreation
-	
-	req_ReplicasFlag = flags.NewIntP(cmd, "replicas", "p", 0, "")//CobraFlagsCreation
 	
 
 
 	
 	cmd.MarkFlagRequired("clusterID")//CobraFlagsRequired
 	
+	cmd.MarkFlagRequired("replicas")//CobraFlagsRequired
+	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("flavor")//CobraFlagsRequired
-	
-	cmd.MarkFlagRequired("replicas")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

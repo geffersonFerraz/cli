@@ -22,11 +22,11 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.ReplicaService) {
 	
-	var req_InstanceTypeIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_SourceIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_InstanceTypeIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -44,16 +44,16 @@ func Create(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.
 
 			
 			
-			if req_InstanceTypeIDFlag.IsChanged() {
-				req.InstanceTypeID = req_InstanceTypeIDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_SourceIDFlag.IsChanged() {
 				req.SourceID = *req_SourceIDFlag.Value
 			}// CobraFlagsAssign
 			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_InstanceTypeIDFlag.IsChanged() {
+				req.InstanceTypeID = req_InstanceTypeIDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -70,11 +70,11 @@ func Create(ctx context.Context, parent *cobra.Command, replicaService dbaasSdk.
 	}
 	
 	
-	req_InstanceTypeIDFlag = flags.NewStrP(cmd, "instance-type-id", "i", "", "")//CobraFlagsCreation
-	
 	req_SourceIDFlag = flags.NewStrP(cmd, "source-id", "s", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
+	
+	req_InstanceTypeIDFlag = flags.NewStrP(cmd, "instance-type-id", "i", "", "")//CobraFlagsCreation
 	
 
 

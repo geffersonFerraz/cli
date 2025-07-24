@@ -22,11 +22,11 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, eventTypeService auditSdk.EventTypeService) {
 	
+	var params_LimitFlag *flags.IntFlag //CobraFlagsDefinition
+	
 	var params_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var params_TenantIDFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var params_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
@@ -44,16 +44,16 @@ func List(ctx context.Context, parent *cobra.Command, eventTypeService auditSdk.
 
 			
 			
+			if params_LimitFlag.IsChanged() {
+				params.Limit = params_LimitFlag.Value
+			}// CobraFlagsAssign
+			
 			if params_OffsetFlag.IsChanged() {
 				params.Offset = params_OffsetFlag.Value
 			}// CobraFlagsAssign
 			
 			if params_TenantIDFlag.IsChanged() {
 				params.TenantID = params_TenantIDFlag.Value
-			}// CobraFlagsAssign
-			
-			if params_LimitFlag.IsChanged() {
-				params.Limit = params_LimitFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -70,11 +70,11 @@ func List(ctx context.Context, parent *cobra.Command, eventTypeService auditSdk.
 	}
 	
 	
-	params_OffsetFlag = flags.NewIntP(cmd, "offset", "o", 0, "")//CobraFlagsCreation
+	params_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
+	
+	params_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 	params_TenantIDFlag = flags.NewStrP(cmd, "tenant-id", "t", "", "")//CobraFlagsCreation
-	
-	params_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 
 

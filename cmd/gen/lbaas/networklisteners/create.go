@@ -22,8 +22,6 @@ import (
 
 func Create(ctx context.Context, parent *cobra.Command, networkListenerService lbaasSdk.NetworkListenerService) {
 	
-	var req_PortFlag *flags.IntFlag //CobraFlagsDefinition
-	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_BackendIDFlag *flags.StrFlag //CobraFlagsDefinition
@@ -33,6 +31,8 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_PortFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	
 
@@ -49,10 +49,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 			
 
 			
-			
-			if req_PortFlag.IsChanged() {
-				req.Port = *req_PortFlag.Value
-			}// CobraFlagsAssign
 			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
@@ -74,6 +70,10 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
 			
+			if req_PortFlag.IsChanged() {
+				req.Port = *req_PortFlag.Value
+			}// CobraFlagsAssign
+			
 
 			networklistenerresponse, err := networkListenerService.Create(ctx, req)
 			
@@ -88,8 +88,6 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 	}
 	
 	
-	req_PortFlag = flags.NewIntP(cmd, "port", "p", 0, "")//CobraFlagsCreation
-	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
 	
 	req_BackendIDFlag = flags.NewStrP(cmd, "backend-id", "b", "", "")//CobraFlagsCreation
@@ -100,16 +98,18 @@ func Create(ctx context.Context, parent *cobra.Command, networkListenerService l
 	
 	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
-
-
+	req_PortFlag = flags.NewIntP(cmd, "port", "p", 0, "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("port")//CobraFlagsRequired
+
+
 	
 	cmd.MarkFlagRequired("load-balancer-id")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("backend-id")//CobraFlagsRequired
 	
 	cmd.MarkFlagRequired("name")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("port")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

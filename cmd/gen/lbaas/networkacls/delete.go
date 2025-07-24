@@ -20,9 +20,9 @@ import (
 
 func Delete(ctx context.Context, parent *cobra.Command, networkACLService lbaasSdk.NetworkACLService) {
 	
-	var req_IDFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_LoadBalancerIDFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_IDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -40,12 +40,12 @@ func Delete(ctx context.Context, parent *cobra.Command, networkACLService lbaasS
 
 			
 			
-			if req_IDFlag.IsChanged() {
-				req.ID = *req_IDFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_LoadBalancerIDFlag.IsChanged() {
 				req.LoadBalancerID = *req_LoadBalancerIDFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_IDFlag.IsChanged() {
+				req.ID = *req_IDFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -60,16 +60,16 @@ func Delete(ctx context.Context, parent *cobra.Command, networkACLService lbaasS
 	}
 	
 	
-	req_IDFlag = flags.NewStrP(cmd, "id", "i", "", "")//CobraFlagsCreation
-	
 	req_LoadBalancerIDFlag = flags.NewStrP(cmd, "load-balancer-id", "l", "", "")//CobraFlagsCreation
 	
-
-
+	req_IDFlag = flags.NewStrP(cmd, "id", "i", "", "")//CobraFlagsCreation
 	
-	cmd.MarkFlagRequired("id")//CobraFlagsRequired
+
+
 	
 	cmd.MarkFlagRequired("load-balancer-id")//CobraFlagsRequired
+	
+	cmd.MarkFlagRequired("id")//CobraFlagsRequired
 	
 	parent.AddCommand(cmd)
 

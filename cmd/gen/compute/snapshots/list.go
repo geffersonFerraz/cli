@@ -22,15 +22,15 @@ import (
 
 func List(ctx context.Context, parent *cobra.Command, snapshotService computeSdk.SnapshotService) {
 	
+	var opts_ExpandFlag *flags.StrSliceFlag //CobraFlagsDefinition
+	
+	var opts_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
 	var opts_LimitFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_OffsetFlag *flags.IntFlag //CobraFlagsDefinition
 	
 	var opts_SortFlag *flags.StrFlag //CobraFlagsDefinition
-	
-	var opts_ExpandFlag *flags.StrSliceFlag //CobraFlagsDefinition
-	
-	var opts_NameFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	
 
@@ -48,6 +48,14 @@ func List(ctx context.Context, parent *cobra.Command, snapshotService computeSdk
 
 			
 			
+			if opts_ExpandFlag.IsChanged() {
+				opts.Expand = *opts_ExpandFlag.Value
+			}// CobraFlagsAssign
+			
+			if opts_NameFlag.IsChanged() {
+				opts.Name = opts_NameFlag.Value
+			}// CobraFlagsAssign
+			
 			if opts_LimitFlag.IsChanged() {
 				opts.Limit = opts_LimitFlag.Value
 			}// CobraFlagsAssign
@@ -58,14 +66,6 @@ func List(ctx context.Context, parent *cobra.Command, snapshotService computeSdk
 			
 			if opts_SortFlag.IsChanged() {
 				opts.Sort = opts_SortFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_ExpandFlag.IsChanged() {
-				opts.Expand = *opts_ExpandFlag.Value
-			}// CobraFlagsAssign
-			
-			if opts_NameFlag.IsChanged() {
-				opts.Name = opts_NameFlag.Value
 			}// CobraFlagsAssign
 			
 
@@ -82,15 +82,15 @@ func List(ctx context.Context, parent *cobra.Command, snapshotService computeSdk
 	}
 	
 	
+	opts_ExpandFlag = flags.NewStrSliceP(cmd, "expand", "e", []string{}, "")//CobraFlagsCreation
+	
+	opts_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
+	
 	opts_LimitFlag = flags.NewIntP(cmd, "limit", "l", 0, "")//CobraFlagsCreation
 	
 	opts_OffsetFlag = flags.NewIntP(cmd, "offset", "f", 0, "")//CobraFlagsCreation
 	
 	opts_SortFlag = flags.NewStrP(cmd, "sort", "s", "", "")//CobraFlagsCreation
-	
-	opts_ExpandFlag = flags.NewStrSliceP(cmd, "expand", "e", []string{}, "")//CobraFlagsCreation
-	
-	opts_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
 	
 
 

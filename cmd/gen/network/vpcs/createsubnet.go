@@ -24,8 +24,6 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 	
 	var vpcIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
-	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
-	
 	var req_CIDRBlockFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_IPVersionFlag *flags.IntFlag //CobraFlagsDefinition
@@ -35,6 +33,8 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 	var req_SubnetPoolIDFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var req_NameFlag *flags.StrFlag //CobraFlagsDefinition
+	
+	var req_DescriptionFlag *flags.StrFlag //CobraFlagsDefinition
 	
 	var opts_ZoneFlag *flags.StrFlag //CobraFlagsDefinition
 	
@@ -62,10 +62,6 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 				vpcID = *vpcIDFlag.Value
 			}// CobraFlagsAssign
 			
-			if req_DescriptionFlag.IsChanged() {
-				req.Description = req_DescriptionFlag.Value
-			}// CobraFlagsAssign
-			
 			if req_CIDRBlockFlag.IsChanged() {
 				req.CIDRBlock = *req_CIDRBlockFlag.Value
 			}// CobraFlagsAssign
@@ -84,6 +80,10 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 			
 			if req_NameFlag.IsChanged() {
 				req.Name = *req_NameFlag.Value
+			}// CobraFlagsAssign
+			
+			if req_DescriptionFlag.IsChanged() {
+				req.Description = req_DescriptionFlag.Value
 			}// CobraFlagsAssign
 			
 			if opts_ZoneFlag.IsChanged() {
@@ -106,8 +106,6 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 	
 	vpcIDFlag = flags.NewStrP(cmd, "vpc-id", "v", "", "")//CobraFlagsCreation
 	
-	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
-	
 	req_CIDRBlockFlag = flags.NewStrP(cmd, "c-id-r-block", "c", "", "")//CobraFlagsCreation
 	
 	req_IPVersionFlag = flags.NewIntP(cmd, "i-p-version", "i", 0, "")//CobraFlagsCreation
@@ -117,6 +115,8 @@ func CreateSubnet(ctx context.Context, parent *cobra.Command, vPCService network
 	req_SubnetPoolIDFlag = flags.NewStrP(cmd, "subnet-pool-id", "u", "", "")//CobraFlagsCreation
 	
 	req_NameFlag = flags.NewStrP(cmd, "name", "a", "", "")//CobraFlagsCreation
+	
+	req_DescriptionFlag = flags.NewStrP(cmd, "description", "e", "", "")//CobraFlagsCreation
 	
 	opts_ZoneFlag = flags.NewStrP(cmd, "zone", "z", "", "")//CobraFlagsCreation
 	
